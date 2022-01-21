@@ -4,16 +4,27 @@
 
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RunMag;
 import frc.robot.io.NTButton;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Magazine;
+import frc.robot.subsystems.Shooter;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,13 +33,24 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
+  private final NetworkTableEntry m_useNTShooterControlEntry;
+  private final NetworkTableEntry m_shooterSpeedEntry;
+  
   private final LoggingManager logManager = new LoggingManager(); 
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+  private final Shooter m_shooter = new Shooter();
+  private final Magazine m_magazine = new Magazine();
+
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+
+  private final Joystick m_joyshtick = new Joystick(1);
+  private final XboxController m_xBocshController = new XboxController(0);
+
+  private final Button trigger = new JoystickButton(m_joyshtick, 1);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -37,6 +59,12 @@ public class RobotContainer {
     if (RobotBase.isSimulation()) logManager.robotLogger.setLevel(Level.FINER);
 
     configureButtonBindings();
+
+    m_useNTShooterControlEntry = NetworkTableInstance.getDefault().getEntry("Use network tables for shooter control");
+    m_shooterSpeedEntry = NetworkTableInstance.getDefault().getEntry("Shooter set speed");
+
+    m_useNTShooterControlEntry.setBoolean(false);
+    m_shooterSpeedEntry.setDouble(0);
   }
 
   /**
@@ -45,7 +73,25 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    
+    
+    trigger.whileHeld(new RunMag( m_magazine, 1));
+
+    m_shooter.setDefaultCommand(new RunCommand(() -> {
+
+    
+      DoubleSupplier speedSupplier = () -> {
+        if (m_useNTShooterControlEntry.getBoolean(true)) {
+          return m_shooterSpeedEntry.getDouble(0);
+        }
+        else {
+          return m_joyshtick.getRawButtonPressed(2) ? 1 : 0;
+        }
+      };
+      m_shooter.set(speedSupplier.getAsDouble());
+    }, m_shooter));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
