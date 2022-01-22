@@ -9,9 +9,9 @@ import java.util.logging.Level;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.DriveTrainCommand;
 import frc.robot.io.NTButton;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.DriveTrainSub;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -23,19 +23,49 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 
+  private static XboxController driver = new XboxController(0);
+
   private final LoggingManager logManager = new LoggingManager(); 
 
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveTrainCommand m_autoCommand;
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final DriveTrainSub m_DriveTrainSub = new DriveTrainSub();
+
+  public enum Axis {
+    kLeftX(0),
+    kRightX(4),
+    kLeftY(1),
+    kRightY(5),
+    kLeftTrigger(2),
+    kRightTrigger(3);
+
+    @SuppressWarnings("MemberName")
+    public final int value;
+
+    Axis(int value) {
+      this.value = value;
+    }
+  }
+
+  public static double getMove() {
+    return driver.getLeftY();
+
+  }
+
+  public static double getTurn() {
+    return driver.getRightX();
+  }
+
+  public static boolean getIntake() {
+    return driver.getRightStickButton();
+  }
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     NTButton.startConcurrentHandling();
     if (RobotBase.isSimulation()) logManager.robotLogger.setLevel(Level.FINER);
-
+    m_autoCommand = new DriveTrainCommand(m_DriveTrainSub, () -> { return getMove(); }, () -> { return getTurn(); });
     configureButtonBindings();
   }
 
@@ -45,8 +75,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
-
+  private void configureButtonBindings() {
+    m_DriveTrainSub.setDefaultCommand(new DriveTrainCommand(m_DriveTrainSub, () -> {
+      return getMove();
+    }, () -> {
+      return getTurn();
+    }));
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
