@@ -50,6 +50,7 @@ public class RobotContainer {
   private final XboxController m_xBocshController = new XboxController(0);
 
   private final Button trigger = new JoystickButton(m_joyshtick, 1);
+  private final Button sideButton = new JoystickButton(m_joyshtick, 2);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
