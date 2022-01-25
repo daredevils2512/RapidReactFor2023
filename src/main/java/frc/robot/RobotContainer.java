@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import java.util.Optional;
 import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
 
@@ -41,8 +42,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final Shooter m_shooter = new Shooter();
-  private final Magazine m_magazine = new Magazine();
+  // private final Shooter m_shooter = new Shooter();
+  private final Optional <Shooter> m_shooter; 
+  private final Optional <Magazine> m_magazine;
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
@@ -60,11 +62,13 @@ public class RobotContainer {
     if (RobotBase.isSimulation()) logManager.robotLogger.setLevel(Level.FINER);
 
     configureButtonBindings();
+    m_magazine = Optional.empty();
+    m_shooter = Optional.of(new Shooter());
 
     m_useNTShooterControlEntry = NetworkTableInstance.getDefault().getEntry("Use network tables for shooter control");
     m_shooterSpeedEntry = NetworkTableInstance.getDefault().getEntry("Shooter set speed");
 
-    m_useNTShooterControlEntry.setBoolean(false);
+    m_useNTShooterControlEntry.setBoolean(true);
     m_shooterSpeedEntry.setDouble(0);
   }
 
@@ -75,13 +79,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
-    
-    trigger.whileHeld(new RunMag( m_magazine, 1));
+    m_magazine.ifPresent((magazine) -> {
+      trigger.whileHeld(new RunMag( magazine, 1));  
+    });
 
-    m_shooter.setDefaultCommand(new RunCommand(() -> {
-
-    
+    m_shooter.ifPresent((shooter) -> {
+    shooter.setDefaultCommand(new RunCommand(() -> {
       DoubleSupplier speedSupplier = () -> {
         if (m_useNTShooterControlEntry.getBoolean(true)) {
           return m_shooterSpeedEntry.getDouble(0);
@@ -90,9 +93,10 @@ public class RobotContainer {
           return m_joyshtick.getRawButtonPressed(2) ? 1 : 0;
         }
       };
-      m_shooter.set(speedSupplier.getAsDouble());
-    }, m_shooter));
-  }
+      shooter.spitBalls(speedSupplier.getAsDouble());
+    }, shooter));
+  });
+};
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

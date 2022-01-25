@@ -1,28 +1,28 @@
 package frc.robot.commands;
 
-public class RevShooter {
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Shooter;
 
-    // public class RevShooter extends CommandBase  {
-    //     private double speed;
-    //     private Magazine m_magazine;
-    //     public RunMag( Magazine magazine, double speed){
-    //     m_magazine = magazine;
+public class RevShooter extends CommandBase  {
+        private double speed;
+        private Shooter m_shooter;
+        public RevShooter( Shooter shooter, double speed){
+        m_shooter = shooter;
             
-    //     }
-    //     @Override
-    //     public void initialize() {
+        }
+        @Override
+        public void initialize() {
             
-    //     }
+        }
     
-    //     @Override
-    //     public void execute() {
-    //     m_magazine.moveBalls(speed);
-    //     }
+        @Override
+        public void execute() {
+        m_shooter.spitBalls(speed);
+        }
     
-    //     @Override
-    //     public void end(boolean interrupted) {
-    //         m_magazine.moveBalls(0.0);
-      
-    //     }
+        @Override
+        public void end(boolean interrupted) {
+        }
     
-}
+    }
+
