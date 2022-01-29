@@ -31,7 +31,7 @@ public class Shooter extends SubsystemBase {
     feedforward = new SimpleMotorFeedforward(ks, kv);
   }
 
-  public void set(double speed) {
+  public void spitBalls(double speed) {
     speed = m_limiter.calculate(speed);
     m_spark.set(speed);
   }  
