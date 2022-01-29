@@ -39,8 +39,8 @@ public class Shooter extends SubsystemBase {
     m_spark.setVoltage(voltage);
   }
   
-  public void setRPM (double RPM){
-    double voltage = feedforward.calculate(RPM);
+  public void set(double speed){
+    double voltage = feedforward.calculate(speed);
     m_spark.setVoltage(voltage);
   }
 }
