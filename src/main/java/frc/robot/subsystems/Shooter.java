@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.Logger;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
@@ -18,7 +19,7 @@ public class Shooter extends NTSubsystem {
 
   private final NetworkTableEntry m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
 
-  private final PWMSparkMax m_spark;
+  private final WPI_TalonFX m_motor;
   private final SlewRateLimiter m_limiter;
   private final SimpleMotorFeedforward feedforward;
 
@@ -26,7 +27,7 @@ public class Shooter extends NTSubsystem {
     super("Shooter");
     m_speed.setDouble(0);
 
-    m_spark = new PWMSparkMax(channel);
+    m_motor = new WPI_TalonFX(channel);
       
     m_limiter = new SlewRateLimiter(0.4);
     feedforward = new SimpleMotorFeedforward(ks, kv);
@@ -34,14 +35,18 @@ public class Shooter extends NTSubsystem {
 
   public void set(double speed) {
     speed = m_limiter.calculate(speed);
-    m_spark.set(speed);
+    m_motor.set(speed);
   }  
   public void setvoltage(double voltage){
-    m_spark.setVoltage(voltage);
+    m_motor.setVoltage(voltage);
   }
   
   public void setRPM (double RPM){
     double voltage = feedforward.calculate(RPM);
-    m_spark.setVoltage(voltage);
+    m_motor.setVoltage(voltage);
+  }
+
+  public double get(){
+    return m_motor.get(); 
   }
 }
