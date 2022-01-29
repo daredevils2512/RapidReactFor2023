@@ -6,9 +6,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Magazine extends SubsystemBase{
     private final Victor m_magMotor;
 
+    //the channel below is not an actual channel, and therefore just a placeholder
+    private final int channel = -1;
+
     public Magazine() {
-        //the channel below is not an actual channel, and therefore just a placeholder. 
-         m_magMotor = new Victor(-1);
+ 
+         m_magMotor = new Victor(channel);
 
     }
 
