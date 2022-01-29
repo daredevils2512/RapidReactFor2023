@@ -20,6 +20,11 @@ public class DriveTrainSub extends PropertiesSubsystem {
   private final int frontRightID = 10;
   private final int backRightID = 11;
 
+  private final int leftEncoderID1 = 0;
+  private final int leftEncoderID2 = 1;
+  private final int rightEncoderID1 = 0;
+  private final int rightEncoderID2 = 1;
+
   private final WPI_TalonSRX m_frontLeft; // Motor stuff
   private final WPI_TalonSRX m_backLeft; 
   private final WPI_TalonSRX m_frontRight; 
@@ -52,8 +57,8 @@ public class DriveTrainSub extends PropertiesSubsystem {
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 
-    m_leftEncoder = new Encoder(0, 1);
-    m_rightEncoder = new Encoder(0, 1);
+    m_leftEncoder = new Encoder(leftEncoderID1, leftEncoderID2);
+    m_rightEncoder = new Encoder(rightEncoderID1, rightEncoderID2);
     m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); // Network table stuff
     m_rightEncoderEntry = m_table.getEntry("Right encoder distance");
     m_encoderResolution = Integer.parseInt(m_properties.getProperty("encoderResolution"));
