@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
-public class ClimberSubsytem extends PropertiesSubsystem {
+public class ClimberSubsytem extends NTSubsystem {
     int rightTalonid = 69;
     int leftTalonid = 420;
     TalonSRX right;
