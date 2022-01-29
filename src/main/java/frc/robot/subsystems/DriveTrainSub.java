@@ -60,7 +60,7 @@ public class DriveTrainSub extends PropertiesSubsystem {
     m_wheelDiameter = Units.inchesToMeters(Double.parseDouble(m_properties.getProperty("wheelDiameter")));
     m_wheelCircumference = Units.inchesToMeters(m_wheelDiameter) * Math.PI;
     m_gearRatio = Double.parseDouble(m_properties.getProperty("gearRatio"));
-    m_distancePerPulse = m_wheelCircumference * m_gearRatio / m_encoderResolution;
+    m_distancePerPulse = m_wheelCircumference / m_gearRatio / m_encoderResolution;
     m_leftEncoder.setDistancePerPulse(m_distancePerPulse);
     m_leftEncoder.setReverseDirection(true);
     m_rightEncoder.setDistancePerPulse(m_distancePerPulse);
