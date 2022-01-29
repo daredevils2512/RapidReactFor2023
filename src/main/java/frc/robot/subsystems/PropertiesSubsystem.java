@@ -12,7 +12,7 @@ import frc.robot.utils.PropertyUtils;
 
 public abstract class PropertiesSubsystem extends NTSubsystem {
 
-  private Properties m_properties;
+  protected Properties m_properties;
 
   public PropertiesSubsystem(String name) {
     super(name);
