@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunMag;
+import frc.robot.io.ControlBoard;
 import frc.robot.io.NTButton;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Magazine;
@@ -47,11 +48,8 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final Joystick m_joyshtick = new Joystick(1);
-  private final XboxController m_xBocshController = new XboxController(0);
 
-  private final Button trigger = new JoystickButton(m_joyshtick, 1);
-  private final Button sideButton = new JoystickButton(m_joyshtick, 2);
-
+  private final ControlBoard controlBoard = new ControlBoard();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -77,7 +75,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
     
-    trigger.whileHeld(new RunMag( m_magazine, 1));
+    controlBoard.extreme.trigger.whileHeld(new RunMag( m_magazine, 1));
 
     m_shooter.setDefaultCommand(new RunCommand(() -> {
 
