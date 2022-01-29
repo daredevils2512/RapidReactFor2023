@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
-public class Shooter extends SubsystemBase { 
+public class Shooter extends NTSubsystem { 
   private final int channel = 0;
   private double ks = 0;
   private double kv = 0;
@@ -24,6 +24,7 @@ public class Shooter extends SubsystemBase {
   private final SimpleMotorFeedforward feedforward;
 
   public Shooter() {
+    super("Shooter");
     m_speed.setDouble(0);
 
     m_motor = new WPI_TalonFX(channel);

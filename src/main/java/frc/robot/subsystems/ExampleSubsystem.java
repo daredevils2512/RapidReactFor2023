@@ -8,7 +8,7 @@ import java.util.logging.Level;
 
 import frc.robot.io.NTButton;
 
-public class ExampleSubsystem extends PropertiesSubsystem {
+public class ExampleSubsystem extends NTSubsystem {
 
   public int examplePort;
   public double exampleValue;
@@ -19,11 +19,6 @@ public class ExampleSubsystem extends PropertiesSubsystem {
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
     super("ExampleSubsystem"); //[deploy-directory]/ExampleSubsystem.properties
-    examplePort = getIntProperty("examplePort", -1);
-    exampleToggle = getBooleanProperty("exampleToggle");
-
-    //creates error
-    exampleValue = getDoubleProperty("exampleValue");
 
     toggleButton = new NTButton(this::toggle, name + "." + "exampleToggle", m_table);
 
@@ -34,7 +29,6 @@ public class ExampleSubsystem extends PropertiesSubsystem {
   public void toggle() {
     exampleToggle = !exampleToggle;
     m_table.getEntry("exampleToggle").setBoolean(exampleToggle);
-    setProperty("exampleToggle", Boolean.toString(exampleToggle));
     m_logger.log(Level.INFO, name + ".toggle() ran sucessfully!");
   }
 
