@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
 import frc.robot.io.ControlBoard;
 import frc.robot.io.NTButton;
@@ -25,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 /**
@@ -44,12 +46,16 @@ public class RobotContainer {
 
   private final Shooter m_shooter = new Shooter();
   private final Magazine m_magazine = new Magazine();
-
+  
+  private final RunFlywheel m_runFlywheel = new RunFlywheel(m_shooter);
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final Joystick m_joyshtick = new Joystick(1);
-
   private final ControlBoard controlBoard = new ControlBoard();
+
+  private final Trigger shooterReady = new Trigger(()->{
+    return m_shooter.get()==0.2;
+    //no value yet
+  });
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -85,12 +91,23 @@ public class RobotContainer {
           return m_shooterSpeedEntry.getDouble(0);
         }
         else {
-          return m_joyshtick.getRawButtonPressed(2) ? 1 : 0;
+          return controlBoard.extreme.sideButton.get() ? 1 : 0;
         }
       };
       m_shooter.set(speedSupplier.getAsDouble());
     }, m_shooter));
+
+     controlBoard.buttonBox.topWhite.and(shooterReady).whileActiveContinuous(new RunCommand(()->{
+      m_magazine.moveBalls(2);
+     },m_magazine));
+
+     controlBoard.buttonBox.topWhite.and(shooterReady).whenInactive(new RunCommand(()->{
+      m_magazine.moveBalls(-1);
+     },m_magazine).withTimeout(1));
+    
+     controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
   }
+  
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
