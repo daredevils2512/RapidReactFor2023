@@ -15,13 +15,29 @@ public class LoggingSubsystem extends SubsystemBase {
   protected Logger m_logger;
   public String name;
 
-  /** Creates a new LoggingSubsystem. */
+  /** @apiNote creates a new LoggingSubsystem. 
+   * @param name sets name of logger
+   * @param logLevel set level for subsystem to display logs at (default: WARNING)
+  */
+  public LoggingSubsystem(String name, Level logLevel) {
+    this.name = name;
+    m_logger = Logger.getLogger("subsystem." + name);
+    m_logger.setParent(Logger.getGlobal());
+    m_logger.log(Level.INFO, m_logger.getName() + " initialized");
+    if (RobotBase.isSimulation()) {m_logger.setLevel(logLevel);} else {m_logger.setLevel(logLevel);}
+    m_logger.log(Level.INFO, name + " logger started, level: " + m_logger.getLevel().toString());
+  }
+  
+  /** @apiNote creates a new LoggingSubsystem. 
+   * @param name sets name of logger
+   * @param logLevel set level for subsystem to display logs at (default: WARNING)
+  */
   public LoggingSubsystem(String name) {
     this.name = name;
     m_logger = Logger.getLogger("subsystem." + name);
     m_logger.setParent(Logger.getGlobal());
     m_logger.log(Level.INFO, m_logger.getName() + " initialized");
-    if (RobotBase.isSimulation()) {m_logger.setLevel(Level.FINER);} else {m_logger.setLevel(Level.WARNING);}
+    if (RobotBase.isSimulation()) {m_logger.setLevel(Level.FINEST);} else {m_logger.setLevel(Level.WARNING);}
     m_logger.log(Level.INFO, name + " logger started, level: " + m_logger.getLevel().toString());
   }
 

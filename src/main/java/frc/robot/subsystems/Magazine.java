@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Magazine extends NTSubsystem {
     private final Victor m_magMotor;
@@ -14,9 +13,8 @@ public class Magazine extends NTSubsystem {
     }
 
     public void moveBalls (double magSpeed) {
-        m_magMotor.set(magSpeed); 
-        
-
+        m_magMotor.set(magSpeed);
+        m_logger.fine("move balls: " + m_magMotor.get());
     }
     
 

@@ -2,10 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-// import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class ClimberSubsytem extends NTSubsystem {
     int rightTalonid = 69;
@@ -20,6 +16,8 @@ public class ClimberSubsytem extends NTSubsystem {
         left.follow (right);
     }
     public void setclimbspeed(double speed){
+        left.set(ControlMode.PercentOutput, speed);
         right.set(ControlMode.PercentOutput, speed);
+        m_logger.fine("setclimbspeed: " + speed);
     }
 }
