@@ -5,8 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -14,6 +16,8 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 public class DriveTrainSub extends PropertiesSubsystem {
   private final double m_maxSpeed = 0.5;
   private final double m_maxTurn = 0.5;
+
+  private final SlewRateLimiter m_rateLim;
 
   private final int frontLeftID = 13;
   private final int backLeftID = 12;
@@ -44,6 +48,7 @@ public class DriveTrainSub extends PropertiesSubsystem {
   private final double m_distancePerPulse;
   private final NetworkTableEntry m_leftDistanceEntry;
   private final NetworkTableEntry m_rightDistanceEntry;
+  private final NetworkTableEntry m_speed;
 
   public DriveTrainSub() {
     super("DriveTrainSub");
@@ -71,9 +76,14 @@ public class DriveTrainSub extends PropertiesSubsystem {
     m_rightEncoder.setDistancePerPulse(m_distancePerPulse);
     m_leftDistanceEntry = m_table.getEntry("Left distance entry"); 
     m_rightDistanceEntry = m_table.getEntry("Right distance entry"); 
+
+    m_rateLim = new SlewRateLimiter(0.4);
+    m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
   }
 
   public void arcadeDrive(double move, double turn) { // arcade drive for driving
+    move = m_rateLim.calculate(m_speed.getDouble(0));
+    turn = m_rateLim.calculate(m_speed.getDouble(0));
     m_drive.arcadeDrive((move)*m_maxSpeed, (turn)*m_maxTurn);
   }
 
