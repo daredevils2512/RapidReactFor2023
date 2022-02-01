@@ -53,4 +53,8 @@ public class Shooter extends SubsystemBase {
   public double encoderRate(int encoder){
     return m_encoder.getRate();
   }
+  
+  public double get(){
+    return m_motor.get(); 
+  }
 }
