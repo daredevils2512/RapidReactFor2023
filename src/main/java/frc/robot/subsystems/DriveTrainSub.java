@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import java.util.Properties;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.util.Units;
