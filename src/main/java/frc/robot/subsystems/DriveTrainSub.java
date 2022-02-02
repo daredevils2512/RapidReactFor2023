@@ -23,17 +23,18 @@ public class DriveTrainSub extends SubsystemBase {
 
   private final SlewRateLimiter m_rateLim;
 
+  // IDs
   private final int frontLeftID = 13;
   private final int backLeftID = 12;
   private final int frontRightID = 10;
   private final int backRightID = 11;
-
   private final int leftEncoderID1 = 0;
   private final int leftEncoderID2 = 1;
   private final int rightEncoderID1 = 0;
   private final int rightEncoderID2 = 1;
 
-  private final WPI_TalonSRX m_frontLeft; // Motor stuff
+  // Motor stuff
+  private final WPI_TalonSRX m_frontLeft; 
   private final WPI_TalonSRX m_backLeft; 
   private final WPI_TalonSRX m_frontRight; 
   private final WPI_TalonSRX m_backRight;
@@ -41,7 +42,8 @@ public class DriveTrainSub extends SubsystemBase {
   private final MotorControllerGroup m_right;
   private final DifferentialDrive m_drive;
 
-  private final NetworkTable m_table; // Network table stuff
+  // Network table stuff
+  private final NetworkTable m_table; 
   private final Encoder m_leftEncoder; 
   private final Encoder m_rightEncoder;
   private final NetworkTableEntry m_leftEncoderEntry;
@@ -60,7 +62,8 @@ public class DriveTrainSub extends SubsystemBase {
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
     m_properties = new Properties();
 
-    m_frontLeft = new WPI_TalonSRX(frontLeftID); // Motor stuff
+    // Motor stuff
+    m_frontLeft = new WPI_TalonSRX(frontLeftID); 
     m_backLeft = new WPI_TalonSRX(backLeftID);
     m_left = new MotorControllerGroup(m_frontLeft, m_backLeft);
     m_left.setInverted(true);
@@ -69,9 +72,10 @@ public class DriveTrainSub extends SubsystemBase {
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 
+    // Network table stuff
     m_leftEncoder = new Encoder(leftEncoderID1, leftEncoderID2);
     m_rightEncoder = new Encoder(rightEncoderID1, rightEncoderID2);
-    m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); // Network table stuff
+    m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); 
     m_rightEncoderEntry = m_table.getEntry("Right encoder distance");
     m_encoderResolution = Integer.parseInt(m_properties.getProperty("encoderResolution"));
     m_wheelDiameter = Units.inchesToMeters(Double.parseDouble(m_properties.getProperty("wheelDiameter")));
@@ -88,30 +92,44 @@ public class DriveTrainSub extends SubsystemBase {
     m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
   }
 
-  public void arcadeDrive(double move, double turn) { // arcade drive for driving
+  // arcade drive for driving
+  public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(m_speed.getDouble(0));
     turn = m_rateLim.calculate(m_speed.getDouble(0));
     m_drive.arcadeDrive((move)*m_maxSpeed, (turn)*m_maxTurn);
   }
 
-  public int getLeftEncoder() { // left encoder retrive value
+  /** left encoder retrive value 
+   * @return returns left encoder value
+  */
+  public int getLeftEncoder() { 
     return m_leftEncoder.get();
   }
 
-  public int getRightEncoder() { // right encoder retrive value
+  /** right encoder retrive value 
+   * @return rernts right encoder value
+  */
+  public int getRightEncoder() { 
     return m_rightEncoder.get();
   }
 
-  public double getLeftDistance() { // left distance retrive value
+  /** left distance retrive value
+   * @return left distance value
+   */
+  public double getLeftDistance() { 
     return m_leftEncoder.getDistance();
   }
 
-  public double getRightDistance() { // left distance retrive value
+  /** right distance retrive value
+   * @return right distance value
+   */
+  public double getRightDistance() { 
     return m_rightEncoder.getDistance();
   }
   
+  // set encoders periodically
   @Override
-  public void periodic() { // set encoders periodically
+  public void periodic() { 
     m_leftEncoderEntry.setNumber(getLeftEncoder());
     m_rightEncoderEntry.setNumber(getRightEncoder());
 
