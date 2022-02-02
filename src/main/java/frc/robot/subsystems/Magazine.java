@@ -7,7 +7,6 @@ public class Magazine extends NTSubsystem {
 
     public Magazine() {
         super("Magazine");
-        //the channel below is not an actual channel, and therefore just a placeholder. 
          m_magMotor = new Victor(-1);
 
     }

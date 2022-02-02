@@ -12,7 +12,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class NTSubsystem extends LoggingSubsystem {
 
   protected NetworkTable m_table;
-  /** @apiNote Creates a new NTsubsystem.
+  /** Creates a new network table.
    * @param name sets name of table
    * @param logLevel set level for subsystem to display logs at (default: WARNING)
   */
@@ -21,7 +21,7 @@ public class NTSubsystem extends LoggingSubsystem {
     m_table = NetworkTableInstance.getDefault().getTable(tableName);
   }
   
-  /** @apiNote Creates a new NTsubsystem.
+  /** Creates a new network table.
    * @param name sets name of table
    * @param logLevel set level for subsystem to display logs at (default: WARNING)
   */
