@@ -14,7 +14,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrainSub extends NTSubsystem {
   private final double m_maxSpeed = 0.5;
