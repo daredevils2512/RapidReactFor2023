@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveTrainSub extends SubsystemBase {
+public class DriveTrainSub extends NTSubsystem {
   private final double m_maxSpeed = 0.5;
   private final double m_maxTurn = 0.5;
 
@@ -58,6 +58,7 @@ public class DriveTrainSub extends SubsystemBase {
   private final Properties m_properties;
 
   public DriveTrainSub() {
+    super("DriveTrainSub");
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
     m_properties = new Properties();
 
