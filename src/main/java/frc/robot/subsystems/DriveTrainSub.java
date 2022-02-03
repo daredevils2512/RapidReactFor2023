@@ -59,7 +59,6 @@ public class DriveTrainSub extends SubsystemBase {
 
   public DriveTrainSub() {
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
-    m_properties = new Properties();
 
     // Motor stuff
     m_frontLeft = new WPI_TalonSRX(frontLeftID); 
@@ -72,6 +71,7 @@ public class DriveTrainSub extends SubsystemBase {
     m_drive = new DifferentialDrive(m_left, m_right); 
 
     // Network table stuff
+    m_properties = new Properties();
     m_leftEncoder = new Encoder(leftEncoderID1, leftEncoderID2);
     m_rightEncoder = new Encoder(rightEncoderID1, rightEncoderID2);
     m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); 
