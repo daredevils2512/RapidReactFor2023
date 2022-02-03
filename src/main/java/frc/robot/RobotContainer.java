@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.DriveTrainCommand;
+import frc.robot.io.NTButton;
+import frc.robot.subsystems.DriveTrainSub;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
 import frc.robot.io.ControlBoard;
@@ -34,19 +36,49 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+  private static XboxController driver = new XboxController(0);
+
   private final NetworkTableEntry m_useNTShooterControlEntry;
   private final NetworkTableEntry m_shooterSpeedEntry;
   
   private final LoggingManager logManager = new LoggingManager(); 
 
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final DriveTrainSub m_DriveTrainSub = new DriveTrainSub();
 
+  public enum Axis {
+    kLeftX(0),
+    kRightX(4),
+    kLeftY(1),
+    kRightY(5),
+    kLeftTrigger(2),
+    kRightTrigger(3);
+
+    @SuppressWarnings("MemberName")
+    public final int value;
+
+    Axis(int value) {
+      this.value = value;
+    }
+  }
+
+  public static double getMove() {
+    return driver.getLeftY();
+
+  }
+
+  public static double getTurn() {
+    return driver.getRightX();
+  }
+
+  public static boolean getIntake() {
+    return driver.getRightStickButton();
+  }
   private final Shooter m_shooter = new Shooter();
   private final Magazine m_magazine = new Magazine();
   
   private final RunFlywheel m_runFlywheel = new RunFlywheel(m_shooter);
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final ControlBoard controlBoard = new ControlBoard();
 
@@ -60,7 +92,7 @@ public class RobotContainer {
     // Configure the button bindings
     NTButton.startConcurrentHandling();
     if (RobotBase.isSimulation()) logManager.robotLogger.setLevel(Level.FINER);
-
+    // m_autoCommand = new DriveTrainCommand(m_DriveTrainSub, () -> { return getMove(); }, () -> { return getTurn(); });
     configureButtonBindings();
 
     m_useNTShooterControlEntry = NetworkTableInstance.getDefault().getEntry("Use network tables for shooter control");
@@ -77,6 +109,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    m_DriveTrainSub.setDefaultCommand(new DriveTrainCommand(m_DriveTrainSub, () -> {
+      return getMove();
+    }, () -> {
+      return getTurn();
+    }));
+  }
     
     
     controlBoard.extreme.trigger.whileHeld(new RunMag( m_magazine, 1));
@@ -114,6 +152,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
