@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import java.util.Properties;
@@ -16,12 +12,11 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class DriveTrainSub extends NTSubsystem {
-  private final double m_maxSpeed = 0.5;
-  private final double m_maxTurn = 0.5;
-
+  // Rate limiter
   private final SlewRateLimiter m_rateLim;
 
   // IDs
+  // TODO: change to correct values!
   private final int frontLeftID = 13;
   private final int backLeftID = 12;
   private final int frontRightID = 10;
@@ -30,6 +25,9 @@ public class DriveTrainSub extends NTSubsystem {
   private final int leftEncoderID2 = 1;
   private final int rightEncoderID1 = 0;
   private final int rightEncoderID2 = 1;
+  private final double rateLimNUM = 0.4;
+  private final double m_maxSpeed = 0.5;
+  private final double m_maxTurn = 0.5;
 
   // Motor stuff
   private final WPI_TalonSRX m_frontLeft; 
@@ -87,46 +85,46 @@ public class DriveTrainSub extends NTSubsystem {
     m_leftDistanceEntry = m_table.getEntry("Left distance entry"); 
     m_rightDistanceEntry = m_table.getEntry("Right distance entry"); 
 
-    m_rateLim = new SlewRateLimiter(0.4);
+    m_rateLim = new SlewRateLimiter(rateLimNUM);
     m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
   }
 
-  // arcade drive for driving
+  /** Runs the arcade drive */
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(m_speed.getDouble(0));
     turn = m_rateLim.calculate(m_speed.getDouble(0));
     m_drive.arcadeDrive((move)*m_maxSpeed, (turn)*m_maxTurn);
   }
 
-  /** left encoder retrive value 
-   * @return returns left encoder value
+  /** 
+   * @return Left encoder
   */
   public int getLeftEncoder() { 
     return m_leftEncoder.get();
   }
 
-  /** right encoder retrive value 
-   * @return rernts right encoder value
+  /** 
+   * @return Right encoder
   */
   public int getRightEncoder() { 
     return m_rightEncoder.get();
   }
 
-  /** left distance retrive value
-   * @return left distance value
+  /** 
+   * @return Left distance
    */
   public double getLeftDistance() { 
     return m_leftEncoder.getDistance();
   }
 
-  /** right distance retrive value
-   * @return right distance value
+  /** 
+   * @return Left distance
    */
   public double getRightDistance() { 
     return m_rightEncoder.getDistance();
   }
   
-  // set encoders periodically
+  /** Periodically runs code */
   @Override
   public void periodic() { 
     m_leftEncoderEntry.setNumber(getLeftEncoder());
