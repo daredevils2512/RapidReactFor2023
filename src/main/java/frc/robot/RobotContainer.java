@@ -46,7 +46,7 @@ public class RobotContainer {
   private final Optional <Shooter> m_shooter; 
   private final Optional <Magazine> m_magazine;
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final ExampleCommand    m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final Joystick m_joyshtick = new Joystick(1);
   private final XboxController m_xBocshController = new XboxController(0);
