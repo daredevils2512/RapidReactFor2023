@@ -144,7 +144,7 @@ public class RobotContainer {
      },m_magazine).withTimeout(1));
     
      controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
-  }
+    }
   
 
   /**
