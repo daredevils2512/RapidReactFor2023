@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 

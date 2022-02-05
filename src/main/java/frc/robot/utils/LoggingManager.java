@@ -11,10 +11,8 @@ import java.util.logging.Handler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
-
 import edu.wpi.first.wpilibj.Filesystem;
 
-/** Add your docs here. */
 public class LoggingManager {
 
     private OutputStream logStream;

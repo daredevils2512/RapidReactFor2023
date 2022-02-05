@@ -9,27 +9,35 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 
 public class Shooter extends NTSubsystem { 
-  private final int channel = 0;
-  private double ks = 0;
-  private double kv = 0;
+  // IDs TODO: Change these values!
+  private final int m_channel = 0;
+  private final double m_ks = 0;
+  private final double m_kv = 0;
+  private final int m_encoderID1 = 1;
+  private final int m_encoderID2 = 2;
 
-  private final NetworkTableEntry m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
-
+  // Motor stuff
   private final WPI_TalonFX m_motor;
   private final SlewRateLimiter m_limiter;
   private final SimpleMotorFeedforward feedforward;
-  private final Encoder m_encoder = new Encoder(1, 2);
+  private final Encoder m_encoder;
+
+  // Network table stuff
+  private final NetworkTableEntry m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
 
   public Shooter() {
     super("Shooter");
+
+    m_encoder = new Encoder(m_encoderID1, m_encoderID2);
+
     m_speed.setDouble(0);
 
     m_encoder.setDistancePerPulse(1./4096);
 
-    m_motor = new WPI_TalonFX(channel);
+    m_motor = new WPI_TalonFX(m_channel);
       
     m_limiter = new SlewRateLimiter(0.4);
-    feedforward = new SimpleMotorFeedforward(ks, kv);
+    feedforward = new SimpleMotorFeedforward(m_ks, m_kv);
   }
 
   public void set(double speed) {
