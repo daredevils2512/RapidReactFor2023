@@ -40,19 +40,19 @@ public class DriveTrainSub extends NTSubsystem {
 
   // Network table stuff
   private final NetworkTable m_table; 
-  private final Encoder m_leftEncoder; 
-  private final Encoder m_rightEncoder;
-  private final NetworkTableEntry m_leftEncoderEntry;
-  private final NetworkTableEntry m_rightEncoderEntry;
-  private final double m_gearRatio;
-  private final double m_wheelCircumference;
-  private final double m_wheelDiameter;
-  private final int m_encoderResolution;
-  private final double m_distancePerPulse;
   private final NetworkTableEntry m_leftDistanceEntry;
   private final NetworkTableEntry m_rightDistanceEntry;
   private final NetworkTableEntry m_speed;
+  private final NetworkTableEntry m_leftEncoderEntry;
+  private final NetworkTableEntry m_rightEncoderEntry;
   private final Properties m_properties;
+  private final Encoder m_leftEncoder; 
+  private final Encoder m_rightEncoder;
+  private final double m_gearRatio;
+  private final double m_wheelCircumference;
+  private final double m_wheelDiameter;
+  private final double m_distancePerPulse;
+  private final int m_encoderResolution;
 
   public DriveTrainSub() {
     super("DriveTrainSub");
