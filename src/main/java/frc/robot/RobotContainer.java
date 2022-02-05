@@ -9,18 +9,17 @@ import java.util.logging.Level;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveTrainCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
 import frc.robot.subsystems.DriveTrainSub;
+import frc.robot.subsystems.IntakeSub;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
 import frc.robot.io.ControlBoard;
-import frc.robot.io.NTButton;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
 import frc.robot.utils.LoggingManager;
@@ -45,6 +44,7 @@ public class RobotContainer {
   private final LoggingManager logManager = new LoggingManager(); 
 
   private final DriveTrainSub m_DriveTrainSub = new DriveTrainSub();
+  private final IntakeSub m_IntakeSub = new IntakeSub();
 
   public enum Axis {
     kLeftX(0),
@@ -71,9 +71,11 @@ public class RobotContainer {
     return driver.getRightX();
   }
 
-  public static boolean getIntake() {
-    return driver.getRightStickButton();
+  public static double getIntake() {
+    // TODO: Change to correct controls!
+    return driver.getRightTriggerAxis();
   }
+
   private final Shooter m_shooter = new Shooter();
   private final Magazine m_magazine = new Magazine();
   
@@ -115,7 +117,8 @@ public class RobotContainer {
       return getTurn();
     }));
     
-    
+    m_IntakeSub.setDefaultCommand(new IntakeCommand(m_IntakeSub, () -> getIntake()));
+
     controlBoard.extreme.trigger.whileHeld(new RunMag( m_magazine, 1));
 
     m_shooter.setDefaultCommand(new RunCommand(() -> {
