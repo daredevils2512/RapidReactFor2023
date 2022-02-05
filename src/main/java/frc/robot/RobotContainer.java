@@ -114,7 +114,6 @@ public class RobotContainer {
     }, () -> {
       return getTurn();
     }));
-  }
     
     
     controlBoard.extreme.trigger.whileHeld(new RunMag( m_magazine, 1));
