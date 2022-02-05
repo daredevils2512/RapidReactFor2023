@@ -15,17 +15,16 @@ public class DriveTrainSub extends NTSubsystem {
   // Rate limiter
   private final SlewRateLimiter m_rateLim;
 
-  // IDs
-  // TODO: change to correct values!
-  private final int frontLeftID = 13;
-  private final int backLeftID = 12;
-  private final int frontRightID = 10;
-  private final int backRightID = 11;
-  private final int leftEncoderID1 = 0;
-  private final int leftEncoderID2 = 1;
-  private final int rightEncoderID1 = 0;
-  private final int rightEncoderID2 = 1;
-  private final double rateLimNUM = 0.4;
+  // IDs TODO: change to correct values!
+  private final int m_frontLeftID = 13;
+  private final int m_backLeftID = 12;
+  private final int m_frontRightID = 10;
+  private final int m_backRightID = 11;
+  private final int m_leftEncoderID1 = 0;
+  private final int m_leftEncoderID2 = 1;
+  private final int m_rightEncoderID1 = 0;
+  private final int m_rightEncoderID2 = 1;
+  private final double m_rateLimNUM = 0.4;
   private final double m_maxSpeed = 0.5;
   private final double m_maxTurn = 0.5;
 
@@ -59,19 +58,19 @@ public class DriveTrainSub extends NTSubsystem {
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff
-    m_frontLeft = new WPI_TalonSRX(frontLeftID); 
-    m_backLeft = new WPI_TalonSRX(backLeftID);
+    m_frontLeft = new WPI_TalonSRX(m_frontLeftID); 
+    m_backLeft = new WPI_TalonSRX(m_backLeftID);
     m_left = new MotorControllerGroup(m_frontLeft, m_backLeft);
     m_left.setInverted(true);
-    m_frontRight = new WPI_TalonSRX(frontRightID);
-    m_backRight = new WPI_TalonSRX(backRightID);
+    m_frontRight = new WPI_TalonSRX(m_frontRightID);
+    m_backRight = new WPI_TalonSRX(m_backRightID);
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 
     // Network table stuff
     m_properties = new Properties();
-    m_leftEncoder = new Encoder(leftEncoderID1, leftEncoderID2);
-    m_rightEncoder = new Encoder(rightEncoderID1, rightEncoderID2);
+    m_leftEncoder = new Encoder(m_leftEncoderID1, m_leftEncoderID2);
+    m_rightEncoder = new Encoder(m_rightEncoderID1, m_rightEncoderID2);
     m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); 
     m_rightEncoderEntry = m_table.getEntry("Right encoder distance");
     m_encoderResolution = Integer.parseInt(m_properties.getProperty("encoderResolution"));
@@ -85,11 +84,14 @@ public class DriveTrainSub extends NTSubsystem {
     m_leftDistanceEntry = m_table.getEntry("Left distance entry"); 
     m_rightDistanceEntry = m_table.getEntry("Right distance entry"); 
 
-    m_rateLim = new SlewRateLimiter(rateLimNUM);
+    m_rateLim = new SlewRateLimiter(m_rateLimNUM);
     m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
   }
 
-  /** Runs the arcade drive */
+  /** Runs the arcade drive 
+   * @param double Speed for forward/backward movement
+   * @param double Speed for left/right movement
+  */
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(m_speed.getDouble(0));
     turn = m_rateLim.calculate(m_speed.getDouble(0));
