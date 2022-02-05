@@ -25,7 +25,7 @@ public class IntakeSub extends NTSubsystem {
   }
     
   /** Runs intake motors
-   * @param double Speed for intake motors
+   * @param Double Speed for intake motors
    */
   public void setIntake(double speed) {
     m_intake1.set(speed);

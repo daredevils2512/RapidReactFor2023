@@ -114,7 +114,7 @@ public class RobotContainer {
       return getTurn();
     }));
     m_IntakeSub.setDefaultCommand(new IntakeCommand(m_IntakeSub, () -> getIntake()));
-    controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, 1));
+    controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, () -> 1));
 
     m_shooter.setDefaultCommand(new RunCommand(() -> {
       DoubleSupplier speedSupplier = () -> {
