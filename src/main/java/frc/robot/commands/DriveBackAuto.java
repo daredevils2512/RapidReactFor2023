@@ -6,28 +6,38 @@ import frc.robot.subsystems.DriveTrainSub;
 public class DriveBackAuto extends CommandBase{
   private final DriveTrainSub m_drivetrain;
   private final double m_move;
+  private final double m_distance;
+  private double m_initialDistance;
 
-  public DriveBackAuto(DriveTrainSub drivetrain, double move){
+  public DriveBackAuto(DriveTrainSub drivetrain, double move, double distance){
     m_drivetrain = drivetrain;
     m_move = move;
+    m_distance = distance;
   }
+
   @Override
   public void initialize() {
-    // TODO Auto-generated method stub
+    m_initialDistance = getDistance();
   }
+
   @Override
   public void execute() {
     m_drivetrain.arcadeDrive(m_move, 0);
-    // TODO Auto-generated method stub
   }
+
   @Override
   public boolean isFinished() {
-    
-    // TODO Auto-generated method stub
-    return false;
+    return getDistance() - m_initialDistance >= m_distance;
   }
+
   @Override
   public void end(boolean interrupted) {
-    // TODO Auto-generated method stub
+    if (!interrupted){
+      m_drivetrain.arcadeDrive (0,0);
+    }
+  }
+
+  private double getDistance() {
+    return (m_drivetrain.getLeftDistance() + m_drivetrain.getRightDistance()) / 2;
   }
 }

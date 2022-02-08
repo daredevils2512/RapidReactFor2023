@@ -120,7 +120,7 @@ public class DriveTrainSub extends NTSubsystem {
   }
 
   /** 
-   * @return Left distance
+   * @return Right distance
    */
   public double getRightDistance() { 
     return m_rightEncoder.getDistance();

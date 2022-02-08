@@ -67,7 +67,7 @@ public class RobotContainer {
 
   }
 
-  public static double getTurn() {
+  public static double getTurn() { 
     return driver.getRightX();
   }
 
