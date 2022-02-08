@@ -79,23 +79,23 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_magazine.ifPresent((magazine) -> {
-      trigger.whileHeld(new RunMag( magazine, 1));  
-    });
+    // m_magazine.ifPresent((magazine) -> {
+    //   trigger.whileHeld(new RunMag( magazine, 1));  
+    // });
 
-    m_shooter.ifPresent((shooter) -> {
-    shooter.setDefaultCommand(new RunCommand(() -> {
-      DoubleSupplier speedSupplier = () -> {
-        if (m_useNTShooterControlEntry.getBoolean(true)) {
-          return m_shooterSpeedEntry.getDouble(0);
-        }
-        else {
-          return m_joyshtick.getRawButtonPressed(2) ? 1 : 0;
-        }
-      };
-      shooter.spitBalls(speedSupplier.getAsDouble());
-    }, shooter));
-  });
+  //   m_shooter.ifPresent((shooter) -> {
+  //   shooter.setDefaultCommand(new RunCommand(() -> {
+  //     DoubleSupplier speedSupplier = () -> {
+  //       if (m_useNTShooterControlEntry.getBoolean(true)) {
+  //         return m_shooterSpeedEntry.getDouble(0);
+  //       }
+  //       else {
+  //         return m_joyshtick.getRawButtonPressed(2) ? 1 : 0;
+  //       }
+  //     };
+  //     shooter.spitBalls(speedSupplier.getAsDouble());
+  //   }, shooter));
+  // });
 };
 
   /**

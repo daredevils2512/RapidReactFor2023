@@ -3,16 +3,17 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-// import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Compressor;
 
-public class Compressor  extends NTSubsystem {
+public class CompresserManager  extends NTSubsystem {
     private final NetworkTable m_networkTable;
     private final NetworkTableEntry m_isRunningEntry;
     private final NetworkTableEntry m_closedLoopControlEntry;
 
-    private Compressor m_compressor = new Compressor();
+    private Compressor m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
  
-    public Compressor() {
+    public CompresserManager() {
         super("Compressor");
         m_networkTable = NetworkTableInstance.getDefault().getTable(getName());
         m_isRunningEntry = m_networkTable.getEntry("Is running");
@@ -27,18 +28,21 @@ public class Compressor  extends NTSubsystem {
     
       
     public void setClosedLoopControl(boolean wantsClosedLoopControl) {
-        m_compressor.setClosedLoopControl(wantsClosedLoopControl);
+        // m_compressor.setClosedLoopControl(wantsClosedLoopControl);
+
+        if (wantsClosedLoopControl)  m_compressor.enableDigital(); else m_compressor.disable();
+        
         m_logger.fine("Compressor closed loop control: " + getClosedLoopControl());
       }
     
       
     public boolean getClosedLoopControl() {
-        return m_compressor.getClosedLoopControl();
+      return m_compressor.enabled();
       }
       
       
     public void toggleCompressor() {
-        m_compressor.setClosedLoopControl(!getClosedLoopControl());
+        if (getClosedLoopControl())  m_compressor.disable() ; else m_compressor.enableDigital();
       }
     
 }
