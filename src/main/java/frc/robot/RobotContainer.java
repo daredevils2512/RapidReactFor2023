@@ -21,8 +21,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.Button;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /** This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,9 +29,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // Controller
-  private static final XboxController m_driver = new XboxController(0);
-
   // Network table stuff
   private final NetworkTableEntry m_useNTShooterControlEntry;
   private final NetworkTableEntry m_shooterSpeedEntry;
@@ -52,7 +47,6 @@ public class RobotContainer {
 
   // Controls
   private final ControlBoard m_controlBoard = new ControlBoard();
-  private final Button m_rightBumper;
 
   public enum Axis {
     kLeftX(0),
@@ -71,27 +65,19 @@ public class RobotContainer {
   }
 
   /** @return Left Stick y-Axis */
-  public static double getMove() {
-    return m_driver.getLeftY();
+  public double getMove() {
+    return m_controlBoard.xboxController.getYAxisLeft();
   }
 
   /** @return Right Stick x-Axis */
-  public static double getTurn() {
-    return m_driver.getRightX();
+  public double getTurn() {
+    return m_controlBoard.xboxController.getXAxisRight();
   }
 
-   // TODO: make sure this is correct! -> /** @return Right Trigger Axis */
-  public static double getIntake() {
+   // TODO: make sure this is correct! -> /** @return Right Trigger */
+  public double getIntake() {
     // TODO: Change to correct controls!
-    return m_driver.getRightTriggerAxis();
-  }
-
-  public static boolean setShift() {
-    return m_driver.getRightBumperPressed();
-  }
-
-  public static boolean releaseShift() {
-    return m_driver.getRightBumperReleased();
+    return m_controlBoard.xboxController.getRightTrigger();
   }
 
   private final Trigger shooterReady = new Trigger(()->{
@@ -111,8 +97,6 @@ public class RobotContainer {
     m_shooterSpeedEntry = NetworkTableInstance.getDefault().getEntry("Shooter set speed");
     m_useNTShooterControlEntry.setBoolean(false);
     m_shooterSpeedEntry.setDouble(0);
-
-    m_rightBumper = new JoystickButton(m_controlBoard.xboxController, 6);
   }
 
   /**
@@ -131,7 +115,7 @@ public class RobotContainer {
     m_IntakeSub.setDefaultCommand(new IntakeCommand(m_IntakeSub, () -> getIntake()));
     m_controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, () -> 1));
 
-    m_rightBumper.whenPressed(new ShiftCommand(m_DriveTrainSub));
+    m_controlBoard.xboxController.rightBumper.whenPressed(new ShiftCommand(m_DriveTrainSub));
 
     m_shooter.setDefaultCommand(new RunCommand(() -> {
       DoubleSupplier speedSupplier = () -> {
