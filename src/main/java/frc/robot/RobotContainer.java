@@ -6,12 +6,12 @@ package frc.robot;
 
 import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.DriveTrainCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
@@ -45,6 +45,8 @@ public class RobotContainer {
 
   private final DriveTrainSub m_DriveTrainSub = new DriveTrainSub();
   private final IntakeSub m_IntakeSub = new IntakeSub();
+
+  private final ControlBoard m_controlBoard = new ControlBoard();
 
   public enum Axis {
     kLeftX(0),
@@ -102,6 +104,8 @@ public class RobotContainer {
 
     m_useNTShooterControlEntry.setBoolean(false);
     m_shooterSpeedEntry.setDouble(0);
+
+    m_controlBoard.extreme.baseBackLeft.whenPressed(new ActuateShiftCommand(m_IntakeSub));
   }
 
   /**
