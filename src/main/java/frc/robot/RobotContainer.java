@@ -14,12 +14,15 @@ import frc.robot.subsystems.DriveTrainSub;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
+import frc.robot.commands.ShiftCommand;
 import frc.robot.io.ControlBoard;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /** This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -48,7 +51,8 @@ public class RobotContainer {
   private final RunFlywheel m_runFlywheel = new RunFlywheel(m_shooter);
 
   // Controls
-  private final ControlBoard controlBoard = new ControlBoard();
+  private final ControlBoard m_controlBoard = new ControlBoard();
+  private final Button m_rightBumper;
 
   public enum Axis {
     kLeftX(0),
@@ -82,6 +86,14 @@ public class RobotContainer {
     return m_driver.getRightTriggerAxis();
   }
 
+  public static boolean setShift() {
+    return m_driver.getRightBumperPressed();
+  }
+
+  public static boolean releaseShift() {
+    return m_driver.getRightBumperReleased();
+  }
+
   private final Trigger shooterReady = new Trigger(()->{
     return m_shooter.get()==0.2;
   });
@@ -99,6 +111,8 @@ public class RobotContainer {
     m_shooterSpeedEntry = NetworkTableInstance.getDefault().getEntry("Shooter set speed");
     m_useNTShooterControlEntry.setBoolean(false);
     m_shooterSpeedEntry.setDouble(0);
+
+    m_rightBumper = new JoystickButton(m_controlBoard.xboxController, 6);
   }
 
   /**
@@ -113,8 +127,11 @@ public class RobotContainer {
     }, () -> {
       return getTurn();
     }));
+
     m_IntakeSub.setDefaultCommand(new IntakeCommand(m_IntakeSub, () -> getIntake()));
-    controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, () -> 1));
+    m_controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, () -> 1));
+
+    m_rightBumper.whenPressed(new ShiftCommand(m_DriveTrainSub));
 
     m_shooter.setDefaultCommand(new RunCommand(() -> {
       DoubleSupplier speedSupplier = () -> {
@@ -122,21 +139,21 @@ public class RobotContainer {
           return m_shooterSpeedEntry.getDouble(0);
         }
         else {
-          return controlBoard.extreme.sideButton.get() ? 1 : 0;
+          return m_controlBoard.extreme.sideButton.get() ? 1 : 0;
         }
       };
       m_shooter.set(speedSupplier.getAsDouble());
     }, m_shooter));
 
-    controlBoard.buttonBox.topWhite.and(shooterReady).whileActiveContinuous(new RunCommand(()->{
+    m_controlBoard.buttonBox.topWhite.and(shooterReady).whileActiveContinuous(new RunCommand(()->{
       m_magazine.moveBalls(2);
     },m_magazine));
 
-    controlBoard.buttonBox.topWhite.and(shooterReady).whenInactive(new RunCommand(()->{
+    m_controlBoard.buttonBox.topWhite.and(shooterReady).whenInactive(new RunCommand(()->{
       m_magazine.moveBalls(-1);
     },m_magazine).withTimeout(1));
     
-     controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
+    m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
   }
   
   /** Use this to pass the autonomous command to the main {@link Robot} class.
