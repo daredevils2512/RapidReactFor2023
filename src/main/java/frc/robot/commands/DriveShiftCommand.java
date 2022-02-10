@@ -3,7 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSub;
 
-public class ShiftCommand extends CommandBase {
+public class DriveShiftCommand extends CommandBase {
   // Variables
   private final DriveTrainSub m_drivetrain;
 
@@ -11,7 +11,7 @@ public class ShiftCommand extends CommandBase {
    * @param drivetrain The subsystem to use
    * @param shift The control for shifting
   */
-  public ShiftCommand(DriveTrainSub drivetrain) {
+  public DriveShiftCommand(DriveTrainSub drivetrain) {
     m_drivetrain = drivetrain;
     addRequirements(m_drivetrain);
   }

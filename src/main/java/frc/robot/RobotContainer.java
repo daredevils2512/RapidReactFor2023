@@ -14,7 +14,7 @@ import frc.robot.subsystems.DriveTrainSub;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
-import frc.robot.commands.ShiftCommand;
+import frc.robot.commands.DriveShiftCommand;
 import frc.robot.io.ControlBoard;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
@@ -115,7 +115,7 @@ public class RobotContainer {
     m_IntakeSub.setDefaultCommand(new IntakeCommand(m_IntakeSub, () -> getIntake()));
     m_controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, () -> 1));
 
-    m_controlBoard.xboxController.rightBumper.whenPressed(new ShiftCommand(m_DriveTrainSub));
+    m_controlBoard.xboxController.rightBumper.whenPressed(new DriveShiftCommand(m_DriveTrainSub));
 
     m_shooter.setDefaultCommand(new RunCommand(() -> {
       DoubleSupplier speedSupplier = () -> {
