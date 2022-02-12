@@ -139,7 +139,7 @@ public class DriveTrainSub extends NTSubsystem {
   }
 
   /** 
-   * @return Left distance
+   * @return Right distance
    */
   public double getRightDistance() { 
     return m_rightEncoder.getDistance();
@@ -151,10 +151,12 @@ public class DriveTrainSub extends NTSubsystem {
   public void setLowGear(boolean wantsLowGear) {
     m_leftShifter.set(wantsLowGear ? Value.kForward : Value.kReverse);
     m_rightShifter.set(wantsLowGear ? Value.kForward : Value.kReverse);
+    m_logger.fine("set low gear: " + wantsLowGear);
   }
 
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
+    m_logger.fine("get low gear: " + (m_leftShifter.get() == Value.kForward ? true : false));
     return m_leftShifter.get() == Value.kForward ? true : false;
   }
 
