@@ -14,7 +14,7 @@ public class LoggingSubsystem extends SubsystemBase {
   protected Logger m_logger;
   public String name;
 
-  /** @apiNote creates a new LoggingSubsystem. 
+  /** Creates a new LoggingSubsystem. 
    * @param name sets name of logger
    * @param logLevel set level for subsystem to display logs at (default: WARNING)
   */
@@ -27,7 +27,7 @@ public class LoggingSubsystem extends SubsystemBase {
     m_logger.log(Level.INFO, name + " logger started, level: " + m_logger.getLevel().toString());
   }
   
-  /** @apiNote creates a new LoggingSubsystem. 
+  /** Creates a new LoggingSubsystem. 
    * @param name sets name of logger
    * @param logLevel set level for subsystem to display logs at (default: WARNING)
   */

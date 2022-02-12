@@ -1,7 +1,8 @@
 package frc.robot.subsystems;
 
 import java.util.Properties;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
@@ -29,41 +30,41 @@ public class DriveTrainSub extends NTSubsystem {
   private final double m_maxTurn = 0.5;
 
   // Motor stuff
-  private final WPI_TalonSRX m_frontLeft; 
-  private final WPI_TalonSRX m_backLeft; 
-  private final WPI_TalonSRX m_frontRight; 
-  private final WPI_TalonSRX m_backRight;
+  private final WPI_TalonFX m_frontLeft; 
+  private final WPI_TalonFX m_backLeft; 
+  private final WPI_TalonFX m_frontRight; 
+  private final WPI_TalonFX m_backRight;
   private final MotorControllerGroup m_left; 
   private final MotorControllerGroup m_right;
   private final DifferentialDrive m_drive;
 
   // Network table stuff
   private final NetworkTable m_table; 
-  private final Encoder m_leftEncoder; 
-  private final Encoder m_rightEncoder;
-  private final NetworkTableEntry m_leftEncoderEntry;
-  private final NetworkTableEntry m_rightEncoderEntry;
-  private final double m_gearRatio;
-  private final double m_wheelCircumference;
-  private final double m_wheelDiameter;
-  private final int m_encoderResolution;
-  private final double m_distancePerPulse;
   private final NetworkTableEntry m_leftDistanceEntry;
   private final NetworkTableEntry m_rightDistanceEntry;
   private final NetworkTableEntry m_speed;
+  private final NetworkTableEntry m_leftEncoderEntry;
+  private final NetworkTableEntry m_rightEncoderEntry;
   private final Properties m_properties;
+  private final Encoder m_leftEncoder; 
+  private final Encoder m_rightEncoder;
+  private final double m_gearRatio;
+  private final double m_wheelCircumference;
+  private final double m_wheelDiameter;
+  private final double m_distancePerPulse;
+  private final int m_encoderResolution;
 
   public DriveTrainSub() {
     super("DriveTrainSub");
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff
-    m_frontLeft = new WPI_TalonSRX(m_frontLeftID); 
-    m_backLeft = new WPI_TalonSRX(m_backLeftID);
+    m_frontLeft = new WPI_TalonFX(m_frontLeftID); 
+    m_backLeft = new WPI_TalonFX(m_backLeftID);
     m_left = new MotorControllerGroup(m_frontLeft, m_backLeft);
     m_left.setInverted(true);
-    m_frontRight = new WPI_TalonSRX(m_frontRightID);
-    m_backRight = new WPI_TalonSRX(m_backRightID);
+    m_frontRight = new WPI_TalonFX(m_frontRightID);
+    m_backRight = new WPI_TalonFX(m_backRightID);
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 
