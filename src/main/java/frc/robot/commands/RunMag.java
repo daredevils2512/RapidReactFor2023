@@ -31,6 +31,3 @@ public class RunMag extends CommandBase  {
     m_magazine.moveBalls(0.0);
   }
 }
-
-  }
-}
