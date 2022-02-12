@@ -115,7 +115,9 @@ public class RobotContainer {
     m_useNTShooterControlEntry.setBoolean(false);
     m_shooterSpeedEntry.setDouble(0);
 
+    // TODO Make correct controls
     m_controlBoard.extreme.baseBackLeft.whenPressed(new ActuateShiftCommand(m_IntakeSub));
+    m_controlBoard.extreme.baseBackRight.whenPressed(new DriveShiftCommand(m_DriveTrainSub));
   }
 
   /**
