@@ -48,7 +48,6 @@ public class DriveTrainSub extends NTSubsystem {
   private final NetworkTable m_table; 
   private final NetworkTableEntry m_leftDistanceEntry;
   private final NetworkTableEntry m_rightDistanceEntry;
-  private final NetworkTableEntry m_speed;
   private final NetworkTableEntry m_leftEncoderEntry;
   private final NetworkTableEntry m_rightEncoderEntry;
   private final Properties m_properties;
@@ -106,7 +105,6 @@ public class DriveTrainSub extends NTSubsystem {
 
     // Rate limiter
     m_rateLim = new SlewRateLimiter(k_rateLimNUM);
-    m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
   }
 
   /** Runs the arcade drive 
@@ -141,7 +139,7 @@ public class DriveTrainSub extends NTSubsystem {
   }
 
   /** 
-   * @return Left distance
+   * @return Right distance
    */
   public double getRightDistance() { 
     return m_rightEncoder.getDistance();
@@ -153,10 +151,12 @@ public class DriveTrainSub extends NTSubsystem {
   public void setLowGear(boolean wantsLowGear) {
     m_leftShifter.set(wantsLowGear ? Value.kForward : Value.kReverse);
     m_rightShifter.set(wantsLowGear ? Value.kForward : Value.kReverse);
+    m_logger.fine("set low gear: " + wantsLowGear);
   }
 
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
+    m_logger.fine("get low gear: " + (m_leftShifter.get() == Value.kForward ? true : false));
     return m_leftShifter.get() == Value.kForward ? true : false;
   }
 
