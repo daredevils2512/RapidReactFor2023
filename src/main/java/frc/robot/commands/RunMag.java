@@ -1,29 +1,34 @@
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Magazine;
 
 public class RunMag extends CommandBase  {
-    private double speed;
-    private Magazine m_magazine;
-    public RunMag( Magazine magazine, double speed){
+  // Variables
+  private final DoubleSupplier m_speed;
+  private final Magazine m_magazine;
+
+  /** Assigns variables
+   * @param Magazine The file to use
+   * @param DoubleSupplier Control for the speed of the magazine
+   */
+  public RunMag(Magazine magazine, DoubleSupplier speed){
     m_magazine = magazine;
-        
-    }
-    @Override
-    public void initialize() {
-        
-    }
+    m_speed = speed;
+    addRequirements(magazine);
+  }
 
-    @Override
-    public void execute() {
-    m_magazine.moveBalls(speed);
-    }
+  /** Executes the code and runs moveBalls */
+  @Override
+  public void execute() {
+    m_magazine.moveBalls(m_speed.getAsDouble());
+  }
 
-    @Override
-    public void end(boolean interrupted) {
-        m_magazine.moveBalls(0.0);
-  
-    }
+  /** Called once the command ends or is interrupted. */
+  @Override
+  public void end(boolean interrupted) {
+    m_magazine.moveBalls(0.0);
+  }
 }
 

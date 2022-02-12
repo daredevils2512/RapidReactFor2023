@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import java.util.logging.Level;
@@ -12,7 +8,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class NTSubsystem extends LoggingSubsystem {
 
   protected NetworkTable m_table;
-  /** Creates a new network table.
+  /** Creates a new NTsubsystem.
    * @param name sets name of table
    * @param logLevel set level for subsystem to display logs at (default: WARNING)
   */
@@ -21,9 +17,8 @@ public class NTSubsystem extends LoggingSubsystem {
     m_table = NetworkTableInstance.getDefault().getTable(tableName);
   }
   
-  /** Creates a new network table.
-   * @param name sets name of table
-   * @param logLevel set level for subsystem to display logs at (default: WARNING)
+  /** Creates a new NTsubsystem.
+   * @param tableName sets name of table
   */
   public NTSubsystem(String tableName) {
     super(tableName);

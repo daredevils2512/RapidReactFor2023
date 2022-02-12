@@ -3,20 +3,22 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
 
 public class Magazine extends NTSubsystem {
-    private final Victor m_magMotor;
+  // Motors
+  private final Victor m_magMotor;
 
-    public Magazine() {
-        super("Magazine");
-         m_magMotor = new Victor(-1);
+  // IDs TODO: Change to correct values!
+  private final int m_magMotorID = 69;
 
-    }
+  public Magazine() {
+    super("Magazine");
 
-    public void moveBalls (double magSpeed) {
-        m_magMotor.set(magSpeed);
-        m_logger.fine("move balls: " + m_magMotor.get());
-    }
-    
+    // Assign motors
+    m_magMotor = new Victor(m_magMotorID);
+  }
 
+  public void moveBalls (double magSpeed) {
+    m_magMotor.set(magSpeed);
+    m_logger.fine("move balls: " + m_magMotor.get());
+  }
 
-    
 }
