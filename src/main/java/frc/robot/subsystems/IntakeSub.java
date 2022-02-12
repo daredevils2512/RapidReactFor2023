@@ -42,19 +42,21 @@ public class IntakeSub extends NTSubsystem {
   }
 
   /** Sets gears to proper value */
-  public void setLowGear(boolean wantsLowGear) {
-    m_leftShifter.set(wantsLowGear ? Value.kForward : Value.kReverse);
-    m_rightShifter.set(wantsLowGear ? Value.kForward : Value.kReverse);
+  public void setExtended(boolean wantsExtended) {
+    m_leftShifter.set(wantsExtended ? Value.kForward : Value.kReverse);
+    m_rightShifter.set(wantsExtended ? Value.kForward : Value.kReverse);
+    m_logger.info("set extended: " + wantsExtended);
   }
 
   /** @return true if shifters are in low gear */
-  public boolean getLowGear() {
+  public boolean getExtended() {
+    m_logger.fine("get extended: " + (m_leftShifter.get() == Value.kForward ? true : false));
     return m_leftShifter.get() == Value.kForward ? true : false;
   }
 
   /** Toggles the shifters on/off */
-  public void toggleLowGear() {
-    setLowGear(!getLowGear());
+  public void toggleExtended() {
+    setExtended(!getExtended());
   }
     
   /** Runs intake motors
@@ -62,5 +64,6 @@ public class IntakeSub extends NTSubsystem {
    */
   public void setIntake(double speed) {
     m_intake1.set(speed);
+    m_logger.fine("set intake speed: " + speed);
   }
 }
