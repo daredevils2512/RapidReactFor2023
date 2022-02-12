@@ -58,11 +58,7 @@ public class DriveTrainSub extends NTSubsystem {
   private final double m_wheelCircumference;
   private final double m_wheelDiameter;
   private final double m_distancePerPulse;
-  private final NetworkTableEntry m_leftDistanceEntry;
-  private final NetworkTableEntry m_rightDistanceEntry;
-  private final NetworkTableEntry m_speed;
   private final NetworkTableEntry m_getLowGearEntry;
-  private final Properties m_properties;
   private final int m_encoderResolution;
 
   // Shifting
@@ -77,12 +73,12 @@ public class DriveTrainSub extends NTSubsystem {
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff
-    m_frontLeft = new WPI_TalonSRX(k_frontLeftID); 
-    m_backLeft = new WPI_TalonSRX(k_backLeftID);
+    m_frontLeft = new WPI_TalonFX(k_frontLeftID); 
+    m_backLeft = new WPI_TalonFX(k_backLeftID);
     m_left = new MotorControllerGroup(m_frontLeft, m_backLeft);
     m_left.setInverted(true);
-    m_frontRight = new WPI_TalonSRX(k_frontRightID);
-    m_backRight = new WPI_TalonSRX(k_backRightID);
+    m_frontRight = new WPI_TalonFX(k_frontRightID);
+    m_backRight = new WPI_TalonFX(k_backRightID);
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 
@@ -120,7 +116,7 @@ public class DriveTrainSub extends NTSubsystem {
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(move);
     turn = m_rateLim.calculate(turn);
-    m_drive.arcadeDrive((move)*m_maxSpeed, (turn)*m_maxTurn);
+    m_drive.arcadeDrive((move)*k_maxSpeed, (turn)*k_maxTurn);
   }
 
   /** 

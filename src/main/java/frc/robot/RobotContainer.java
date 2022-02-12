@@ -49,8 +49,6 @@ public class RobotContainer {
   // Controls
   private final ControlBoard m_controlBoard = new ControlBoard();
 
-  private final ControlBoard m_controlBoard = new ControlBoard();
-
   public enum Axis {
     kLeftX(0),
     kRightX(4),
