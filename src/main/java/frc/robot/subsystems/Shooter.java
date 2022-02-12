@@ -4,43 +4,64 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.Logger;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.Encoder;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 
-public class Shooter extends SubsystemBase { 
-  private final int channel = 0;
-  private double ks = 0;
-  private double kv = 0;
+public class Shooter extends NTSubsystem { 
+  // IDs TODO: Change these values!
+  private final int m_channel = 0;
+  private final int m_encoderID1 = 1;
+  private final int m_encoderID2 = 2;
+  private final double m_ks = 0;
+  private final double m_kv = 0;
 
-  private final NetworkTableEntry m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
-
-  private final PWMSparkMax m_spark;
+  // Motor stuff
+  private final Encoder m_encoder;
+  private final WPI_TalonFX m_motor;
   private final SlewRateLimiter m_limiter;
   private final SimpleMotorFeedforward feedforward;
 
+  // Network table stuff
+  private final NetworkTableEntry m_speed;
+
   public Shooter() {
+    super("Shooter");
+
+    m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
     m_speed.setDouble(0);
 
-    m_spark = new PWMSparkMax(channel);
+    m_encoder = new Encoder(m_encoderID1, m_encoderID2);
+    m_encoder.setDistancePerPulse(1./4096);
+
+    m_motor = new WPI_TalonFX(m_channel);
       
     m_limiter = new SlewRateLimiter(0.4);
-    feedforward = new SimpleMotorFeedforward(ks, kv);
+    feedforward = new SimpleMotorFeedforward(m_ks, m_kv);
   }
 
   public void spitBalls(double speed) {
     speed = m_limiter.calculate(speed);
-    m_spark.set(speed);
+    m_motor.set(speed);
+    m_logger.fine("set: " + get());
   }  
+  
   public void setvoltage(double voltage){
-    m_spark.setVoltage(voltage);
+    m_motor.setVoltage(voltage);
+    m_logger.fine("set: " + get());
   }
   
-  public void set(double speed){
-    double voltage = feedforward.calculate(speed);
-    m_spark.setVoltage(voltage);
+  public void setRPM (double RPM){
+    double voltage = feedforward.calculate(RPM);
+    m_motor.setVoltage(voltage);
+    m_logger.fine("set: " + get());
+  }
+ 
+  public double encoderRate(int encoder){
+    return m_encoder.getRate();
+  }
+  
+  public double get(){
+    return m_motor.get(); 
   }
 }
