@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveBackAuto;
+import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.DriveTrainCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
@@ -15,6 +16,7 @@ import frc.robot.subsystems.DriveTrainSub;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
+import frc.robot.commands.DriveShiftCommand;
 import frc.robot.io.ControlBoard;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
@@ -30,9 +32,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // Controller
-  private static final XboxController m_driver = new XboxController(0);
-
   // Network table stuff
   private final NetworkTableEntry m_useNTShooterControlEntry;
   private final NetworkTableEntry m_shooterSpeedEntry;
@@ -50,7 +49,7 @@ public class RobotContainer {
   private final RunFlywheel m_runFlywheel = new RunFlywheel(m_shooter);
 
   // Controls
-  private final ControlBoard controlBoard = new ControlBoard();
+  private final ControlBoard m_controlBoard = new ControlBoard();
 
   //TODO change speed
   private final Command auto = new DriveBackAuto(m_DriveTrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
@@ -72,19 +71,19 @@ public class RobotContainer {
   }
 
   /** @return Left Stick y-Axis */
-  public static double getMove() {
-    return m_driver.getLeftY();
+  public double getMove() {
+    return m_controlBoard.xboxController.getYAxisLeft();
   }
 
   /** @return Right Stick x-Axis */
-  public static double getTurn() {
-    return m_driver.getRightX();
+  public double getTurn() {
+    return m_controlBoard.xboxController.getXAxisRight();
   }
 
-   // TODO: make sure this is correct! -> /** @return Right Trigger Axis */
-  public static double getIntake() {
+   // TODO: make sure this is correct! -> /** @return Right Trigger */
+  public double getIntake() {
     // TODO: Change to correct controls!
-    return m_driver.getRightTriggerAxis();
+    return m_controlBoard.xboxController.getRightTrigger();
   }
 
   private final Trigger shooterReady = new Trigger(()->{
@@ -104,6 +103,8 @@ public class RobotContainer {
     m_shooterSpeedEntry = NetworkTableInstance.getDefault().getEntry("Shooter set speed");
     m_useNTShooterControlEntry.setBoolean(false);
     m_shooterSpeedEntry.setDouble(0);
+
+    m_controlBoard.extreme.baseBackLeft.whenPressed(new ActuateShiftCommand(m_IntakeSub));
   }
 
   /**
@@ -118,8 +119,11 @@ public class RobotContainer {
     }, () -> {
       return getTurn();
     }));
+
     m_IntakeSub.setDefaultCommand(new IntakeCommand(m_IntakeSub, () -> getIntake()));
-    controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, 1));
+    m_controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, () -> 1));
+
+    m_controlBoard.xboxController.rightBumper.whenPressed(new DriveShiftCommand(m_DriveTrainSub));
 
     m_shooter.setDefaultCommand(new RunCommand(() -> {
       DoubleSupplier speedSupplier = () -> {
@@ -127,22 +131,22 @@ public class RobotContainer {
           return m_shooterSpeedEntry.getDouble(0);
         }
         else {
-          return controlBoard.extreme.sideButton.get() ? 1 : 0;
+          return m_controlBoard.extreme.sideButton.get() ? 1 : 0;
         }
       };
       m_shooter.set(speedSupplier.getAsDouble());
     }, m_shooter));
 
-    controlBoard.buttonBox.topWhite.and(shooterReady).whileActiveContinuous(new RunCommand(()->{
+    m_controlBoard.buttonBox.topWhite.and(shooterReady).whileActiveContinuous(new RunCommand(()->{
       m_magazine.moveBalls(2);
     },m_magazine));
 
-    controlBoard.buttonBox.topWhite.and(shooterReady).whenInactive(new RunCommand(()->{
+    m_controlBoard.buttonBox.topWhite.and(shooterReady).whenInactive(new RunCommand(()->{
       m_magazine.moveBalls(-1);
     },m_magazine).withTimeout(1));
     
-     controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
-    }
+    m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
+  }
   
   /** Use this to pass the autonomous command to the main {@link Robot} class.
    * @return The command to run in autonomous
