@@ -7,6 +7,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.DriveTrainCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
@@ -46,6 +47,8 @@ public class RobotContainer {
   private final RunFlywheel m_runFlywheel = new RunFlywheel(m_shooter);
 
   // Controls
+  private final ControlBoard m_controlBoard = new ControlBoard();
+
   private final ControlBoard m_controlBoard = new ControlBoard();
 
   public enum Axis {
@@ -97,6 +100,8 @@ public class RobotContainer {
     m_shooterSpeedEntry = NetworkTableInstance.getDefault().getEntry("Shooter set speed");
     m_useNTShooterControlEntry.setBoolean(false);
     m_shooterSpeedEntry.setDouble(0);
+
+    m_controlBoard.extreme.baseBackLeft.whenPressed(new ActuateShiftCommand(m_IntakeSub));
   }
 
   /**
