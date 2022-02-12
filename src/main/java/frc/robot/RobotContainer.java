@@ -1,5 +1,6 @@
 package frc.robot;
 
+import java.util.Optional;
 import java.util.function.DoubleSupplier;
 import java.util.logging.Level;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -39,14 +40,18 @@ public class RobotContainer {
   // Logging
   private final LoggingManager m_logManager = new LoggingManager(); 
 
+  // private final Shooter m_shooter = new Shooter();
+  private final Optional <Shooter> m_shooter; 
+  private final Optional <Magazine> m_magazine;
+
+
   // Subsystems
   private final DriveTrainSub m_DriveTrainSub = new DriveTrainSub();
   private final IntakeSub m_IntakeSub = new IntakeSub();
-  private final Shooter m_shooter = new Shooter();
-  private final Magazine m_magazine = new Magazine();
+  
 
   // Commands
-  private final RunFlywheel m_runFlywheel = new RunFlywheel(m_shooter);
+  private final RunFlywheel m_runFlywheel; 
 
   // Controls
   private final ControlBoard m_controlBoard = new ControlBoard();
@@ -85,10 +90,9 @@ public class RobotContainer {
     // TODO: Change to correct controls!
     return m_controlBoard.xboxController.getRightTrigger();
   }
-
-  private final Trigger shooterReady = new Trigger(()->{
-    return m_shooter.get()==0.2;
-  });
+  private final Trigger shooterReady;
+ 
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -96,7 +100,14 @@ public class RobotContainer {
     if (RobotBase.isSimulation()) m_logManager.robotLogger.setLevel(Level.FINER);
     // m_DriveTrainSub = new DriveTrainCommand(m_DriveTrainSub, () -> { return getMove(); }, () -> { return getTurn(); });
     configureButtonBindings();
+    m_magazine = Optional.empty();
+    m_shooter = Optional.of(new Shooter());
 
+     shooterReady = new Trigger(()->{
+    return m_shooter.get().get()==0.2;
+  
+  });
+  m_runFlywheel = new RunFlywheel(m_shooter.get());
     // Network Table stuff
     NTButton.startConcurrentHandling();
     m_useNTShooterControlEntry = NetworkTableInstance.getDefault().getEntry("Use network tables for shooter control");
@@ -114,36 +125,32 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_DriveTrainSub.setDefaultCommand(new DriveTrainCommand(m_DriveTrainSub, () -> {
-      return getMove();
-    }, () -> {
-      return getTurn();
-    }));
+    // m_magazine.ifPresent((magazine) -> {
+    //   trigger.whileHeld(new RunMag( magazine, 1));  
+    // });
 
-    m_IntakeSub.setDefaultCommand(new IntakeCommand(m_IntakeSub, () -> getIntake()));
-    m_controlBoard.extreme.trigger.whileHeld(new RunMag(m_magazine, () -> 1));
+  //   m_shooter.ifPresent((shooter) -> {
+  //   shooter.setDefaultCommand(new RunCommand(() -> {
+  //     DoubleSupplier speedSupplier = () -> {
+  //       if (m_useNTShooterControlEntry.getBoolean(true)) {
+  //         return m_shooterSpeedEntry.getDouble(0);
+  //       }
+  //       else {
+  //         return m_joyshtick.getRawButtonPressed(2) ? 1 : 0;
+  //       }
+  //     };
+  //     shooter.spitBalls(speedSupplier.getAsDouble());
+  //   }, shooter));
+  // });
 
-    m_controlBoard.xboxController.rightBumper.whenPressed(new DriveShiftCommand(m_DriveTrainSub));
-
-    m_shooter.setDefaultCommand(new RunCommand(() -> {
-      DoubleSupplier speedSupplier = () -> {
-        if (m_useNTShooterControlEntry.getBoolean(true)) {
-          return m_shooterSpeedEntry.getDouble(0);
-        }
-        else {
-          return m_controlBoard.extreme.sideButton.get() ? 1 : 0;
-        }
-      };
-      m_shooter.set(speedSupplier.getAsDouble());
-    }, m_shooter));
 
     m_controlBoard.buttonBox.topWhite.and(shooterReady).whileActiveContinuous(new RunCommand(()->{
-      m_magazine.moveBalls(2);
-    },m_magazine));
+      m_magazine.get().moveBalls(2);
+    },m_magazine.get()));
 
     m_controlBoard.buttonBox.topWhite.and(shooterReady).whenInactive(new RunCommand(()->{
-      m_magazine.moveBalls(-1);
-    },m_magazine).withTimeout(1));
+      m_magazine.get().moveBalls(-1);
+    },m_magazine.get()).withTimeout(1));
     
     m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
   }

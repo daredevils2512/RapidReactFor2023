@@ -40,7 +40,7 @@ public class Shooter extends NTSubsystem {
     feedforward = new SimpleMotorFeedforward(m_ks, m_kv);
   }
 
-  public void set(double speed) {
+  public void spitBalls(double speed) {
     speed = m_limiter.calculate(speed);
     m_motor.set(speed);
     m_logger.fine("set: " + get());

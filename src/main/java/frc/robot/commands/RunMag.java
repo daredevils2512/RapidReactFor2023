@@ -32,3 +32,5 @@ public class RunMag extends CommandBase  {
   }
 }
 
+  }
+}
