@@ -31,7 +31,7 @@ public class IntakeSub extends NTSubsystem {
     m_intake1 = new WPI_TalonSRX(k_intake1ID);
     m_intake2 = new WPI_TalonSRX(k_intake2ID);
         
-    // Sets up invertions, etc.
+    // Sets up inversions, etc.
     m_intake1.setInverted(false);
     m_intake2.setInverted(true);
     m_intake2.follow(m_intake1);
@@ -58,8 +58,8 @@ public class IntakeSub extends NTSubsystem {
   }
     
   /** Runs intake motors
-  * @param double Speed for intake motors
-  */
+   * @param speed Speed for intake motors
+   */
   public void setIntake(double speed) {
     m_intake1.set(speed);
   }
