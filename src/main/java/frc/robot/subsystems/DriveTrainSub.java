@@ -90,12 +90,12 @@ public class DriveTrainSub extends NTSubsystem {
   }
 
   /** Runs the arcade drive 
-   * @param double Speed for forward/backward movement
-   * @param double Speed for left/right movement
+   * @param move Speed for forward/backward movement
+   * @param turn Speed for left/right movement
   */
   public void arcadeDrive(double move, double turn) { 
-    move = m_rateLim.calculate(m_speed.getDouble(0));
-    turn = m_rateLim.calculate(m_speed.getDouble(0));
+    move = m_rateLim.calculate(move);
+    turn = m_rateLim.calculate(turn);
     m_drive.arcadeDrive((move)*m_maxSpeed, (turn)*m_maxTurn);
   }
 
