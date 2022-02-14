@@ -18,6 +18,6 @@ public class ActuateShiftCommand extends CommandBase {
   /** Toggles low gear */
   @Override
   public void execute() {
-    m_intakesub.toggleLowGear();
+    m_intakesub.toggleExtended();
   }
 }

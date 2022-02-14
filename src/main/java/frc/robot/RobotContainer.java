@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.DriveBackAuto;
 import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.DriveTrainCommand;
 import frc.robot.commands.IntakeCommand;
@@ -20,6 +21,7 @@ import frc.robot.commands.DriveShiftCommand;
 import frc.robot.io.ControlBoard;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
+import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -53,6 +55,9 @@ public class RobotContainer {
 
   // Controls
   private final ControlBoard m_controlBoard = new ControlBoard();
+
+  //TODO change speed
+  private final Command auto = new DriveBackAuto(m_DriveTrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
 
   public enum Axis {
     kLeftX(0),
@@ -110,7 +115,9 @@ public class RobotContainer {
     m_useNTShooterControlEntry.setBoolean(false);
     m_shooterSpeedEntry.setDouble(0);
 
+    // TODO Make correct controls
     m_controlBoard.extreme.baseBackLeft.whenPressed(new ActuateShiftCommand(m_IntakeSub));
+    m_controlBoard.extreme.baseBackRight.whenPressed(new DriveShiftCommand(m_DriveTrainSub));
   }
 
   /**

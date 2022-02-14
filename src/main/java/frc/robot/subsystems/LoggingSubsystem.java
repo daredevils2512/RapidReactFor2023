@@ -19,11 +19,7 @@ public class LoggingSubsystem extends SubsystemBase {
     m_logger = Logger.getLogger("subsystem." + name);
     m_logger.setParent(Logger.getGlobal());
     m_logger.log(Level.INFO, m_logger.getName() + " initialized");
-    if (RobotBase.isSimulation()) {
-      m_logger.setLevel(logLevel);
-    } else {
-      m_logger.setLevel(logLevel);
-    }
+    if (RobotBase.isSimulation()) {m_logger.setLevel(logLevel);} else {m_logger.setLevel(logLevel);}
     m_logger.log(Level.INFO, name + " logger started, level: " + m_logger.getLevel().toString());
   }
   

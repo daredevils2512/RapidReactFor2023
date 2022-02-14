@@ -30,7 +30,4 @@ public class RunMag extends CommandBase  {
   public void end(boolean interrupted) {
     m_magazine.moveBalls(0.0);
   }
-
-
-  }
-
+}
