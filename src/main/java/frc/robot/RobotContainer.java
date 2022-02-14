@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveBackAuto;
 import frc.robot.commands.ActuateShiftCommand;
-import frc.robot.commands.DriveTrainCommand;
+import frc.robot.commands.DrivetrainCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
-import frc.robot.subsystems.DriveTrainSub;
-import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
 import frc.robot.commands.DriveShiftCommand;
@@ -46,8 +46,8 @@ public class RobotContainer {
 
 
   // Subsystems
-  private final DriveTrainSub m_DriveTrainSub = new DriveTrainSub();
-  private final IntakeSub m_IntakeSub = new IntakeSub();
+  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Intake m_intake = new Intake();
   
 
   // Commands
@@ -57,7 +57,7 @@ public class RobotContainer {
   private final ControlBoard m_controlBoard = new ControlBoard();
 
   //TODO change speed
-  private final Command auto = new DriveBackAuto(m_DriveTrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
+  private final Command auto = new DriveBackAuto(m_drivetrain, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
 
   public enum Axis {
     kLeftX(0),
@@ -116,8 +116,8 @@ public class RobotContainer {
     m_shooterSpeedEntry.setDouble(0);
 
     // TODO Make correct controls
-    m_controlBoard.extreme.baseBackLeft.whenPressed(new ActuateShiftCommand(m_IntakeSub));
-    m_controlBoard.extreme.baseBackRight.whenPressed(new DriveShiftCommand(m_DriveTrainSub));
+    m_controlBoard.extreme.baseBackLeft.whenPressed(new ActuateShiftCommand(m_intake));
+    m_controlBoard.extreme.baseBackRight.whenPressed(new DriveShiftCommand(m_drivetrain));
   }
 
   /**

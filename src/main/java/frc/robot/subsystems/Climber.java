@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class ClimberSubsytem extends NTSubsystem {
+public class Climber extends NTSubsystem {
   // IDs TODO: Change to correct values!
   private final int m_rightTalonID = 69;
   private final int m_leftTalonID = 420;
@@ -12,7 +12,7 @@ public class ClimberSubsytem extends NTSubsystem {
   private final TalonSRX m_rightMotor;
   private final TalonSRX m_leftMotor;
 
-  public ClimberSubsytem (){
+  public Climber (){
     super("ClimberSubsystem");
 
     // Make Motors
