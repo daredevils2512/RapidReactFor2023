@@ -30,7 +30,7 @@ public final class Constants {
   public static int drivetrainLeftBackwardChannel = 0;
   public static int drivetrainRightForwardChannel = 0;
   public static int drivetrainRightBackwardChannel = 0;
-  public static int drivetrainGearRatio = 0;
+  public static double drivetrainGearRatio = Double.parseDouble(m_properties.getProperty("gearRatio"));
   public static int drivetrainEncoderResolution = Integer.parseInt(m_properties.getProperty("encoderResolution"));
   public static double drivetrainWheelDiameter = Units.inchesToMeters(Double.parseDouble(m_properties.getProperty("wheelDiameter")));
   public static double drivetrainWheelCircumference =  Units.inchesToMeters(drivetrainWheelDiameter) * Math.PI;

@@ -1,9 +1,7 @@
 package frc.robot.subsystems;
 
-import java.util.Properties;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -29,10 +27,8 @@ public class Drivetrain extends NTSubsystem {
   private final NetworkTableEntry m_rightDistanceEntry;
   private final NetworkTableEntry m_leftEncoderEntry;
   private final NetworkTableEntry m_rightEncoderEntry;
-  private final Properties m_properties;
   private final Encoder m_leftEncoder; 
   private final Encoder m_rightEncoder;
-  private final double m_gearRatio;
   private final NetworkTableEntry m_getLowGearEntry;
 
   // Shifting
@@ -57,12 +53,10 @@ public class Drivetrain extends NTSubsystem {
     m_drive = new DifferentialDrive(m_left, m_right); 
 
     // Network table stuff
-    m_properties = new Properties();
     m_leftEncoder = new Encoder(Constants.drivetrainLeftEncoderID1, Constants.drivetrainLeftEncoderID2);
     m_rightEncoder = new Encoder(Constants.drivetrainRightEncoderID1, Constants.drivetrainRightEncoderID2);
     m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); 
     m_rightEncoderEntry = m_table.getEntry("Right encoder distance");
-    m_gearRatio = Double.parseDouble(m_properties.getProperty("gearRatio"));
     m_leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
     m_leftEncoder.setReverseDirection(true);
     m_rightEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
