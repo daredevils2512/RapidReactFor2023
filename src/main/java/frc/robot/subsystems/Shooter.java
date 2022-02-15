@@ -7,14 +7,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-
 public class Shooter extends NTSubsystem { 
   // IDs TODO: Change these values!
-  private final int m_channel = 0;
-  private final int m_encoderID1 = 1;
-  private final int m_encoderID2 = 2;
-  private final double m_ks = 0;
-  private final double m_kv = 0;
+  private final int k_channel = 0;
+  private final int k_encoderID1 = 1;
+  private final int k_encoderID2 = 2;
+  private final double k_rateLim = 0.5;
+  private final double k_ks = 0;
+  private final double k_kv = 0;
 
   // Motor stuff
   private final Encoder m_encoder;
@@ -31,13 +31,13 @@ public class Shooter extends NTSubsystem {
     m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
     m_speed.setDouble(0);
 
-    m_encoder = new Encoder(m_encoderID1, m_encoderID2);
+    m_encoder = new Encoder(k_encoderID1, k_encoderID2);
     m_encoder.setDistancePerPulse(1./4096);
 
-    m_motor = new WPI_TalonFX(m_channel);
+    m_motor = new WPI_TalonFX(k_channel);
       
-    m_limiter = new SlewRateLimiter(0.4);
-    feedforward = new SimpleMotorFeedforward(m_ks, m_kv);
+    m_limiter = new SlewRateLimiter(k_rateLim);
+    feedforward = new SimpleMotorFeedforward(k_ks, k_kv);
   }
 
   public void spitBalls(double speed) {
