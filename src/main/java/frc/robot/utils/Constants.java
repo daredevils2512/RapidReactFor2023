@@ -1,5 +1,8 @@
 package frc.robot.utils;
 
+import java.util.Properties;
+
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -12,6 +15,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  private static Properties m_properties;
   
   // TODO set auto speed
   public static final double DRIVE_AUTO_SPEED = 0.5;
@@ -26,6 +30,11 @@ public final class Constants {
   public static int drivetrainLeftBackwardChannel = 0;
   public static int drivetrainRightForwardChannel = 0;
   public static int drivetrainRightBackwardChannel = 0;
+  public static int drivetrainGearRatio = 0;
+  public static int drivetrainEncoderResolution = Integer.parseInt(m_properties.getProperty("encoderResolution"));
+  public static double drivetrainWheelDiameter = Units.inchesToMeters(Double.parseDouble(m_properties.getProperty("wheelDiameter")));
+  public static double drivetrainWheelCircumference =  Units.inchesToMeters(drivetrainWheelDiameter) * Math.PI;
+  public static double drivetrainDistancePerPulse = drivetrainWheelCircumference / drivetrainGearRatio / drivetrainEncoderResolution;
 
   // Intake
   public static int intakeShifter1ForwardID = 01;

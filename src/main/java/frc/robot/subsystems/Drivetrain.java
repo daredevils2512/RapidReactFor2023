@@ -66,14 +66,10 @@ public class Drivetrain extends NTSubsystem {
     m_rightEncoder = new Encoder(Constants.drivetrainRightEncoderID1, Constants.drivetrainRightEncoderID2);
     m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); 
     m_rightEncoderEntry = m_table.getEntry("Right encoder distance");
-    m_encoderResolution = Integer.parseInt(m_properties.getProperty("encoderResolution"));
-    m_wheelDiameter = Units.inchesToMeters(Double.parseDouble(m_properties.getProperty("wheelDiameter")));
-    m_wheelCircumference = Units.inchesToMeters(m_wheelDiameter) * Math.PI;
     m_gearRatio = Double.parseDouble(m_properties.getProperty("gearRatio"));
-    m_distancePerPulse = m_wheelCircumference / m_gearRatio / m_encoderResolution;
-    m_leftEncoder.setDistancePerPulse(m_distancePerPulse);
+    m_leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
     m_leftEncoder.setReverseDirection(true);
-    m_rightEncoder.setDistancePerPulse(m_distancePerPulse);
+    m_rightEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
     m_leftDistanceEntry = m_table.getEntry("Left distance entry"); 
     m_rightDistanceEntry = m_table.getEntry("Right distance entry"); 
     m_getLowGearEntry = m_table.getEntry("Low gear entry");
