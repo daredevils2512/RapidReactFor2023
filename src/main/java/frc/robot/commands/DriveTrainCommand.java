@@ -11,9 +11,9 @@ public class DrivetrainCommand extends CommandBase {
   private final DoubleSupplier m_turn;
 
   /** Assigns the values of the arcadeDrive stuff 
-   * @param DriveTrainSub The subsystem to use
-   * @param DoubleSupplier Control for forward and backward movement
-   * @param DoubleSupplier Control for left and right movement
+   * @param drivetrain The subsystem to use
+   * @param move Control for forward and backward movement
+   * @param turn Control for left and right movement
   */
   public DrivetrainCommand(Drivetrain drivetrain, DoubleSupplier move, DoubleSupplier turn) {
     m_drivetrain = drivetrain;
