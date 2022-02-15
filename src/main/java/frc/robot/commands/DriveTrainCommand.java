@@ -2,20 +2,20 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrainSub;
+import frc.robot.subsystems.Drivetrain;
 
-public class DriveTrainCommand extends CommandBase {
+public class DrivetrainCommand extends CommandBase {
   // Variables
-  private final DriveTrainSub m_drivetrain;
+  private final Drivetrain m_drivetrain;
   private final DoubleSupplier m_move;
   private final DoubleSupplier m_turn;
 
   /** Assigns the values of the arcadeDrive stuff 
-   * @param DriveTrainSub The subsystem to use
-   * @param DoubleSupplier Control for forward and backward movement
-   * @param DoubleSupplier Control for left and right movement
+   * @param drivetrain The subsystem to use
+   * @param move Control for forward and backward movement
+   * @param turn Control for left and right movement
   */
-  public DriveTrainCommand(DriveTrainSub drivetrain, DoubleSupplier move, DoubleSupplier turn) {
+  public DrivetrainCommand(Drivetrain drivetrain, DoubleSupplier move, DoubleSupplier turn) {
     m_drivetrain = drivetrain;
     m_move = move;
     m_turn = turn;

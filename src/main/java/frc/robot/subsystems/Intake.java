@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
-public class IntakeSub extends NTSubsystem {
+public class Intake extends NTSubsystem {
   // IDs TODO: change to correct values!
   private final int k_intake1ID = 01;
   private final int k_intake2ID = 02;
@@ -24,7 +24,7 @@ public class IntakeSub extends NTSubsystem {
   private final DoubleSolenoid m_leftShifter;
   private final DoubleSolenoid m_rightShifter;
 
-  public IntakeSub() {
+  public Intake() {
     super("IntakeSub");
 
     // Sets IDs for motors

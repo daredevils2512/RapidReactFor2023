@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
-public class DriveTrainSub extends NTSubsystem {
+public class Drivetrain extends NTSubsystem {
 
   // IDs TODO: change to correct values!
   private final int k_frontLeftID = 00;
@@ -66,8 +66,8 @@ public class DriveTrainSub extends NTSubsystem {
   // Rate limiter
   private final SlewRateLimiter m_rateLim;
 
-  public DriveTrainSub() {
-    super("DriveTrainSub");
+  public Drivetrain() {
+    super("DrivetrainSub");
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff

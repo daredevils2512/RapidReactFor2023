@@ -9,15 +9,15 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveBackAuto;
 import frc.robot.commands.ActuateShiftCommand;
+import frc.robot.commands.DrivetrainCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
-import frc.robot.subsystems.DriveTrainSub;
-import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
 import frc.robot.commands.ShootLowGoal;
 import frc.robot.commands.DriveShiftCommand;
-import frc.robot.commands.DriveTrainCommand;
-import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.RevShooter;
 import frc.robot.io.ControlBoard;
 import frc.robot.subsystems.Magazine;
@@ -40,8 +40,8 @@ public class RobotContainer {
   private final LoggingManager m_logManager; 
 
   // Subsystems
-  private final Optional <DriveTrainSub> m_DriveTrainSub;
-  private final Optional <IntakeSub> m_IntakeSub;
+  private final Optional <Drivetrain> m_DriveTrainSub;
+  private final Optional <Intake> m_IntakeSub;
   private final Optional <Magazine> m_magazine;
   private final Optional <Shooter> m_shooter; 
   
@@ -49,7 +49,7 @@ public class RobotContainer {
   private final ActuateShiftCommand m_intakeShift;
   private final DriveBackAuto m_auto;
   private final DriveShiftCommand m_driveShift;
-  private final DriveTrainCommand m_DriveTrainCommand;
+  private final DrivetrainCommand m_DriveTrainCommand;
   private final IntakeCommand m_intakeCommand;
   private final RevShooter m_revShooter;
   private final RunFlywheel m_runFlywheel; 
@@ -100,8 +100,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Define optionals
-    m_DriveTrainSub = Optional.of(new DriveTrainSub());
-    m_IntakeSub = Optional.of(new IntakeSub());
+    m_DriveTrainSub = Optional.of(new Drivetrain());
+    m_IntakeSub = Optional.of(new Intake());
     m_magazine = Optional.of(new Magazine());
     m_shooter = Optional.of(new Shooter());
 
@@ -109,7 +109,7 @@ public class RobotContainer {
     m_intakeShift = m_IntakeSub.isPresent() ? new ActuateShiftCommand(m_IntakeSub.get()) : null;
     m_auto = m_DriveTrainSub.isPresent() ? new DriveBackAuto(m_DriveTrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
     m_driveShift = m_DriveTrainSub.isPresent() ? new DriveShiftCommand(m_DriveTrainSub.get()) : null;
-    m_DriveTrainCommand = m_DriveTrainSub.isPresent() ? new DriveTrainCommand(m_DriveTrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
+    m_DriveTrainCommand = m_DriveTrainSub.isPresent() ? new DrivetrainCommand(m_DriveTrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
     m_intakeCommand = m_IntakeSub.isPresent() ? new IntakeCommand(m_IntakeSub.get(), () -> getIntake()) : null;
     m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), 0) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
