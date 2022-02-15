@@ -5,17 +5,11 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
+import frc.robot.utils.Constants;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-public class Shooter extends NTSubsystem { 
-  // IDs TODO: Change these values!
-  private final int k_channel = 0;
-  private final int k_encoderID1 = 1;
-  private final int k_encoderID2 = 2;
-  private final double k_rateLim = 0.5;
-  private final double k_ks = 0;
-  private final double k_kv = 0;
-
+public class Shooter extends NTSubsystem {
   // Motor stuff
   private final Encoder m_encoder;
   private final WPI_TalonFX m_motor;
@@ -31,13 +25,13 @@ public class Shooter extends NTSubsystem {
     m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
     m_speed.setDouble(0);
 
-    m_encoder = new Encoder(k_encoderID1, k_encoderID2);
+    m_encoder = new Encoder(Constants.shooterEncoderChannelA, Constants.shooterEncoderChannelB);
     m_encoder.setDistancePerPulse(1./4096);
 
-    m_motor = new WPI_TalonFX(k_channel);
+    m_motor = new WPI_TalonFX(Constants.shooterID);
       
-    m_limiter = new SlewRateLimiter(k_rateLim);
-    feedforward = new SimpleMotorFeedforward(k_ks, k_kv);
+    m_limiter = new SlewRateLimiter(Constants.shooterRateLimNUM);
+    feedforward = new SimpleMotorFeedforward(Constants.shooterForwardChannel, Constants.shooterBackwardChannel);
   }
 
   public void spitBalls(double speed) {

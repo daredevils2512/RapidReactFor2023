@@ -2,19 +2,17 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.utils.Constants;
 
 public class Magazine extends NTSubsystem {
   // Motors
   private final WPI_TalonSRX m_magMotor;
 
-  // IDs TODO: Change to correct values!
-  private final int m_magMotorID = 06;
-
   public Magazine() {
     super("Magazine");
 
     // Assign motors
-    m_magMotor = new WPI_TalonSRX(m_magMotorID);
+    m_magMotor = new WPI_TalonSRX(Constants.magID);
   }
 
   public void moveBalls (double magSpeed) {
