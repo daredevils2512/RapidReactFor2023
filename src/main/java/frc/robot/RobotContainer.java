@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveBackAuto;
 import frc.robot.commands.ActuateShiftCommand;
+import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.commands.RunFlywheel;
@@ -40,13 +42,15 @@ public class RobotContainer {
   private final LoggingManager m_logManager; 
 
   // Subsystems
-  private final Optional <Drivetrain> m_DriveTrainSub;
-  private final Optional <Intake> m_IntakeSub;
+  private final Optional <Drivetrain> m_drivetrainSub;
+  private final Optional <Climber> m_climber;
+  private final Optional <Intake> m_intakeSub;
   private final Optional <Magazine> m_magazine;
   private final Optional <Shooter> m_shooter; 
   
   // Commands
   private final ActuateShiftCommand m_intakeShift;
+  private final ClimberCommand m_climberComamnd;
   private final DriveBackAuto m_auto;
   private final DriveShiftCommand m_driveShift;
   private final DrivetrainCommand m_DriveTrainCommand;
@@ -97,20 +101,27 @@ public class RobotContainer {
     return m_controlBoard.xboxController.getXAxisLeft();
   }
 
+  /** @return YAxisRight (this is temporary) */
+  public double getClimber() {
+    return m_controlBoard.xboxController.getYAxisRight();
+  }
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Define optionals
-    m_DriveTrainSub = Optional.of(new Drivetrain());
-    m_IntakeSub = Optional.of(new Intake());
+    m_climber = Optional.of(new Climber());
+    m_drivetrainSub = Optional.of(new Drivetrain());
+    m_intakeSub = Optional.of(new Intake());
     m_magazine = Optional.of(new Magazine());
     m_shooter = Optional.of(new Shooter());
 
     // Define commands
-    m_intakeShift = m_IntakeSub.isPresent() ? new ActuateShiftCommand(m_IntakeSub.get()) : null;
-    m_auto = m_DriveTrainSub.isPresent() ? new DriveBackAuto(m_DriveTrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
-    m_driveShift = m_DriveTrainSub.isPresent() ? new DriveShiftCommand(m_DriveTrainSub.get()) : null;
-    m_DriveTrainCommand = m_DriveTrainSub.isPresent() ? new DrivetrainCommand(m_DriveTrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
-    m_intakeCommand = m_IntakeSub.isPresent() ? new IntakeCommand(m_IntakeSub.get(), () -> getIntake()) : null;
+    m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
+    m_climberComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), getClimber()) : null;
+    m_auto = m_drivetrainSub.isPresent() ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
+    m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
+    m_DriveTrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
+    m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), () -> getIntake()) : null;
     m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), 0) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
     m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 0) : null;
@@ -141,11 +152,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // TODO Make correct controls
-    if (m_IntakeSub.isPresent()) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
+    if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
+    if (m_climber.isPresent()) m_climber.get().setDefaultCommand(m_climberComamnd);
     // m_auto command here
-    if (m_DriveTrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
-    if (m_DriveTrainSub.isPresent()) m_DriveTrainSub.get().setDefaultCommand(m_DriveTrainCommand);
-    if (m_IntakeSub.isPresent()) m_IntakeSub.get().setDefaultCommand(m_intakeCommand);
+    if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
+    if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_DriveTrainCommand);
+    if (m_intakeSub.isPresent()) m_intakeSub.get().setDefaultCommand(m_intakeCommand);
     if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
     if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     if (m_magazine.isPresent()) m_magazine.get().setDefaultCommand(m_runMag);
