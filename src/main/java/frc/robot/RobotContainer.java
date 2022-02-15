@@ -13,6 +13,7 @@ import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.DriveTrainCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
+import frc.robot.subsystems.CompresserManager;
 import frc.robot.subsystems.DriveTrainSub;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.commands.RunFlywheel;
@@ -43,6 +44,7 @@ public class RobotContainer {
   // private final Shooter m_shooter = new Shooter();
   private final Optional <Shooter> m_shooter; 
   private final Optional <Magazine> m_magazine;
+  private final Optional <CompresserManager> m_compressor;
 
 
   // Subsystems
@@ -102,6 +104,7 @@ public class RobotContainer {
     configureButtonBindings();
     m_magazine = Optional.empty();
     m_shooter = Optional.of(new Shooter());
+    m_compressor = Optional.of(new CompresserManager());
 
      shooterReady = new Trigger(()->{
     return m_shooter.get().get()==0.2;
@@ -127,9 +130,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // m_magazine.ifPresent((magazine) -> {
-    //   trigger.whileHeld(new RunMag( magazine, 1));  
-    // });
+    m_compressor.ifPresent((compressor) -> {
+      compressor.setClosedLoopControl(true);
+    });
+  //   m_magazine.ifPresent((magazine) -> {
+  //     m_controlBoard.extreme.trigger.whileHeld(new RunMag( magazine, () -> 1));  
+  //   });
 
   //   m_shooter.ifPresent((shooter) -> {
   //   shooter.setDefaultCommand(new RunCommand(() -> {
