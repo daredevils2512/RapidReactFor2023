@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Intake extends NTSubsystem {
   // IDs TODO: change to correct values!
-  private final int k_intake1ID = 01;
-  private final int k_intake2ID = 02;
+  private final int k_intake1ID = 04;
+  private final int k_intake2ID = 05;
   private final int k_shifter1ForwardID = 01;
   private final int k_shifter1BackwardID = 01;
   private final int k_shifter2ForwardID = 02;

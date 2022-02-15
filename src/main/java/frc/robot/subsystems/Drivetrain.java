@@ -19,8 +19,8 @@ public class Drivetrain extends NTSubsystem {
   // IDs TODO: change to correct values!
   private final int k_frontLeftID = 00;
   private final int k_backLeftID = 01;
-  private final int k_frontRightID = 12;
-  private final int k_backRightID = 13;
+  private final int k_frontRightID = 02;
+  private final int k_backRightID = 03;
   private final int k_leftEncoderID1 = 0;
   private final int k_leftEncoderID2 = 1;
   private final int k_rightEncoderID1 = 0;

@@ -5,8 +5,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class Climber extends NTSubsystem {
   // IDs TODO: Change to correct values!
-  private final int m_rightTalonID = 69;
-  private final int m_leftTalonID = 420;
+  private final int m_rightTalonID = 07;
+  private final int m_leftTalonID = 8;
 
   // Motor stuff
   private final TalonSRX m_rightMotor;
