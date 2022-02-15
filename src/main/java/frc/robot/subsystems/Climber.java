@@ -22,7 +22,7 @@ public class Climber extends NTSubsystem {
   /** Sets the speed of the climbing motors
    * @param speed The speed of the motors
    */
-  public void setclimbspeed(double speed){
+  public void setClimbSpeed(double speed){
     m_rightMotor.set(ControlMode.PercentOutput, speed);
     m_logger.fine("setclimbspeed: " + speed);
   }
