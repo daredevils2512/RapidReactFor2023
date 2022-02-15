@@ -43,12 +43,12 @@ public class Drivetrain extends NTSubsystem {
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff
-    m_frontLeft = new WPI_TalonFX(Constants.drivetrainLeft1ID); 
-    m_backLeft = new WPI_TalonFX(Constants.drivetrainLeft2ID);
+    m_frontLeft = new WPI_TalonFX(Constants.drivetrainLeftID1); 
+    m_backLeft = new WPI_TalonFX(Constants.drivetrainLeftID2);
     m_left = new MotorControllerGroup(m_frontLeft, m_backLeft);
     m_left.setInverted(true);
-    m_frontRight = new WPI_TalonFX(Constants.drivetrainRight1ID);
-    m_backRight = new WPI_TalonFX(Constants.drivetrainRight2ID);
+    m_frontRight = new WPI_TalonFX(Constants.drivetrainRightID1);
+    m_backRight = new WPI_TalonFX(Constants.drivetrainRightID2);
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 

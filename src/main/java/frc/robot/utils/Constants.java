@@ -21,7 +21,7 @@ public final class Constants {
   public static final double drivetrainMaxSpeed = 0.5; // TODO find best value
   public static final double drivetrainMaxTurn = 0.5; // TODO find best value
   public static final double drivetrainGearRatio = 1; // TODO find value
-  public static final double drivetrainWheelDiameter = 1; // TODO find value
+  public static final double drivetrainWheelDiameter = 6;
   public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
   public static final double drivetrainDistancePerPulse = drivetrainWheelCircumference / drivetrainGearRatio / drivetrainEncoderResolution;
 
@@ -31,10 +31,10 @@ public final class Constants {
   public static final double shooterRateLimNUM = 0.5; // TODO find best value
 
   // Motor IDs
-  public static final int drivetrainLeft1ID = 0; // TODO find value
-  public static final int drivetrainLeft2ID = 1; // TODO find value
-  public static final int drivetrainRight1ID = 2; // TODO find value
-  public static final int drivetrainRight2ID = 3; // TODO find value
+  public static final int drivetrainLeftID1 = 0; // TODO find value
+  public static final int drivetrainLeftID2 = 1; // TODO find value
+  public static final int drivetrainRightID1 = 2; // TODO find value
+  public static final int drivetrainRightID2 = 3; // TODO find value
   public static final int intake1ID = 4; // TODO find value
   public static final int intake2ID = 5; // TODO find value
   public static final int magID = 6; // TODO find value
