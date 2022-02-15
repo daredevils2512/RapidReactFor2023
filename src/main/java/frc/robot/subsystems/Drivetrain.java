@@ -53,8 +53,8 @@ public class Drivetrain extends NTSubsystem {
     m_drive = new DifferentialDrive(m_left, m_right); 
 
     // Network table stuff
-    m_leftEncoder = new Encoder(Constants.drivetrainLeftEncoderID1, Constants.drivetrainLeftEncoderID2);
-    m_rightEncoder = new Encoder(Constants.drivetrainRightEncoderID1, Constants.drivetrainRightEncoderID2);
+    m_leftEncoder = new Encoder(Constants.drivetrainLeftEncoderChannelA, Constants.drivetrainLeftEncoderChannelB);
+    m_rightEncoder = new Encoder(Constants.drivetrainRightEncoderChannelA, Constants.drivetrainRightEncoderChannelB);
     m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); 
     m_rightEncoderEntry = m_table.getEntry("Right encoder distance");
     m_leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
@@ -65,8 +65,8 @@ public class Drivetrain extends NTSubsystem {
     m_getLowGearEntry = m_table.getEntry("Low gear entry");
 
     // Shifting
-    m_leftShifter = new DoubleSolenoid(Constants.CTREPCM_PneumaticsModuleType, Constants.drivetrainLeftForwardChannel, Constants.drivetrainLeftBackwardChannel);
-    m_rightShifter = new DoubleSolenoid(Constants.CTREPCM_PneumaticsModuleType, Constants.drivetrainRightForwardChannel, Constants.drivetrainRightBackwardChannel);
+    m_leftShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.drivetrainLeftForwardChannel, Constants.drivetrainLeftBackwardChannel);
+    m_rightShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.drivetrainRightForwardChannel, Constants.drivetrainRightBackwardChannel);
 
     // Rate limiter
     m_rateLim = new SlewRateLimiter(Constants.drivetrainRateLimNUM);
@@ -114,15 +114,15 @@ public class Drivetrain extends NTSubsystem {
    * @param wantsLowGear if it wants to set low gear
    */
   public void setLowGear(boolean wantsLowGear) {
-    m_leftShifter.set(wantsLowGear ? Constants.value_kforward : Constants.value_kreverse);
-    m_rightShifter.set(wantsLowGear ? Constants.value_kforward : Constants.value_kreverse);
+    m_leftShifter.set(wantsLowGear ? Constants.drivetrainLowGearValue : Constants.drivetrainHighGearValue);
+    m_rightShifter.set(wantsLowGear ? Constants.drivetrainLowGearValue : Constants.drivetrainHighGearValue);
     m_logger.fine("set low gear: " + wantsLowGear);
   }
 
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
-    m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.value_kforward ? true : false));
-    return m_leftShifter.get() == Constants.value_kforward ? true : false;
+    m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.drivetrainLowGearValue));
+    return m_leftShifter.get() == Constants.drivetrainLowGearValue;
   }
 
   public void toggleShifters() {

@@ -27,21 +27,21 @@ public class Intake extends NTSubsystem {
     m_intake2.follow(m_intake1);
 
     // Shifters
-    m_leftShifter = new DoubleSolenoid(Constants.CTREPCM_PneumaticsModuleType, Constants.intakeShifter1ForwardID, Constants.intakeShifter1BackwardID);
-    m_rightShifter = new DoubleSolenoid(Constants.CTREPCM_PneumaticsModuleType, Constants.intakeShifter2ForwardID, Constants.intakeShifter2BackwardID);
+    m_leftShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter1ForwardID, Constants.intakeShifter1BackwardID);
+    m_rightShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter2ForwardID, Constants.intakeShifter2BackwardID);
   }
 
   /** Sets gears to proper value */
   public void setExtended(boolean wantsExtended) {
-    m_leftShifter.set(wantsExtended ? Constants.value_kforward : Constants.value_kreverse);
-    m_rightShifter.set(wantsExtended ? Constants.value_kforward : Constants.value_kreverse);
+    m_leftShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);
+    m_rightShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);
     m_logger.info("set extended: " + wantsExtended);
   }
 
   /** @return true if shifters are in low gear */
   public boolean getExtended() {
-    m_logger.fine("get extended: " + (m_leftShifter.get() == Constants.value_kforward ? true : false));
-    return m_leftShifter.get() == Constants.value_kforward ? true : false;
+    m_logger.fine("get extended: " + (m_leftShifter.get() == Constants.intakeExtendedValue));
+    return m_leftShifter.get() == Constants.intakeExtendedValue;
   }
 
   /** Toggles the shifters on/off */

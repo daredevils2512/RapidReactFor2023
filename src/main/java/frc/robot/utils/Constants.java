@@ -1,8 +1,5 @@
 package frc.robot.utils;
 
-import java.util.Properties;
-
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -15,64 +12,60 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  private static Properties m_properties;
-  
-  // TODO set auto speed
-  public static final double DRIVE_AUTO_SPEED = 0.5;
-  // TODO change distance
-  public static final double AUTO_DRIVE_BACK_DISTANCE = 150;
+  public static final double DRIVE_AUTO_SPEED = 0.5; // TODO set value
+  public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // TODO find value
 
   // Drivetrain
-  public static double drivetrainRateLimNUM = 0.5;
-  public static double drivetrainMaxSpeed = 0.5;
-  public static double drivetrainMaxTurn = 0.5;
-  public static int drivetrainLeftForwardChannel = 0;
-  public static int drivetrainLeftBackwardChannel = 0;
-  public static int drivetrainRightForwardChannel = 0;
-  public static int drivetrainRightBackwardChannel = 0;
-  public static double drivetrainGearRatio = Double.parseDouble(m_properties.getProperty("gearRatio"));
-  public static int drivetrainEncoderResolution = Integer.parseInt(m_properties.getProperty("encoderResolution"));
-  public static double drivetrainWheelDiameter = Units.inchesToMeters(Double.parseDouble(m_properties.getProperty("wheelDiameter")));
-  public static double drivetrainWheelCircumference =  Units.inchesToMeters(drivetrainWheelDiameter) * Math.PI;
-  public static double drivetrainDistancePerPulse = drivetrainWheelCircumference / drivetrainGearRatio / drivetrainEncoderResolution;
+  public static final double drivetrainRateLimNUM = 0.5; // TODO find best value
+  public static final double drivetrainMaxSpeed = 0.5; // TODO find best value
+  public static final double drivetrainMaxTurn = 0.5; // TODO find best value
+  public static final double drivetrainGearRatio = 1; // TODO find value
+  public static final int drivetrainEncoderResolution = 1; // TODO find value
+  public static final double drivetrainWheelDiameter = 1; // TODO find value
+  public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
+  public static final double drivetrainDistancePerPulse = drivetrainWheelCircumference / drivetrainGearRatio / drivetrainEncoderResolution;
 
   // Intake
-  public static int intakeShifter1ForwardID = 01;
-  public static int intakeShifter1BackwardID = 01;
-  public static int intakeShifter2ForwardID = 02;
-  public static int intakeShifter2BackwardID = 02;
 
   // Shooter
-  public static int shooterEncoderID1 = 1;
-  public static int shooterEncoderID2 = 2;
-  public static double shooterRateLimNUM = 0.5;
-  public static int shooterForwardChannel = 0;
-  public static int shooterBackwardChannel = 1;
+  public static final double shooterRateLimNUM = 0.5; // TODO find best value
+  public static final int shooterForwardChannel = 0; // TODO find value
+  public static final int shooterBackwardChannel = 1; // TODO find value
 
   // Motor IDs
-  public static int drivetrainLeft1ID = 0;
-  public static int drivetrainLeft2ID = 1;
-  public static int drivetrainRight1ID = 2;
-  public static int drivetrainRight2ID = 3;
-  public static int intake1ID = 4;
-  public static int intake2ID = 5;
-  public static int magID = 6;
-  public static int climber1ID = 7;
-  public static int climber2ID = 8;
-  public static int shooterID = 9;
+  public static final int drivetrainLeft1ID = 0; // TODO find value
+  public static final int drivetrainLeft2ID = 1; // TODO find value
+  public static final int drivetrainRight1ID = 2; // TODO find value
+  public static final int drivetrainRight2ID = 3; // TODO find value
+  public static final int intake1ID = 4; // TODO find value
+  public static final int intake2ID = 5; // TODO find value
+  public static final int magID = 6; // TODO find value
+  public static final int climber1ID = 7; // TODO find value
+  public static final int climber2ID = 8; // TODO find value
+  public static final int shooterID = 9; // TODO find value
 
   // Encoder IDs
-  public static int drivetrainLeftEncoderID1 = 0;
-  public static int drivetrainLeftEncoderID2 = 1;
-  public static int drivetrainRightEncoderID1 = 0;
-  public static int drivetrainRightEncoderID2 = 1;
+  public static final int drivetrainLeftEncoderChannelA = 0; // TODO find value
+  public static final int drivetrainLeftEncoderChannelB = 0; // TODO find value
+  public static final int drivetrainRightEncoderChannelA = 0; // TODO find value
+  public static final int drivetrainRightEncoderChannelB = 0; // TODO find value
+  public static final int shooterEncoderChannelA = 0; // TODO find value
+  public static final int shooterEncoderChannelB = 0; // TODO find value
 
-  // Other stuffs
-  public static PneumaticsModuleType CTREPCM_PneumaticsModuleType = PneumaticsModuleType.CTREPCM;
-  public static Value value_kforward = Value.kForward;
-  public static Value value_kreverse = Value.kReverse;
+  // Pneumatics
+  public static final PneumaticsModuleType pneumaticsModuleType = PneumaticsModuleType.CTREPCM;
+  public static final int drivetrainLeftForwardChannel = 0; // TODO find value
+  public static final int drivetrainLeftBackwardChannel = 0; // TODO find value
+  public static final int drivetrainRightForwardChannel = 0; // TODO find value
+  public static final int drivetrainRightBackwardChannel = 0; // TODO find value
+  public static final Value drivetrainLowGearValue = Value.kForward; // TODO find value
+  public static final Value drivetrainHighGearValue = Value.kReverse; // TODO find value
+  public static final int intakeShifter1ForwardID = 0; // TODO find value
+  public static final int intakeShifter1BackwardID = 0; // TODO find value
+  public static final int intakeShifter2ForwardID = 0; // TODO find value
+  public static final int intakeShifter2BackwardID = 0; // TODO find value
+  public static final Value intakeExtendedValue = Value.kForward; // TODO find value
+  public static final Value intakeRetractedValue = Value.kReverse; // TODO find value
 
-  private Constants(){
-
-  }
+  private Constants() { }
 }

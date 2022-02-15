@@ -11,7 +11,7 @@ public class CompresserManager  extends NTSubsystem {
   private final NetworkTableEntry m_isRunningEntry;
   private final NetworkTableEntry m_closedLoopControlEntry;
 
-  private Compressor m_compressor = new Compressor(Constants.CTREPCM_PneumaticsModuleType);
+  private Compressor m_compressor = new Compressor(Constants.pneumaticsModuleType);
  
   public CompresserManager() {
     super("Compressor");
