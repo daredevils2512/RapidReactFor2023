@@ -33,11 +33,7 @@ public class Drivetrain extends NTSubsystem {
   private final Encoder m_leftEncoder; 
   private final Encoder m_rightEncoder;
   private final double m_gearRatio;
-  private final double m_wheelCircumference;
-  private final double m_wheelDiameter;
-  private final double m_distancePerPulse;
   private final NetworkTableEntry m_getLowGearEntry;
-  private final int m_encoderResolution;
 
   // Shifting
   private final DoubleSolenoid m_leftShifter;
