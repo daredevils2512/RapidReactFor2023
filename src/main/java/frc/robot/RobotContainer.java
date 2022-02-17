@@ -28,9 +28,13 @@ import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
 
-/** This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+/**
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -39,15 +43,15 @@ public class RobotContainer {
   private final NetworkTableEntry m_shooterSpeedEntry;
 
   // Logging
-  private final LoggingManager m_logManager; 
+  private final LoggingManager m_logManager;
 
   // Subsystems
-  private final Optional <Drivetrain> m_drivetrainSub;
-  private final Optional <Climber> m_climber;
-  private final Optional <Intake> m_intakeSub;
-  private final Optional <Magazine> m_magazine;
-  private final Optional <Shooter> m_shooter; 
-  
+  private final Optional<Drivetrain> m_drivetrainSub;
+  private final Optional<Climber> m_climber;
+  private final Optional<Intake> m_intakeSub;
+  private final Optional<Magazine> m_magazine;
+  private final Optional<Shooter> m_shooter;
+
   // Commands
   private final ActuateShiftCommand m_intakeShift;
   private final ClimberCommand m_climberComamnd;
@@ -56,7 +60,7 @@ public class RobotContainer {
   private final DrivetrainCommand m_drivetrainCommand;
   private final IntakeCommand m_intakeCommand;
   private final RevShooter m_revShooter;
-  private final RunFlywheel m_runFlywheel; 
+  private final RunFlywheel m_runFlywheel;
   private final RunMag m_runMag;
   private final ShootLowGoal m_shootLowGoal;
 
@@ -89,7 +93,7 @@ public class RobotContainer {
     return m_controlBoard.xboxController.getXAxisRight();
   }
 
-   /** @return Right Trigger  (this is temporary) */
+  /** @return Right Trigger (this is temporary) */
   public double getIntake() {
     // TODO: Change to correct controls!
     return m_controlBoard.xboxController.getRightTrigger();
@@ -106,7 +110,9 @@ public class RobotContainer {
     return m_controlBoard.xboxController.getYAxisRight();
   }
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Define optionals
     m_climber = Optional.of(new Climber());
@@ -118,7 +124,9 @@ public class RobotContainer {
     // Define commands
     m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
     m_climberComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), getClimber()) : null;
-    m_auto = m_drivetrainSub.isPresent() ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
+    m_auto = m_drivetrainSub.isPresent()
+        ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE)
+        : null;
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), () -> getIntake()) : null;
@@ -132,7 +140,8 @@ public class RobotContainer {
     m_controlBoard = new ControlBoard();
 
     // Configure the button bindings
-    if (RobotBase.isSimulation()) m_logManager.robotLogger.setLevel(Level.FINER);
+    if (RobotBase.isSimulation())
+      m_logManager.robotLogger.setLevel(Level.FINER);
     configureButtonBindings();
 
     // Network Table stuff
@@ -145,15 +154,19 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
     // TODO Make correct controls
-    if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
-    if (m_climber.isPresent()) m_climber.get().setDefaultCommand(m_climberComamnd);
+    if (m_intakeSub.isPresent())
+      m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
+    if (m_climber.isPresent())
+      m_climber.get().setDefaultCommand(m_climberComamnd);
     // m_auto command here
     if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
     if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
@@ -162,11 +175,13 @@ public class RobotContainer {
     if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     if (m_magazine.isPresent()) m_magazine.get().setDefaultCommand(m_runMag);
   }
-  
-  /** Use this to pass the autonomous command to the main {@link Robot} class.
+
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   * 
    * @return The command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return m_auto;
   }
 }
