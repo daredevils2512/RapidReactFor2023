@@ -40,22 +40,22 @@ public class Shooter extends NTSubsystem {
     m_logger.fine("set: " + get());
   }  
   
-  public void setvoltage(double voltage){
+  public void setVoltage(double voltage) {
     m_motor.setVoltage(voltage);
     m_logger.fine("set: " + get());
   }
   
-  public void setRPM (double RPM){
+  public void setRPM (double RPM) {
     double voltage = feedforward.calculate(RPM);
     m_motor.setVoltage(voltage);
     m_logger.fine("set: " + get());
   }
  
-  public double encoderRate(int encoder){
+  public double encoderRate(int encoder) {
     return m_encoder.getRate();
   }
   
-  public double get(){
+  public double get() {
     return m_motor.get(); 
   }
 }

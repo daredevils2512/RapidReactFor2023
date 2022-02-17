@@ -3,13 +3,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveBackAuto extends CommandBase{
+public class DriveBackAutoCommand extends CommandBase{
   private final Drivetrain m_drivetrain;
   private final double m_move;
   private final double m_distance;
   private double m_initialDistance;
 
-  public DriveBackAuto(Drivetrain drivetrain, double move, double distance){
+  public DriveBackAutoCommand(Drivetrain drivetrain, double move, double distance){
     m_drivetrain = drivetrain;
     m_move = move;
     m_distance = distance;
@@ -17,7 +17,7 @@ public class DriveBackAuto extends CommandBase{
 
   @Override
   public void initialize() {
-    m_initialDistance = getDistance();
+    m_initialDistance = m_drivetrain.getAverageDistance();
   }
 
   @Override
@@ -27,7 +27,7 @@ public class DriveBackAuto extends CommandBase{
 
   @Override
   public boolean isFinished() {
-    return getDistance() - m_initialDistance >= m_distance;
+    return m_drivetrain.getAverageDistance() - m_initialDistance >= m_distance;
   }
 
   @Override
@@ -35,9 +35,5 @@ public class DriveBackAuto extends CommandBase{
     if (!interrupted){
       m_drivetrain.arcadeDrive (0,0);
     }
-  }
-
-  private double getDistance() {
-    return (m_drivetrain.getLeftDistance() + m_drivetrain.getRightDistance()) / 2;
   }
 }
