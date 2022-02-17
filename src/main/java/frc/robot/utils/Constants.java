@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  // Auto
   public static final double DRIVE_AUTO_SPEED = 0.5; // TODO set value
   public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // TODO find value
 
