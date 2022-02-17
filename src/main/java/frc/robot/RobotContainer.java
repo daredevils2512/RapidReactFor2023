@@ -128,15 +128,7 @@ public class RobotContainer {
         ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE)
         : null;
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
-<<<<<<< HEAD
-    m_DriveTrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> {
-      return getMove();
-    }, () -> {
-      return getTurn();
-    }) : null;
-=======
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
->>>>>>> master
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), () -> getIntake()) : null;
     m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), 0) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
@@ -176,27 +168,12 @@ public class RobotContainer {
     if (m_climber.isPresent())
       m_climber.get().setDefaultCommand(m_climberComamnd);
     // m_auto command here
-<<<<<<< HEAD
-    if (m_drivetrainSub.isPresent())
-      m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
-    if (m_drivetrainSub.isPresent())
-      m_drivetrainSub.get().setDefaultCommand(m_DriveTrainCommand);
-    if (m_intakeSub.isPresent())
-      m_intakeSub.get().setDefaultCommand(m_intakeCommand);
-    if (m_shooter.isPresent())
-      m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
-    if (m_shooter.isPresent())
-      m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
-    if (m_magazine.isPresent())
-      m_magazine.get().setDefaultCommand(m_runMag);
-=======
     if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
     if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
     if (m_intakeSub.isPresent()) m_intakeSub.get().setDefaultCommand(m_intakeCommand);
     if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
     if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     if (m_magazine.isPresent()) m_magazine.get().setDefaultCommand(m_runMag);
->>>>>>> master
   }
 
   /**
