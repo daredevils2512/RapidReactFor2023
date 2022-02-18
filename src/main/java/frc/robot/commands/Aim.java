@@ -13,13 +13,17 @@ public class Aim extends CommandBase{
   private final Double m_speed;
   private final NetworkTable m_limelight;
   private final NetworkTableEntry m_tx; 
+  private final Double m_aimAjust; 
+  private final Double Kp; 
 
 
   public Aim(Drivetrain drivetrain, Double speed){
     m_drivetrain = drivetrain; 
+    Kp = 0.0;
     m_speed = speed;
     m_limelight = NetworkTableInstance.getDefault().getTable("limelight");
     m_tx = m_limelight.getEntry("tx");
+    m_aimAjust = Kp * m_tx.getDouble(0);
 
   }
 
