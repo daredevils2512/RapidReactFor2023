@@ -1,32 +1,33 @@
 package frc.robot;
 
-import java.util.Optional;
-import java.util.logging.Level;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.DriveBackAuto;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.ClimberCommand;
+import frc.robot.commands.DriveBackAuto;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.io.ControlBoard;
 import frc.robot.io.NTButton;
+import frc.robot.subsystems.AddressableLEDManager;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.RunFlywheel;
-import frc.robot.commands.RunMag;
-import frc.robot.commands.ShootLowGoal;
+import frc.robot.subsystems.Magazine;
+import frc.robot.subsystems.Shooter;
 import frc.robot.commands.DriveShiftCommand;
 import frc.robot.commands.DrivetrainCommand;
 import frc.robot.commands.RevShooter;
-import frc.robot.io.ControlBoard;
-import frc.robot.subsystems.Magazine;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.RunFlywheel;
+import frc.robot.commands.RunMag;
+import frc.robot.commands.ShootLowGoal;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
-import edu.wpi.first.wpilibj2.command.Command;
+import java.util.logging.Level;
+import java.util.Optional;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -46,6 +47,7 @@ public class RobotContainer {
   private final LoggingManager m_logManager;
 
   // Subsystems
+  private final Optional<AddressableLEDManager> m_LED;
   private final Optional<Drivetrain> m_drivetrainSub;
   private final Optional<Climber> m_climber;
   private final Optional<Intake> m_intakeSub;
@@ -115,6 +117,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define optionals
+    m_LED = Optional.of(new AddressableLEDManager()); // TODO: find out how to run this
     m_climber = Optional.of(new Climber());
     m_drivetrainSub = Optional.of(new Drivetrain());
     m_intakeSub = Optional.of(new Intake());

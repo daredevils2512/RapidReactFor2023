@@ -66,5 +66,10 @@ public final class Constants {
   public static final Value drivetrainHighGearValue = Value.kReverse; // TODO find value
   public static final PneumaticsModuleType pneumaticsModuleType = PneumaticsModuleType.CTREPCM;
 
-  private Constants() { }
+  // LEDs
+  public static final int LEDPort = 0; // TODO: find value
+  public static final int LEDLength = 15; // TODO: find value
+  public static int LED_S = 255;
+
+  private Constants() {}
 }
