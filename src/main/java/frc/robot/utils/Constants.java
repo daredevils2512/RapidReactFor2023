@@ -12,16 +12,17 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  // Auto
   public static final double DRIVE_AUTO_SPEED = 0.5; // TODO set value
   public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // TODO find value
 
   // Drivetrain
   public static final int drivetrainEncoderResolution = 1; // TODO find value
-  public static final double drivetrainRateLimNUM = 0.5; // TODO find best value
-  public static final double drivetrainMaxSpeed = 0.5; // TODO find best value
-  public static final double drivetrainMaxTurn = 0.5; // TODO find best value
+  public static final double drivetrainRateLimNUM = 15; // TODO find best value
+  public static final double drivetrainMaxSpeed = 0.75; // TODO find best value
+  public static final double drivetrainMaxTurn = 0.75; // TODO find best value
   public static final double drivetrainGearRatio = 1; // TODO find value
-  public static final double drivetrainWheelDiameter = 1; // TODO find value
+  public static final double drivetrainWheelDiameter = 6;
   public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
   public static final double drivetrainDistancePerPulse = drivetrainWheelCircumference / drivetrainGearRatio / drivetrainEncoderResolution;
 
@@ -31,16 +32,16 @@ public final class Constants {
   public static final double shooterRateLimNUM = 0.5; // TODO find best value
 
   // Motor IDs
-  public static final int drivetrainLeft1ID = 0; // TODO find value
-  public static final int drivetrainLeft2ID = 1; // TODO find value
-  public static final int drivetrainRight1ID = 2; // TODO find value
-  public static final int drivetrainRight2ID = 3; // TODO find value
-  public static final int intake1ID = 4; // TODO find value
-  public static final int intake2ID = 5; // TODO find value
-  public static final int magID = 6; // TODO find value
-  public static final int climber1ID = 7; // TODO find value
-  public static final int climber2ID = 8; // TODO find value
-  public static final int shooterID = 9; // TODO find value
+  public static final int drivetrainLeftID1 = 0; 
+  public static final int drivetrainLeftID2 = 1; 
+  public static final int drivetrainRightID1 = 2;
+  public static final int drivetrainRightID2 = 3;
+  public static final int intake1ID = 4; 
+  public static final int intake2ID = 5; 
+  public static final int magID = 6;
+  public static final int climber1ID = 7;
+  public static final int climber2ID = 8;
+  public static final int shooterID = 9; 
 
   // Encoder IDs
   public static final int drivetrainLeftEncoderChannelA = 0; // TODO find value

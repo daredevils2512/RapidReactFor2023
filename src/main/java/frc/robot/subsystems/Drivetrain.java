@@ -27,9 +27,9 @@ public class Drivetrain extends NTSubsystem {
   private final NetworkTableEntry m_rightDistanceEntry;
   private final NetworkTableEntry m_leftEncoderEntry;
   private final NetworkTableEntry m_rightEncoderEntry;
+  private final NetworkTableEntry m_getLowGearEntry;
   private final Encoder m_leftEncoder; 
   private final Encoder m_rightEncoder;
-  private final NetworkTableEntry m_getLowGearEntry;
 
   // Shifting
   private final DoubleSolenoid m_leftShifter;
@@ -37,18 +37,19 @@ public class Drivetrain extends NTSubsystem {
 
   // Rate limiter
   private final SlewRateLimiter m_rateLim;
+  private final SlewRateLimiter m_rateLimTurn;
 
   public Drivetrain() {
     super("DrivetrainSub");
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff
-    m_frontLeft = new WPI_TalonFX(Constants.drivetrainLeft1ID); 
-    m_backLeft = new WPI_TalonFX(Constants.drivetrainLeft2ID);
+    m_frontLeft = new WPI_TalonFX(Constants.drivetrainLeftID1); 
+    m_backLeft = new WPI_TalonFX(Constants.drivetrainLeftID2);
     m_left = new MotorControllerGroup(m_frontLeft, m_backLeft);
     m_left.setInverted(true);
-    m_frontRight = new WPI_TalonFX(Constants.drivetrainRight1ID);
-    m_backRight = new WPI_TalonFX(Constants.drivetrainRight2ID);
+    m_frontRight = new WPI_TalonFX(Constants.drivetrainRightID1);
+    m_backRight = new WPI_TalonFX(Constants.drivetrainRightID2);
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 
@@ -70,6 +71,7 @@ public class Drivetrain extends NTSubsystem {
 
     // Rate limiter
     m_rateLim = new SlewRateLimiter(Constants.drivetrainRateLimNUM);
+    m_rateLimTurn = new SlewRateLimiter(Constants.drivetrainRateLimNUM);
   }
 
   /** Runs the arcade drive 
@@ -78,7 +80,7 @@ public class Drivetrain extends NTSubsystem {
   */
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(move);
-    turn = m_rateLim.calculate(turn);
+    turn = m_rateLimTurn.calculate(turn);
     m_drive.arcadeDrive((move)*Constants.drivetrainMaxSpeed, (turn)*Constants.drivetrainMaxTurn);
   }
 
