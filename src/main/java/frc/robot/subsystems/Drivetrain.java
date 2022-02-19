@@ -27,9 +27,9 @@ public class Drivetrain extends NTSubsystem {
   private final NetworkTableEntry m_rightDistanceEntry;
   private final NetworkTableEntry m_leftEncoderEntry;
   private final NetworkTableEntry m_rightEncoderEntry;
+  private final NetworkTableEntry m_getLowGearEntry;
   private final Encoder m_leftEncoder; 
   private final Encoder m_rightEncoder;
-  private final NetworkTableEntry m_getLowGearEntry;
 
   // Shifting
   private final DoubleSolenoid m_leftShifter;
