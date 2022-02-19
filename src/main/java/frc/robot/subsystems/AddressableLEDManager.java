@@ -35,6 +35,9 @@ public class AddressableLEDManager extends NTSubsystem {
 
     // LED Buffer
     m_LEDBuffer = new AddressableLEDBuffer(Constants.LEDLength);
+
+    // Starts the LEDs
+    m_LED.start();
   }
   
   /** Periodically runs code */
@@ -43,7 +46,6 @@ public class AddressableLEDManager extends NTSubsystem {
     setColor(Math.sin(Timer.getFPGATimestamp()) / 2 + 0.5);
     m_LEDColor.setValue(getColor());
     m_LED.setData(m_LEDBuffer);
-    m_LED.start();
   }
 
   /** @return The color value of the LEDs */
