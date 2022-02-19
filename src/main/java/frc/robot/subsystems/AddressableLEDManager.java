@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.utils.Constants;
 
@@ -17,7 +18,7 @@ public class AddressableLEDManager extends NTSubsystem {
   private final NetworkTable m_table;
   private final NetworkTableEntry m_LEDColor;
 
-  // Maths
+  // Math
   private int sMin = 0;
   private int sMax = 255;
 
@@ -36,10 +37,10 @@ public class AddressableLEDManager extends NTSubsystem {
     m_LEDBuffer = new AddressableLEDBuffer(Constants.LEDLength);
   }
   
-  /** Sets stuff periodically */
+  /** Periodically runs code */
   @Override
   public void periodic() {
-    setColor();
+    setColor(Math.sin(Timer.getFPGATimestamp()) / 2 + 0.5);
     m_LEDColor.setValue(getColor());
     m_LED.setData(m_LEDBuffer);
     m_LED.start();
@@ -50,12 +51,12 @@ public class AddressableLEDManager extends NTSubsystem {
     return m_LEDBuffer.getLED(1);
   }
 
-  /** sets the color values of the LEDs */
-  public void setColor() {
+  /** Sets the color values of the LEDs */
+  public void setColor(double saturation) {
     for (int i = 0; i <= Constants.LEDLength; i++) { 
       m_LEDBuffer.setRGB(i, 255, 0, 0);
 
-      Constants.LED_S = sMin + (int)((sMax - sMin) * i / Constants.LEDLength);
+      Constants.LED_S = sMin + (int)((sMax - sMin) * saturation);
       
       m_LEDBuffer.setHSV(i, 180, Constants.LED_S, 255);
     }
