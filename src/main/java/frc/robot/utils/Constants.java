@@ -18,10 +18,10 @@ public final class Constants {
 
   // Drivetrain
   public static final int drivetrainEncoderResolution = 1; // TODO find value
-  public static final double drivetrainRateLimNUM = 15; // TODO find best value
-  public static final double drivetrainMaxSpeed = 0.75; // TODO find best value
-  public static final double drivetrainMaxTurn = 0.75; // TODO find best value
-  public static final double drivetrainGearRatio = 1; // TODO find value
+  public static final double drivetrainRateLimNUM = 15;
+  public static final double drivetrainMaxSpeed = 0.75; 
+  public static final double drivetrainMaxTurn = 0.75; 
+  public static final double drivetrainGearRatio = 1; // TODO find vale
   public static final double drivetrainWheelDiameter = 6;
   public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
   public static final double drivetrainDistancePerPulse = drivetrainWheelCircumference / drivetrainGearRatio / drivetrainEncoderResolution;
@@ -44,10 +44,10 @@ public final class Constants {
   public static final int shooterID = 9; 
 
   // Encoder IDs
-  public static final int drivetrainLeftEncoderChannelA = 0; // TODO find value
-  public static final int drivetrainLeftEncoderChannelB = 0; // TODO find value
-  public static final int drivetrainRightEncoderChannelA = 0; // TODO find value
-  public static final int drivetrainRightEncoderChannelB = 0; // TODO find value
+  public static final int drivetrainLeftEncoderChannelA = 1; 
+  public static final int drivetrainLeftEncoderChannelB = 2; 
+  public static final int drivetrainRightEncoderChannelA = 3;
+  public static final int drivetrainRightEncoderChannelB = 4;
   public static final int shooterEncoderChannelA = 0; // TODO find value
   public static final int shooterEncoderChannelB = 0; // TODO find value
 
