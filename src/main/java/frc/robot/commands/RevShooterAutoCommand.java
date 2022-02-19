@@ -8,7 +8,7 @@ public class RevShooterAutoCommand extends CommandBase {
   private double speed;
   private Shooter m_shooter;
 
-  public RevShooterAutoCommand(Shooter shooter, double speed) {
+  public RevShooterAutoCommand(Shooter shooter) {
     m_shooter = shooter;
   }
 
@@ -18,15 +18,6 @@ public class RevShooterAutoCommand extends CommandBase {
   @Override
   public void execute() {
     m_shooter.spitBalls(speed);
-  }
-
-  @Override
-  public boolean isFinished() {
-    if (speed == 0) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   @Override

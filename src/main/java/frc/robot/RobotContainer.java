@@ -130,7 +130,7 @@ public class RobotContainer {
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), () -> getIntake()) : null;
-    m_revShooterAuto = m_shooter.isPresent() ? new RevShooterAutoCommand(m_shooter.get(), 0) : null;
+    m_revShooterAuto = m_shooter.isPresent() ? new RevShooterAutoCommand(m_shooter.get()) : null;
     m_revShooter = m_shooter.isPresent() ? new RevShooterCommand(m_shooter.get(), 0) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheelCommand(m_shooter.get()) : null;
     m_runMag = m_magazine.isPresent() ? new RunMagCommand(m_magazine.get(), () -> 0) : null;
