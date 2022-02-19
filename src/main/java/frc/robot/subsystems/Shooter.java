@@ -74,6 +74,6 @@ public class Shooter extends NTSubsystem {
   }
 
   public void setRPMPID(double setpoint) {
-    m_motor.set(PID.calculate(m_encoder.getDistance(), setpoint));
+    m_motor.set(PID.calculate(m_encoder.getRate(), setpoint));
   }
 }
