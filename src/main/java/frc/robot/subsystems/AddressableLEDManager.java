@@ -22,6 +22,9 @@ public class AddressableLEDManager extends NTSubsystem {
   private int sMin = 0;
   private int sMax = 255;
 
+  // Time
+  private double startTime = Timer.getFPGATimestamp();
+
   public AddressableLEDManager() {
     super("AddressableLEDManager");
 
@@ -43,7 +46,7 @@ public class AddressableLEDManager extends NTSubsystem {
   /** Periodically runs code */
   @Override
   public void periodic() {
-    setColor(Math.sin(Timer.getFPGATimestamp()) / 2 + 0.5);
+    setColor(Math.cos(Timer.getFPGATimestamp() - startTime) / 2 + 0.5);
     m_LEDColor.setValue(getColor());
     m_LED.setData(m_LEDBuffer);
   }
