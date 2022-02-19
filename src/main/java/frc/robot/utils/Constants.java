@@ -18,9 +18,9 @@ public final class Constants {
 
   // Drivetrain
   public static final int drivetrainEncoderResolution = 1; // TODO find value
-  public static final double drivetrainRateLimNUM = 0.5; // TODO find best value
-  public static final double drivetrainMaxSpeed = 0.5; // TODO find best value
-  public static final double drivetrainMaxTurn = 0.5; // TODO find best value
+  public static final double drivetrainRateLimNUM = 15; // TODO find best value
+  public static final double drivetrainMaxSpeed = 0.75; // TODO find best value
+  public static final double drivetrainMaxTurn = 0.75; // TODO find best value
   public static final double drivetrainGearRatio = 1; // TODO find value
   public static final double drivetrainWheelDiameter = 6;
   public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
