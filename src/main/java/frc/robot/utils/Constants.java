@@ -1,8 +1,7 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.utils;
+
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -13,13 +12,59 @@ package frc.robot.utils;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  
-  //TODO set auto speed
-  public static final double DRIVE_AUTO_SPEED = 0.5;
-  //TODO change distance
-  public static final double AUTO_DRIVE_BACK_DISTANCE = 150;
+  // Auto
+  public static final double DRIVE_AUTO_SPEED = 0.5; // TODO set value
+  public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // TODO find value
 
-  private Constants(){
+  // Drivetrain
+  public static final int drivetrainEncoderResolution = 1; // TODO find value
+  public static final double drivetrainRateLimNUM = 15;
+  public static final double drivetrainMaxSpeed = 0.75; 
+  public static final double drivetrainMaxTurn = 0.75; 
+  public static final double drivetrainGearRatio = 1; // TODO find vale
+  public static final double drivetrainWheelDiameter = 6;
+  public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
+  public static final double drivetrainDistancePerPulse = drivetrainWheelCircumference / drivetrainGearRatio / drivetrainEncoderResolution;
 
-  }
+  // Shooter
+  public static final int shooterForwardChannel = 0; // TODO find value
+  public static final int shooterBackwardChannel = 1; // TODO find value
+  public static final double shooterRateLimNUM = 0.5; // TODO find best value
+
+  // Motor IDs
+  public static final int drivetrainLeftID1 = 0; 
+  public static final int drivetrainLeftID2 = 1; 
+  public static final int drivetrainRightID1 = 2;
+  public static final int drivetrainRightID2 = 3;
+  public static final int intake1ID = 4; 
+  public static final int intake2ID = 5; 
+  public static final int magID = 6;
+  public static final int climber1ID = 7;
+  public static final int climber2ID = 8;
+  public static final int shooterID = 9; 
+
+  // Encoder IDs
+  public static final int drivetrainLeftEncoderChannelA = 1; 
+  public static final int drivetrainLeftEncoderChannelB = 2; 
+  public static final int drivetrainRightEncoderChannelA = 3;
+  public static final int drivetrainRightEncoderChannelB = 4;
+  public static final int shooterEncoderChannelA = 0; // TODO find value
+  public static final int shooterEncoderChannelB = 0; // TODO find value
+
+  // Pneumatics
+  public static final int drivetrainLeftForwardChannel = 0; // TODO find value
+  public static final int drivetrainLeftBackwardChannel = 0; // TODO find value
+  public static final int drivetrainRightForwardChannel = 0; // TODO find value
+  public static final int drivetrainRightBackwardChannel = 0; // TODO find value
+  public static final int intakeShifter1ForwardID = 0; // TODO find value
+  public static final int intakeShifter1BackwardID = 0; // TODO find value
+  public static final int intakeShifter2ForwardID = 0; // TODO find value
+  public static final int intakeShifter2BackwardID = 0; // TODO find value
+  public static final Value intakeExtendedValue = Value.kForward; // TODO find value
+  public static final Value intakeRetractedValue = Value.kReverse; // TODO find value
+  public static final Value drivetrainLowGearValue = Value.kForward; // TODO find value
+  public static final Value drivetrainHighGearValue = Value.kReverse; // TODO find value
+  public static final PneumaticsModuleType pneumaticsModuleType = PneumaticsModuleType.CTREPCM;
+
+  private Constants() { }
 }
