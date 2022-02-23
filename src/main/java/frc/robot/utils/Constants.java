@@ -43,6 +43,18 @@ public final class Constants {
   public static final int climber2ID = 8;
   public static final int shooterID = 9; 
 
+  // Vision, Baby! 
+  // how many degrees back is your limelight rotated from perfectly vertical? TODO:FIX THIS SHIT
+public static final double limelightMountAngleDegrees = 0.00;
+
+// distance from the center of the Limelight lens to the floor TODO: THIS SHIT WACK
+public static final double limelightLensHeightInches = 0.00;
+
+// distance from the target to the floor
+public static final double goalHeightInches = 104;
+
+
+
   // Encoder IDs
   public static final int drivetrainLeftEncoderChannelA = 1; 
   public static final int drivetrainLeftEncoderChannelB = 2; 
