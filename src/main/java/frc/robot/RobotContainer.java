@@ -117,7 +117,7 @@ public class RobotContainer {
     // Define optionals
     m_climber = Optional.empty();
     m_drivetrainSub = Optional.of(new Drivetrain());
-    m_intakeSub = Optional.empty();
+    m_intakeSub = Optional.empty(); 
     m_magazine = Optional.empty();
     m_shooter = Optional.empty();
 

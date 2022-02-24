@@ -46,13 +46,12 @@ public final class Constants {
   // Vision, Baby! 
   // how many degrees back is your limelight rotated from perfectly vertical? TODO:FIX THIS SHIT
 public static final double limelightMountAngleDegrees = 0.00;
-
 // distance from the center of the Limelight lens to the floor TODO: THIS SHIT WACK
 public static final double limelightLensHeightInches = 0.00;
-
 // distance from the target to the floor
 public static final double goalHeightInches = 104;
-
+//desired distance from the target
+public static final double desiredDistance = 0.0;
 
 
   // Encoder IDs
