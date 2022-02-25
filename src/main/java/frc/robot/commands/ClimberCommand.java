@@ -17,4 +17,8 @@ public class ClimberCommand extends CommandBase {
   public void execute() {
     m_climber.setClimbSpeed(m_speed);
   }
+  @Override
+  public void end(boolean interrupted){
+    m_climber.setClimbSpeed(0);
+  }
 }
