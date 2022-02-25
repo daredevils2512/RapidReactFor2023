@@ -116,10 +116,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Define optionals
     m_climber = Optional.empty();
-    m_drivetrainSub = Optional.of(new Drivetrain());
+    m_drivetrainSub = Optional.empty();
     m_intakeSub = Optional.empty();
     m_magazine = Optional.empty();
-    m_shooter = Optional.empty();
+    m_shooter = Optional.of(new Shooter());
 
     // Define commands
     m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
@@ -128,7 +128,7 @@ public class RobotContainer {
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), () -> getIntake()) : null;
-    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), 0) : null;
+    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), .75) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
     m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 0) : null;
     m_shootLowGoal = null; // TODO: idk what this is
@@ -168,7 +168,7 @@ public class RobotContainer {
     if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
     if (m_intakeSub.isPresent()) m_intakeSub.get().setDefaultCommand(m_intakeCommand);
     if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
-    if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
+    // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     if (m_magazine.isPresent()) m_magazine.get().setDefaultCommand(m_runMag);
   }
 
