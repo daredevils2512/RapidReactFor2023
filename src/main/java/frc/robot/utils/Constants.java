@@ -32,14 +32,14 @@ public final class Constants {
   public static final double shooterRateLimNUM = 0.5; // TODO find best value
 
   // Motor IDs
-  public static final int drivetrainLeftID1 = 0; 
-  public static final int drivetrainLeftID2 = 1; 
+  public static final int drivetrainLeftID1 = 10; 
+  public static final int drivetrainLeftID2 = 11; 
   public static final int drivetrainRightID1 = 2;
   public static final int drivetrainRightID2 = 3;
   public static final int intake1ID = 4; 
   public static final int intake2ID = 5;
   //TODO: fix this shit beacue CAD fucked up and added/ subtrated a mototor. 
-  public static final int intake3ID = 0; 
+  // public static final int intake3ID = 0; 
 
   public static final int magID = 6;
   public static final int climber1ID = 7;
@@ -51,18 +51,18 @@ public final class Constants {
   public static final int drivetrainLeftEncoderChannelB = 2; 
   public static final int drivetrainRightEncoderChannelA = 3;
   public static final int drivetrainRightEncoderChannelB = 4;
-  public static final int shooterEncoderChannelA = 0; // TODO find value
-  public static final int shooterEncoderChannelB = 0; // TODO find value
+  // public static final int shooterEncoderChannelA = 0; // TODO find value
+  // public static final int shooterEncoderChannelB = 0; // TODO find value
 
   // Pneumatics
   public static final int drivetrainLeftForwardChannel = 0; // TODO find value
-  public static final int drivetrainLeftBackwardChannel = 0; // TODO find value
-  public static final int drivetrainRightForwardChannel = 0; // TODO find value
-  public static final int drivetrainRightBackwardChannel = 0; // TODO find value
-  public static final int intakeShifter1ForwardID = 0; // TODO find value
-  public static final int intakeShifter1BackwardID = 0; // TODO find value
-  public static final int intakeShifter2ForwardID = 0; // TODO find value
-  public static final int intakeShifter2BackwardID = 0; // TODO find value
+  public static final int drivetrainLeftBackwardChannel = 1; // TODO find value
+  public static final int drivetrainRightForwardChannel = 2; // TODO find value
+  public static final int drivetrainRightBackwardChannel = 3; // TODO find value
+  public static final int intakeShifter1ForwardID = 4; // TODO find value
+  public static final int intakeShifter1BackwardID = 5; // TODO find value
+  // public static final int intakeShifter2ForwardID = 0; // TODO find value
+  // public static final int intakeShifter2BackwardID = 0; // TODO find value
   public static final Value intakeExtendedValue = Value.kForward; // TODO find value
   public static final Value intakeRetractedValue = Value.kReverse; // TODO find value
   public static final Value drivetrainLowGearValue = Value.kForward; // TODO find value

@@ -119,7 +119,9 @@ public class RobotContainer {
     m_drivetrainSub = Optional.empty();
     m_intakeSub = Optional.empty();
     m_magazine = Optional.empty();
-    m_shooter = Optional.of(new Shooter());
+    // m_shooter = Optional.of(new Shooter());
+    m_shooter = Optional.empty();
+
 
     // Define commands
     m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
