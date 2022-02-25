@@ -1,12 +1,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.physical.PhysicalShooter;
 
 public class RunFlywheel extends CommandBase {
-  private final Shooter m_flywheel;
+  private final PhysicalShooter m_flywheel;
 
-  public RunFlywheel(Shooter flywheel) {
+  public RunFlywheel(PhysicalShooter flywheel) {
     m_flywheel = flywheel;
     addRequirements(flywheel);
   }

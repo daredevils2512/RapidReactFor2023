@@ -12,9 +12,11 @@ import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.physical.PhysicalClimber;
+import frc.robot.subsystems.physical.PhysicalDrivetrain;
+import frc.robot.subsystems.physical.PhysicalIntake;
+import frc.robot.subsystems.physical.PhysicalMagazine;
+import frc.robot.subsystems.physical.PhysicalShooter;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
 import frc.robot.commands.ShootLowGoal;
@@ -22,8 +24,6 @@ import frc.robot.commands.DriveShiftCommand;
 import frc.robot.commands.DrivetrainCommand;
 import frc.robot.commands.RevShooter;
 import frc.robot.io.ControlBoard;
-import frc.robot.subsystems.Magazine;
-import frc.robot.subsystems.Shooter;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,11 +46,11 @@ public class RobotContainer {
   private final LoggingManager m_logManager;
 
   // Subsystems
-  private final Optional<Drivetrain> m_drivetrainSub;
-  private final Optional<Climber> m_climber;
-  private final Optional<Intake> m_intakeSub;
-  private final Optional<Magazine> m_magazine;
-  private final Optional<Shooter> m_shooter;
+  private final Optional<PhysicalDrivetrain> m_drivetrainSub;
+  private final Optional<PhysicalClimber> m_climber;
+  private final Optional<PhysicalIntake> m_intakeSub;
+  private final Optional<PhysicalMagazine> m_magazine;
+  private final Optional<PhysicalShooter> m_shooter;
 
   // Commands
   private final ActuateShiftCommand m_intakeShift;
@@ -115,11 +115,11 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define optionals
-    m_climber = Optional.of(new Climber());
-    m_drivetrainSub = Optional.of(new Drivetrain());
-    m_intakeSub = Optional.of(new Intake());
-    m_magazine = Optional.of(new Magazine());
-    m_shooter = Optional.of(new Shooter());
+    m_climber = Optional.of(new PhysicalClimber());
+    m_drivetrainSub = Optional.of(new PhysicalDrivetrain());
+    m_intakeSub = Optional.of(new PhysicalIntake());
+    m_magazine = Optional.of(new PhysicalMagazine());
+    m_shooter = Optional.of(new PhysicalShooter());
 
     // Define commands
     m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;

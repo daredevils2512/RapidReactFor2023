@@ -2,11 +2,11 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.physical.PhysicalDrivetrain;
 
 public class DrivetrainCommand extends CommandBase {
   // Variables
-  private final Drivetrain m_drivetrain;
+  private final PhysicalDrivetrain m_drivetrain;
   private final DoubleSupplier m_move;
   private final DoubleSupplier m_turn;
 
@@ -15,7 +15,7 @@ public class DrivetrainCommand extends CommandBase {
    * @param move Control for forward and backward movement
    * @param turn Control for left and right movement
   */
-  public DrivetrainCommand(Drivetrain drivetrain, DoubleSupplier move, DoubleSupplier turn) {
+  public DrivetrainCommand(PhysicalDrivetrain drivetrain, DoubleSupplier move, DoubleSupplier turn) {
     m_drivetrain = drivetrain;
     m_move = move;
     m_turn = turn;

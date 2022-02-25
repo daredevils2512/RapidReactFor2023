@@ -1,13 +1,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.physical.PhysicalShooter;
 
 public class RevShooter extends CommandBase {
   private double speed;
-  private Shooter m_shooter;
+  private PhysicalShooter m_shooter;
 
-  public RevShooter(Shooter shooter, double speed) {
+  public RevShooter(PhysicalShooter shooter, double speed) {
     m_shooter = shooter;
 
   }

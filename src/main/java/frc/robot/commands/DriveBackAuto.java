@@ -1,15 +1,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.physical.PhysicalDrivetrain;
 
 public class DriveBackAuto extends CommandBase{
-  private final Drivetrain m_drivetrain;
+  private final PhysicalDrivetrain m_drivetrain;
   private final double m_move;
   private final double m_distance;
   private double m_initialDistance;
 
-  public DriveBackAuto(Drivetrain drivetrain, double move, double distance){
+  public DriveBackAuto(PhysicalDrivetrain drivetrain, double move, double distance){
     m_drivetrain = drivetrain;
     m_move = move;
     m_distance = distance;

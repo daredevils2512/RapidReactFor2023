@@ -1,13 +1,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.physical.PhysicalClimber;
 
 public class ClimberCommand extends CommandBase {
-  private final Climber m_climber;
+  private final PhysicalClimber m_climber;
   private final double m_speed;
 
-  public ClimberCommand(Climber climber, double speed) {
+  public ClimberCommand(PhysicalClimber climber, double speed) {
     m_climber = climber;
     m_speed = speed;
     addRequirements(m_climber);
