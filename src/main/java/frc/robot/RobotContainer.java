@@ -54,7 +54,8 @@ public class RobotContainer {
 
   // Commands
   private final ActuateShiftCommand m_intakeShift;
-  private final ClimberCommand m_climberComamnd;
+  private final ClimberCommand m_climberUpComamnd;
+  private final ClimberCommand m_climberDownComamnd;
   private final DriveBackAuto m_auto;
   private final DriveShiftCommand m_driveShift;
   private final DrivetrainCommand m_drivetrainCommand;
@@ -63,6 +64,7 @@ public class RobotContainer {
   private final RunFlywheel m_runFlywheel;
   private final RunMag m_runMag;
   private final ShootLowGoal m_shootLowGoal;
+ 
 
   // Controls
   private final ControlBoard m_controlBoard;
@@ -99,16 +101,10 @@ public class RobotContainer {
     return m_controlBoard.xboxController.getRightTrigger();
   }
 
-  /** @return XAxisLeft (this is temporary) */
-  public double getMagz() {
-    // TODO: Change to correct controls!
-    return m_controlBoard.xboxController.getXAxisLeft();
-  }
+ 
 
-  /** @return YAxisRight (this is temporary) */
-  public double getClimber() {
-    return m_controlBoard.xboxController.getYAxisRight();
-  }
+
+ 
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -125,14 +121,15 @@ public class RobotContainer {
 
     // Define commands
     m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
-    m_climberComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), getClimber()) : null;
+    m_climberUpComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), .5): null;
+    m_climberDownComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), -.5) : null;
     m_auto = m_drivetrainSub.isPresent() ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), () -> getIntake()) : null;
     m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), .75) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
-    m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 0) : null;
+    m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 1) : null;
     m_shootLowGoal = null; // TODO: idk what this is
 
     // Define
@@ -164,14 +161,15 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // TODO Make correct controls
     if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
-    if (m_climber.isPresent()) m_climber.get().setDefaultCommand(m_climberComamnd);
+    if (m_climber.isPresent()) m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
+    if (m_climber.isPresent()) m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
     // m_auto command here
     if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
     if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
     if (m_intakeSub.isPresent()) m_intakeSub.get().setDefaultCommand(m_intakeCommand);
     if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
     // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
-    if (m_magazine.isPresent()) m_magazine.get().setDefaultCommand(m_runMag);
+    if (m_magazine.isPresent()) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
   }
 
   /**

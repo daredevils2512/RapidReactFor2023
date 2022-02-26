@@ -27,7 +27,7 @@ public class Shooter extends NTSubsystem {
     m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
     m_speed.setDouble(0);
 
-    // m_encoder = new Encoder(Constants.shooterEncoderChannelA, Constants.shooterEncoderChannelB);
+    // m_motor.getSelectedSensorVelocity() 
     // m_encoder.setDistancePerPulse(1./4096);
 
     m_motor = new WPI_TalonFX(Constants.shooterID);
