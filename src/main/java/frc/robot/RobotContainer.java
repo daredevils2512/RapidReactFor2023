@@ -95,17 +95,6 @@ public class RobotContainer {
     return m_controlBoard.xboxController.getXAxisRight();
   }
 
-  /** @return Right Trigger (this is temporary) */
-  public double getIntake() {
-    // TODO: Change to correct controls!
-    return m_controlBoard.xboxController.getRightTrigger();
-  }
-
- 
-
-
- 
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -126,7 +115,7 @@ public class RobotContainer {
     m_auto = m_drivetrainSub.isPresent() ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
-    m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), () -> getIntake()) : null;
+    m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), ()-> 1) : null;
     m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), .75) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
     m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 1) : null;
@@ -166,7 +155,7 @@ public class RobotContainer {
     // m_auto command here
     if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
     if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
-    if (m_intakeSub.isPresent()) m_intakeSub.get().setDefaultCommand(m_intakeCommand);
+    if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseMiddleLeft.whileHeld(m_intakeCommand);
     if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
     // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     if (m_magazine.isPresent()) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
