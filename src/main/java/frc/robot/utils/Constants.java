@@ -53,7 +53,7 @@ public static final double limelightLensHeightInches = 26;
 // distance from the target to the floor
 public static final double goalHeightInches = 104;
 //desired distance from the target
-public static final double desiredDistance = 0.0; 
+public static final double desiredDistance = 66; 
 
 
   // Encoder IDs
