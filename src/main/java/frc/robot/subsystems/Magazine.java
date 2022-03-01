@@ -13,6 +13,7 @@ public class Magazine extends NTSubsystem {
 
     // Assign motors
     m_magMotor = new WPI_TalonSRX(Constants.magID);
+    m_magMotor.setInverted(true);
   }
 
   public void moveBalls (double magSpeed) {

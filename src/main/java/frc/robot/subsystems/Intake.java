@@ -24,7 +24,7 @@ public class Intake extends NTSubsystem {
         
     // Sets up inversions, etc.
     m_intake1.setInverted(false);
-    m_intake2.setInverted(true);
+    m_intake2.setInverted(false);
     m_intake2.follow(m_intake1);
 
     // Shifters

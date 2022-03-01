@@ -120,7 +120,7 @@ public class RobotContainer {
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), ()-> 1) : null;
-    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), .75) : null;
+    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), 1) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
     m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 1) : null;
     m_shootLowGoal = null; // TODO: idk what this is
@@ -162,7 +162,7 @@ public class RobotContainer {
     // m_auto command here
     if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
     if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
-    if (m_intakeSub.isPresent()) m_controlBoard.buttonBox.bigWhite.whileHeld(m_intakeCommand);
+    if (m_intakeSub.isPresent()) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_intakeCommand);
     if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
     // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     if (m_magazine.isPresent()) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
