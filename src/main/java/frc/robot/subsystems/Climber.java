@@ -17,6 +17,7 @@ public class Climber extends NTSubsystem {
     m_rightMotor = new TalonSRX(Constants.climber1ID);
     m_leftMotor = new TalonSRX(Constants.climber2ID);
     m_leftMotor.follow(m_rightMotor);
+    m_leftMotor.setInverted(true);
   }
 
   /** Sets the speed of the climbing motors

@@ -7,11 +7,13 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.utils.Constants;
 
+import java.util.logging.Level;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Shooter extends NTSubsystem {
   // Motor stuff
-  private final Encoder m_encoder;
+  // private final Encoder m_encoder;
   private final WPI_TalonFX m_motor;
   private final SlewRateLimiter m_limiter;
   private final SimpleMotorFeedforward feedforward;
@@ -20,13 +22,13 @@ public class Shooter extends NTSubsystem {
   private final NetworkTableEntry m_speed;
 
   public Shooter() {
-    super("Shooter");
+    super("Shooter", Level.FINE);
 
     m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
     m_speed.setDouble(0);
 
-    m_encoder = new Encoder(Constants.shooterEncoderChannelA, Constants.shooterEncoderChannelB);
-    m_encoder.setDistancePerPulse(1./4096);
+    // m_motor.getSelectedSensorVelocity() 
+    // m_encoder.setDistancePerPulse(1./4096);
 
     m_motor = new WPI_TalonFX(Constants.shooterID);
       
@@ -35,7 +37,7 @@ public class Shooter extends NTSubsystem {
   }
 
   public void spitBalls(double speed) {
-    speed = m_limiter.calculate(speed);
+    // speed = m_limiter.calculate(speed);
     m_motor.set(speed);
     m_logger.fine("set: " + get());
   }  
@@ -51,9 +53,9 @@ public class Shooter extends NTSubsystem {
     m_logger.fine("set: " + get());
   }
  
-  public double encoderRate(int encoder){
-    return m_encoder.getRate();
-  }
+  // public double encoderRate(int encoder){
+  //   return m_encoder.getRate();
+  // }
   
   public double get(){
     return m_motor.get(); 

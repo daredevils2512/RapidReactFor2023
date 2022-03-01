@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveBackAuto;
 import frc.robot.commands.ActuateShiftCommand;
+import frc.robot.commands.Aim;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
@@ -20,6 +21,7 @@ import frc.robot.commands.RunMag;
 import frc.robot.commands.ShootLowGoal;
 import frc.robot.commands.DriveShiftCommand;
 import frc.robot.commands.DrivetrainCommand;
+import frc.robot.commands.FindRange;
 import frc.robot.commands.RevShooter;
 import frc.robot.io.ControlBoard;
 import frc.robot.subsystems.Magazine;
@@ -51,10 +53,11 @@ public class RobotContainer {
   private final Optional<Intake> m_intakeSub;
   private final Optional<Magazine> m_magazine;
   private final Optional<Shooter> m_shooter;
-
+  
   // Commands
   private final ActuateShiftCommand m_intakeShift;
-  private final ClimberCommand m_climberComamnd;
+  private final ClimberCommand m_climberUpComamnd;
+  private final ClimberCommand m_climberDownComamnd;
   private final DriveBackAuto m_auto;
   private final DriveShiftCommand m_driveShift;
   private final DrivetrainCommand m_drivetrainCommand;
@@ -63,6 +66,9 @@ public class RobotContainer {
   private final RunFlywheel m_runFlywheel;
   private final RunMag m_runMag;
   private final ShootLowGoal m_shootLowGoal;
+  private final Aim m_aim;
+  private final FindRange m_FindRange;
+ 
 
   // Controls
   private final ControlBoard m_controlBoard;
@@ -91,47 +97,35 @@ public class RobotContainer {
   /** @return Right Stick x-Axis */
   public double getTurn() {
     return m_controlBoard.xboxController.getXAxisRight();
-  }
-
-  /** @return Right Trigger (this is temporary) */
-  public double getIntake() {
-    // TODO: Change to correct controls!
-    return m_controlBoard.xboxController.getRightTrigger();
-  }
-
-  /** @return XAxisLeft (this is temporary) */
-  public double getMagz() {
-    // TODO: Change to correct controls!
-    return m_controlBoard.xboxController.getXAxisLeft();
-  }
-
-  /** @return YAxisRight (this is temporary) */
-  public double getClimber() {
-    return m_controlBoard.xboxController.getYAxisRight();
-  }
-
+  } 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Define optionals
     m_climber = Optional.empty();
-    m_drivetrainSub = Optional.of(new Drivetrain());
-    m_intakeSub = Optional.empty(); 
+    m_drivetrainSub = Optional.empty();
+    m_intakeSub = Optional.empty();
     m_magazine = Optional.empty();
+    // m_shooter = Optional.of(new Shooter());
     m_shooter = Optional.empty();
+
 
     // Define commands
     m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
-    m_climberComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), getClimber()) : null;
+    m_climberUpComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), .5): null;
+    m_climberDownComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), -.5) : null;
     m_auto = m_drivetrainSub.isPresent() ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
-    m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), () -> getIntake()) : null;
-    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), 0) : null;
+    m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), ()-> 1) : null;
+    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), .75) : null;
     m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
-    m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 0) : null;
+    m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 1) : null;
     m_shootLowGoal = null; // TODO: idk what this is
+
+    m_aim = m_drivetrainSub.isPresent() ? new Aim(m_drivetrainSub.get()):null;
+    m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
 
     // Define
     m_logManager = new LoggingManager();
@@ -162,14 +156,17 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // TODO Make correct controls
     if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
-    if (m_climber.isPresent()) m_climber.get().setDefaultCommand(m_climberComamnd);
+    if (m_climber.isPresent()) m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
+    if (m_climber.isPresent()) m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
     // m_auto command here
     if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
     if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
-    if (m_intakeSub.isPresent()) m_intakeSub.get().setDefaultCommand(m_intakeCommand);
+    if (m_intakeSub.isPresent()) m_controlBoard.buttonBox.bigWhite.whileHeld(m_intakeCommand);
     if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
-    if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
-    if (m_magazine.isPresent()) m_magazine.get().setDefaultCommand(m_runMag);
+    // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
+    if (m_magazine.isPresent()) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
+    if (m_drivetrainSub.isPresent()) m_controlBoard.buttonBox.yellow.whileHeld(m_aim);
+    if (m_drivetrainSub.isPresent()) m_controlBoard.buttonBox.green.whileHeld(m_FindRange); 
   }
 
   /**

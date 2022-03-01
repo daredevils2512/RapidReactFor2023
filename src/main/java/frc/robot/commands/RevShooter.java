@@ -9,6 +9,7 @@ public class RevShooter extends CommandBase {
 
   public RevShooter(Shooter shooter, double speed) {
     m_shooter = shooter;
+    this.speed = speed;
 
   }
 
@@ -24,6 +25,11 @@ public class RevShooter extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    m_shooter.spitBalls(0);
+  }
+  @Override
+  public boolean isFinished(){
+    return false;
   }
 
 }
