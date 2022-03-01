@@ -36,12 +36,11 @@ public final class Constants {
   public static final int drivetrainLeftID2 = 11; 
   public static final int drivetrainRightID1 = 2;
   public static final int drivetrainRightID2 = 3;
-  public static final int intake1ID = 4; 
+  public static final int intake1ID = 6; 
   public static final int intake2ID = 5;
-  //TODO: fix this shit beacue CAD fucked up and added/ subtrated a mototor. 
-  // public static final int intake3ID = 0; 
 
-  public static final int magID = 6;
+
+  public static final int magID = 4;
   public static final int climber1ID = 7;
   public static final int climber2ID = 8;
   public static final int shooterID = 9; 

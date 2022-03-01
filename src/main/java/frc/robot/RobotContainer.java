@@ -97,7 +97,8 @@ public class RobotContainer {
   /** @return Right Stick x-Axis */
   public double getTurn() {
     return m_controlBoard.xboxController.getXAxisRight();
-  } 
+  }
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -177,4 +178,4 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return null;
   }
-}
+} 
