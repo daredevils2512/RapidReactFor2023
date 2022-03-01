@@ -100,7 +100,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define optionals
-    m_climber = Optional.empty();
+    m_climber = Optional.of(new Climber());
     m_drivetrainSub = Optional.empty();
     m_intakeSub = Optional.empty();
     m_magazine = Optional.empty();
@@ -169,4 +169,4 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return null;
   }
-}
+} 
