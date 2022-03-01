@@ -1,9 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Intake;
 
-public class ActuateShiftCommand extends CommandBase {
+public class ActuateShiftCommand extends InstantCommand {
   // Variables
   private final Intake m_intake;
 
