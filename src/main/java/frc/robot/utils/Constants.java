@@ -36,15 +36,25 @@ public final class Constants {
   public static final int drivetrainLeftID2 = 11; 
   public static final int drivetrainRightID1 = 2;
   public static final int drivetrainRightID2 = 3;
-  public static final int intake1ID = 4; 
+  public static final int intake1ID = 6; 
   public static final int intake2ID = 5;
-  //TODO: fix this shit beacue CAD fucked up and added/ subtrated a mototor. 
-  // public static final int intake3ID = 0; 
 
-  public static final int magID = 6;
+
+  public static final int magID = 4;
   public static final int climber1ID = 7;
   public static final int climber2ID = 8;
   public static final int shooterID = 9; 
+
+  // Vision, Baby! 
+  // how many degrees back is your limelight rotated from perfectly vertical? TODO:FIX THIS SHIT
+public static final double limelightMountAngleDegrees = 26.39;
+// distance from the center of the Limelight lens to the floor TODO: THIS SHIT WACK
+public static final double limelightLensHeightInches = 26;
+// distance from the target to the floor
+public static final double goalHeightInches = 104;
+//desired distance from the target
+public static final double desiredDistance = 0.0; 
+
 
   // Encoder IDs
   public static final int drivetrainLeftEncoderChannelA = 1; 
@@ -61,8 +71,8 @@ public final class Constants {
   public static final int drivetrainRightBackwardChannel = 3; // TODO find value
   public static final int intakeShifter1ForwardID = 4; // TODO find value
   public static final int intakeShifter1BackwardID = 5; // TODO find value
-  // public static final int intakeShifter2ForwardID = 0; // TODO find value
-  // public static final int intakeShifter2BackwardID = 0; // TODO find value
+  public static final int intakeShifter2ForwardID = 0; // TODO find value
+  public static final int intakeShifter2BackwardID = 0; // TODO find value
   public static final Value intakeExtendedValue = Value.kForward; // TODO find value
   public static final Value intakeRetractedValue = Value.kReverse; // TODO find value
   public static final Value drivetrainLowGearValue = Value.kForward; // TODO find value

@@ -120,7 +120,13 @@ public class Drivetrain extends NTSubsystem {
     m_rightShifter.set(wantsLowGear ? Constants.drivetrainLowGearValue : Constants.drivetrainHighGearValue);
     m_logger.fine("set low gear: " + wantsLowGear);
   }
-
+  public void aimLeft(double speed) {
+    m_left.set(speed);
+  }
+  public void aimRight(double speed){
+    m_right.set(speed);
+  }
+  
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
     m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.drivetrainLowGearValue));

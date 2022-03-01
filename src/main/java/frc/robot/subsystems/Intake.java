@@ -21,14 +21,11 @@ public class Intake extends NTSubsystem {
     // Sets IDs for motors
     m_intake1 = new WPI_TalonSRX(Constants.intake1ID);
     m_intake2 = new WPI_TalonSRX(Constants.intake2ID);
-    // m_intake3 = new WPI_TalonSRX(Constants.intake3ID);
         
     // Sets up inversions, etc.
     m_intake1.setInverted(false);
-    m_intake2.setInverted(true);
+    m_intake2.setInverted(false);
     m_intake2.follow(m_intake1);
-    // m_intake3.setInverted(false);
-    // m_intake3.follow(m_intake1);
 
     // Shifters
     m_leftShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter1ForwardID, Constants.intakeShifter1BackwardID);
