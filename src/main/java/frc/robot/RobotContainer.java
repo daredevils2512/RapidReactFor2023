@@ -93,7 +93,7 @@ public class RobotContainer {
   public double getMove() {
     return m_controlBoard.xboxController.getYAxisLeft();
   }
-
+// MARIOOOO NOOOOOOOO
   /** @return Right Stick x-Axis */
   public double getTurn() {
     return m_controlBoard.xboxController.getXAxisRight();
@@ -103,12 +103,12 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define optionals
-    m_climber = Optional.empty();
-    m_drivetrainSub = Optional.empty();
-    m_intakeSub = Optional.empty();
-    m_magazine = Optional.empty();
-    // m_shooter = Optional.of(new Shooter());
-    m_shooter = Optional.empty();
+    m_climber = Optional.of( new Climber());
+    m_drivetrainSub = Optional.of(new Drivetrain());
+    m_intakeSub = Optional.of( new Intake());
+    m_magazine = Optional.of( new Magazine());
+    m_shooter = Optional.of(new Shooter());
+    // m_shooter = Optional.empty();
 
 
     // Define commands
