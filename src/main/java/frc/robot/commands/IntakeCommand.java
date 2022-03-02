@@ -24,4 +24,8 @@ public class IntakeCommand extends CommandBase {
   public void execute() {
     m_intake.setIntake(m_speed.getAsDouble());
   }
+  @Override
+  public void  end(boolean interupted){
+    m_intake.setIntake(0.0);
+  }
 }

@@ -27,9 +27,9 @@ public class Drivetrain extends NTSubsystem {
   private final NetworkTableEntry m_rightDistanceEntry;
   private final NetworkTableEntry m_leftEncoderEntry;
   private final NetworkTableEntry m_rightEncoderEntry;
+  private final NetworkTableEntry m_getLowGearEntry;
   private final Encoder m_leftEncoder; 
   private final Encoder m_rightEncoder;
-  private final NetworkTableEntry m_getLowGearEntry;
 
   // Shifting
   private final DoubleSolenoid m_leftShifter;
@@ -37,6 +37,7 @@ public class Drivetrain extends NTSubsystem {
 
   // Rate limiter
   private final SlewRateLimiter m_rateLim;
+  private final SlewRateLimiter m_rateLimTurn;
 
   public Drivetrain() {
     super("DrivetrainSub");
@@ -70,6 +71,7 @@ public class Drivetrain extends NTSubsystem {
 
     // Rate limiter
     m_rateLim = new SlewRateLimiter(Constants.drivetrainRateLimNUM);
+    m_rateLimTurn = new SlewRateLimiter(Constants.drivetrainRateLimNUM);
   }
 
   /** Runs the arcade drive 
@@ -78,7 +80,7 @@ public class Drivetrain extends NTSubsystem {
   */
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(move);
-    turn = m_rateLim.calculate(turn);
+    turn = m_rateLimTurn.calculate(turn);
     m_drive.arcadeDrive((move)*Constants.drivetrainMaxSpeed, (turn)*Constants.drivetrainMaxTurn);
   }
 
@@ -118,7 +120,13 @@ public class Drivetrain extends NTSubsystem {
     m_rightShifter.set(wantsLowGear ? Constants.drivetrainLowGearValue : Constants.drivetrainHighGearValue);
     m_logger.fine("set low gear: " + wantsLowGear);
   }
-
+  public void aimLeft(double speed) {
+    m_left.set(speed);
+  }
+  public void aimRight(double speed){
+    m_right.set(speed);
+  }
+  
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
     m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.drivetrainLowGearValue));
