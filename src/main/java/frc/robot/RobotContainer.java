@@ -28,6 +28,7 @@ import frc.robot.subsystems.physical.PhysicalDrivetrain;
 import frc.robot.subsystems.physical.PhysicalIntake;
 import frc.robot.subsystems.physical.PhysicalMagazine;
 import frc.robot.subsystems.physical.PhysicalShooter;
+import frc.robot.subsystems.physical.PhysicalSparkDrivetrain;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
 import frc.robot.commands.ShootLowGoal;
@@ -62,7 +63,7 @@ public class RobotContainer {
   private final boolean intakeEnabled = true;
   private final boolean climberEnabled = true;
   private final boolean drivetrainEnabled = true;
-  private final boolean sparkDrivetrainEnabled = true;
+  private final boolean sparkDrivetrainEnabled = false;
 
   // Subsystems
   private final Drivetrain m_drivetrainSub;
@@ -122,7 +123,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Define optionals
     m_climber = climberEnabled ? new PhysicalClimber() : new SwiggitySwoogittyClimber();
-    m_drivetrainSub = drivetrainEnabled ? new PhysicalDrivetrain() : new SwiggitySwooggityDrivetrain();
+    m_drivetrainSub = drivetrainEnabled ? (sparkDrivetrainEnabled ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new SwiggitySwooggityDrivetrain();
     m_intakeSub = intakeEnabled ? new PhysicalIntake() : new SwiggitySwooggityIntake();
     m_magazine = magazineEnabled ? new PhysicalMagazine() : new SwiggitySwooggityMagazine();
     m_shooter = shooterEnabled ? new PhysicalShooter() : new SwiggitySwooggityShooter();
