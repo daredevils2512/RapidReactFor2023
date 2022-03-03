@@ -53,6 +53,6 @@ public class Autonomous extends CommandBase {
   }
 
   public Command runShooter() {
-    return m_flywheel.withTimeout(2).andThen(m_mag).withTimeout(1); //TODO find mag time for shooting
+    return m_flywheel.withTimeout(5).andThen(m_mag).withTimeout(5); //TODO find mag time for shooting
   }
 }

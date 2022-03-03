@@ -182,6 +182,6 @@ public class RobotContainer {
    * @return The command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return m_autoDriveBackAndShoot;
   }
 } 
