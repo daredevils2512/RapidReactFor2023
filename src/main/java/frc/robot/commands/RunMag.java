@@ -3,7 +3,6 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Magazine;
-import frc.robot.subsystems.physical.PhysicalMagazine;
 
 public class RunMag extends CommandBase  {
   // Variables

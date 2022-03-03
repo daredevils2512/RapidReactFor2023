@@ -1,7 +1,6 @@
 package frc.robot.subsystems.dummy;
 
 import frc.robot.subsystems.CompresserManager;
-import frc.robot.subsystems.NTSubsystem;
 
 public class DummyCompressor implements CompresserManager {
 

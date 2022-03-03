@@ -1,6 +1,5 @@
 package frc.robot;
 
-import java.util.Optional;
 import java.util.logging.Level;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;

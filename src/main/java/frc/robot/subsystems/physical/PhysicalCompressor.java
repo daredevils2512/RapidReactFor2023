@@ -1,8 +1,6 @@
 package frc.robot.subsystems.physical;
 
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.subsystems.CompresserManager;
 import frc.robot.subsystems.NTSubsystem;
 import frc.robot.utils.Constants;
