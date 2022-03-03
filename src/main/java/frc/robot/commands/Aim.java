@@ -19,12 +19,12 @@ public class Aim extends CommandBase{
   
 
 
-  public Aim(Drivetrain drivetrain){
+  public Aim(Drivetrain drivetrain, Limelight limelight){
     m_drivetrain = drivetrain; 
     Kp = 0.2;
     m_limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
     m_tx = m_limelightTable.getEntry("tx");
-   
+    m_limelight = limelight;
 
   }
 
@@ -32,12 +32,13 @@ public class Aim extends CommandBase{
   @Override
   public void initialize() {
   m_limelight.setLEDMode(LimelightLEDMode.ON);
-
+  
   }
 
   /** Called every time the scheduler runs while the command is scheduled. */
   @Override
   public void execute() {
+    
     double m_aimAjust = Kp * m_tx.getDouble(0); 
    m_drivetrain.arcadeDrive(0, m_aimAjust);
   }

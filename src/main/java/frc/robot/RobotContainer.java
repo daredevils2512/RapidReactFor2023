@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveBackAuto;
+import frc.robot.Vision.Limelight;
+import frc.robot.Vision.Limelight.Pipeline;
 import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.Aim;
 import frc.robot.commands.ClimberCommand;
@@ -69,6 +71,7 @@ public class RobotContainer {
   private final ShootLowGoal m_shootLowGoal;
   private final Aim m_aim;
   private final FindRange m_FindRange;
+  private final Limelight m_limelight;
  
 
   // Controls
@@ -110,13 +113,14 @@ public class RobotContainer {
     m_intakeSub = Optional.of( new Intake());
     m_magazine = Optional.of( new Magazine());
     m_shooter = Optional.of(new Shooter());
+    m_limelight = new Limelight(Pipeline.N_E_D);
     // m_shooter = Optional.empty();
 
 
     // Define commands
     m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
-    m_climberUpComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), .5): null;
-    m_climberDownComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), -.5) : null;
+    m_climberUpComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), 1): null;
+    m_climberDownComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), -1) : null;
     m_auto = m_drivetrainSub.isPresent() ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
@@ -127,7 +131,7 @@ public class RobotContainer {
     m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 1) : null;
     m_shootLowGoal = null; // TODO: idk what this is
 
-    m_aim = m_drivetrainSub.isPresent() ? new Aim(m_drivetrainSub.get()):null;
+    m_aim = m_drivetrainSub.isPresent() ? new Aim(m_drivetrainSub.get(), m_limelight):null;
     m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
 
     // Define
