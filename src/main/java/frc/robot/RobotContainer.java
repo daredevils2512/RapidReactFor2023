@@ -16,6 +16,18 @@ import frc.robot.io.NTButton;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Magazine;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.dummy.SwiggitySwooggityDrivetrain;
+import frc.robot.subsystems.dummy.SwiggitySwooggityIntake;
+import frc.robot.subsystems.dummy.SwiggitySwooggityMagazine;
+import frc.robot.subsystems.dummy.SwiggitySwooggityShooter;
+import frc.robot.subsystems.dummy.SwiggitySwoogittyClimber;
+import frc.robot.subsystems.physical.PhysicalClimber;
+import frc.robot.subsystems.physical.PhysicalDrivetrain;
+import frc.robot.subsystems.physical.PhysicalIntake;
+import frc.robot.subsystems.physical.PhysicalMagazine;
+import frc.robot.subsystems.physical.PhysicalShooter;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunMag;
 import frc.robot.commands.ShootLowGoal;
@@ -24,8 +36,6 @@ import frc.robot.commands.DrivetrainCommand;
 import frc.robot.commands.FindRange;
 import frc.robot.commands.RevShooter;
 import frc.robot.io.ControlBoard;
-import frc.robot.subsystems.Magazine;
-import frc.robot.subsystems.Shooter;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -47,13 +57,20 @@ public class RobotContainer {
   // Logging
   private final LoggingManager m_logManager;
 
+  private final boolean shooterEnabled = true;
+  private final boolean magazineEnabled = true;
+  private final boolean intakeEnabled = true;
+  private final boolean climberEnabled = true;
+  private final boolean drivetrainEnabled = true;
+  private final boolean sparkDrivetrainEnabled = true;
+
   // Subsystems
-  private final Optional<Drivetrain> m_drivetrainSub;
-  private final Optional<Climber> m_climber;
-  private final Optional<Intake> m_intakeSub;
-  private final Optional<Magazine> m_magazine;
-  private final Optional<Shooter> m_shooter;
-  
+  private final Drivetrain m_drivetrainSub;
+  private final Climber m_climber;
+  private final Intake m_intakeSub;
+  private final Magazine m_magazine;
+  private final Shooter m_shooter;
+
   // Commands
   private final ActuateShiftCommand m_intakeShift;
   private final ClimberCommand m_climberUpComamnd;
@@ -93,7 +110,7 @@ public class RobotContainer {
   public double getMove() {
     return m_controlBoard.xboxController.getYAxisLeft();
   }
-// MARIOOOO NOOOOOOOO
+  
   /** @return Right Stick x-Axis */
   public double getTurn() {
     return m_controlBoard.xboxController.getXAxisRight();
@@ -104,29 +121,27 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define optionals
-    m_climber = Optional.of( new Climber());
-    m_drivetrainSub = Optional.of(new Drivetrain());
-    m_intakeSub = Optional.of( new Intake());
-    m_magazine = Optional.of( new Magazine());
-    m_shooter = Optional.of(new Shooter());
-    // m_shooter = Optional.empty();
-
+    m_climber = climberEnabled ? new PhysicalClimber() : new SwiggitySwoogittyClimber();
+    m_drivetrainSub = drivetrainEnabled ? new PhysicalDrivetrain() : new SwiggitySwooggityDrivetrain();
+    m_intakeSub = intakeEnabled ? new PhysicalIntake() : new SwiggitySwooggityIntake();
+    m_magazine = magazineEnabled ? new PhysicalMagazine() : new SwiggitySwooggityMagazine();
+    m_shooter = shooterEnabled ? new PhysicalShooter() : new SwiggitySwooggityShooter();
 
     // Define commands
-    m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
-    m_climberUpComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), .5): null;
-    m_climberDownComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), -.5) : null;
-    m_auto = m_drivetrainSub.isPresent() ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
-    m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
-    m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
-    m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), ()-> 1) : null;
-    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), 1) : null;
-    m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
-    m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 1) : null;
+    m_intakeShift = intakeEnabled ? new ActuateShiftCommand(m_intakeSub) : null;
+    m_climberUpComamnd = climberEnabled ? new ClimberCommand(m_climber, .5): null;
+    m_climberDownComamnd = climberEnabled ? new ClimberCommand(m_climber, -.5) : null;
+    m_auto = drivetrainEnabled ? new DriveBackAuto(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
+    m_driveShift = drivetrainEnabled ? new DriveShiftCommand(m_drivetrainSub) : null;
+    m_drivetrainCommand = drivetrainEnabled ? new DrivetrainCommand(m_drivetrainSub, () -> { return getMove(); }, () -> { return getTurn(); }) : null;
+    m_intakeCommand = intakeEnabled ? new IntakeCommand(m_intakeSub, ()-> 1) : null;
+    m_revShooter = shooterEnabled ? new RevShooter(m_shooter, 1) : null;
+    m_runFlywheel = shooterEnabled ? new RunFlywheel(m_shooter) : null;
+    m_runMag = magazineEnabled ? new RunMag(m_magazine, () -> 1) : null;
     m_shootLowGoal = null; // TODO: idk what this is
 
-    m_aim = m_drivetrainSub.isPresent() ? new Aim(m_drivetrainSub.get()):null;
-    m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
+    m_aim = drivetrainEnabled ? new Aim(m_drivetrainSub):null;
+    m_FindRange = drivetrainEnabled ? new FindRange(m_drivetrainSub) :null;
 
     // Define
     m_logManager = new LoggingManager();
@@ -156,18 +171,18 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // TODO Make correct controls
-    if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
-    if (m_climber.isPresent()) m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
-    if (m_climber.isPresent()) m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
+    if (intakeEnabled) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
+    if (climberEnabled) m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
+    if (climberEnabled) m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
     // m_auto command here
-    if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
-    if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
-    if (m_intakeSub.isPresent()) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_intakeCommand);
-    if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
+    if (drivetrainEnabled) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
+    if (drivetrainEnabled) m_drivetrainSub.setDefaultCommand(m_drivetrainCommand);
+    if (intakeEnabled) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_intakeCommand);
+    if (shooterEnabled) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
     // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
-    if (m_magazine.isPresent()) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
-    if (m_drivetrainSub.isPresent()) m_controlBoard.buttonBox.yellow.whileHeld(m_aim);
-    if (m_drivetrainSub.isPresent()) m_controlBoard.buttonBox.green.whileHeld(m_FindRange); 
+    if (magazineEnabled) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
+    if (drivetrainEnabled) m_controlBoard.buttonBox.yellow.whileHeld(m_aim);
+    if (drivetrainEnabled) m_controlBoard.buttonBox.green.whileHeld(m_FindRange); 
   }
 
   /**

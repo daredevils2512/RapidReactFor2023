@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.physical.PhysicalShooter;
 
 public class RunFlywheel extends CommandBase {
   private final Shooter m_flywheel;

@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.physical.PhysicalIntake;
 
 public class ActuateShiftCommand extends InstantCommand {
   // Variables
@@ -13,7 +14,7 @@ public class ActuateShiftCommand extends InstantCommand {
    */
   public ActuateShiftCommand(Intake intake) {
     m_intake = intake;
-    addRequirements(m_intake);
+    // addRequirements(m_intake);
   }
 
   /** Toggles low gear */

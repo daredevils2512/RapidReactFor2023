@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Magazine;
+import frc.robot.subsystems.physical.PhysicalMagazine;
 
 public class RunMag extends CommandBase  {
   // Variables
@@ -10,7 +11,7 @@ public class RunMag extends CommandBase  {
   private final Magazine m_magazine;
 
   /** Assigns variables
-   * @param Magazine The file to use
+   * @param PhysicalMagazine The file to use
    * @param DoubleSupplier Control for the speed of the magazine
    */
   public RunMag(Magazine magazine, DoubleSupplier speed){

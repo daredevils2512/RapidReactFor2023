@@ -4,6 +4,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.physical.PhysicalIntake;
 
 public class IntakeCommand extends CommandBase {
   // Variables
@@ -17,7 +18,7 @@ public class IntakeCommand extends CommandBase {
   public IntakeCommand(Intake intake, DoubleSupplier speed) {
     m_intake = intake;
     m_speed = speed;
-    addRequirements(m_intake);
+    // addRequirements(m_intake);
   }  
 
   /** Executes intake code */
