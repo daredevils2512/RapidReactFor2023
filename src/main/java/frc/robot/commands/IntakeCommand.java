@@ -17,7 +17,7 @@ public class IntakeCommand extends CommandBase {
   public IntakeCommand(Intake intake, DoubleSupplier speed) {
     m_intake = intake;
     m_speed = speed;
-    addRequirements(m_intake);
+    // addRequirements(m_intake);
   }  
 
   /** Executes intake code */
