@@ -81,7 +81,7 @@ public class Drivetrain extends NTSubsystem {
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(move);
     turn = m_rateLimTurn.calculate(turn);
-    m_drive.arcadeDrive((move)*Constants.drivetrainMaxSpeed, (turn)*Constants.drivetrainMaxTurn);
+    m_drive.arcadeDrive((-move)*Constants.drivetrainMaxSpeed, (turn)*Constants.drivetrainMaxTurn);
   }
 
   /** 

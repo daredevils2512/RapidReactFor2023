@@ -19,8 +19,8 @@ public final class Constants {
   // Drivetrain
   public static final int drivetrainEncoderResolution = 1; // TODO find value
   public static final double drivetrainRateLimNUM = 15;
-  public static final double drivetrainMaxSpeed = 0.75; 
-  public static final double drivetrainMaxTurn = 0.75; 
+  public static final double drivetrainMaxSpeed = .75; 
+  public static final double drivetrainMaxTurn = .75; 
   public static final double drivetrainGearRatio = 1; // TODO find vale
   public static final double drivetrainWheelDiameter = 6;
   public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
@@ -53,7 +53,7 @@ public static final double limelightLensHeightInches = 26;
 // distance from the target to the floor
 public static final double goalHeightInches = 104;
 //desired distance from the target
-public static final double desiredDistance = 0.0; 
+public static final double desiredDistance = 66; 
 
 
   // Encoder IDs
