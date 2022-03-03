@@ -39,5 +39,17 @@ public class SwiggitySwooggityDrivetrain implements Drivetrain {
     // TODO Auto-generated method stub
     return false;
   }
+
+  @Override
+  public int getLeftEncoder() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public int getRightEncoder() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
   
 }
