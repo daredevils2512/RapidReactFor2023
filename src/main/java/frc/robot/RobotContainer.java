@@ -14,16 +14,19 @@ import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.CompresserManager;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.dummy.SwiggitySwooggityDrivetrain;
-import frc.robot.subsystems.dummy.SwiggitySwooggityIntake;
-import frc.robot.subsystems.dummy.SwiggitySwooggityMagazine;
-import frc.robot.subsystems.dummy.SwiggitySwooggityShooter;
-import frc.robot.subsystems.dummy.SwiggitySwoogittyClimber;
+import frc.robot.subsystems.dummy.DummyDrivetrain;
+import frc.robot.subsystems.dummy.DummyIntake;
+import frc.robot.subsystems.dummy.DummyMagazine;
+import frc.robot.subsystems.dummy.DummyShooter;
+import frc.robot.subsystems.dummy.DummyClimber;
+import frc.robot.subsystems.dummy.DummyCompressor;
 import frc.robot.subsystems.physical.PhysicalClimber;
+import frc.robot.subsystems.physical.PhysicalCompressor;
 import frc.robot.subsystems.physical.PhysicalDrivetrain;
 import frc.robot.subsystems.physical.PhysicalIntake;
 import frc.robot.subsystems.physical.PhysicalMagazine;
@@ -64,6 +67,7 @@ public class RobotContainer {
   private final boolean climberEnabled = true;
   private final boolean drivetrainEnabled = true;
   private final boolean sparkDrivetrainEnabled = false;
+  private final boolean compressorEnabled = true;
 
   // Subsystems
   private final Drivetrain m_drivetrainSub;
@@ -71,6 +75,7 @@ public class RobotContainer {
   private final Intake m_intakeSub;
   private final Magazine m_magazine;
   private final Shooter m_shooter;
+  private final CompresserManager m_compressor = compressorEnabled ? new PhysicalCompressor() : new DummyCompressor();
 
   // Commands
   private final ActuateShiftCommand m_intakeShift;
@@ -122,11 +127,11 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define optionals
-    m_climber = climberEnabled ? new PhysicalClimber() : new SwiggitySwoogittyClimber();
-    m_drivetrainSub = drivetrainEnabled ? (sparkDrivetrainEnabled ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new SwiggitySwooggityDrivetrain();
-    m_intakeSub = intakeEnabled ? new PhysicalIntake() : new SwiggitySwooggityIntake();
-    m_magazine = magazineEnabled ? new PhysicalMagazine() : new SwiggitySwooggityMagazine();
-    m_shooter = shooterEnabled ? new PhysicalShooter() : new SwiggitySwooggityShooter();
+    m_climber = climberEnabled ? new PhysicalClimber() : new DummyClimber();
+    m_drivetrainSub = drivetrainEnabled ? (sparkDrivetrainEnabled ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new DummyDrivetrain();
+    m_intakeSub = intakeEnabled ? new PhysicalIntake() : new DummyIntake();
+    m_magazine = magazineEnabled ? new PhysicalMagazine() : new DummyMagazine();
+    m_shooter = shooterEnabled ? new PhysicalShooter() : new DummyShooter();
 
     // Define commands
     m_intakeShift = intakeEnabled ? new ActuateShiftCommand(m_intakeSub) : null;
@@ -159,6 +164,8 @@ public class RobotContainer {
     m_shooterSpeedEntry = NetworkTableInstance.getDefault().getEntry("Shooter set speed");
     m_useNTShooterControlEntry.setBoolean(false);
     m_shooterSpeedEntry.setDouble(0);
+
+    m_compressor.setClosedLoopControl(true);
 
   }
 

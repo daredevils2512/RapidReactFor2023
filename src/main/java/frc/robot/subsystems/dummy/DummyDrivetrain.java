@@ -2,7 +2,7 @@ package frc.robot.subsystems.dummy;
 
 import frc.robot.subsystems.Drivetrain;
 
-public class SwiggitySwooggityDrivetrain implements Drivetrain {
+public class DummyDrivetrain implements Drivetrain {
 
   @Override
   public void arcadeDrive(double move, double turn) {

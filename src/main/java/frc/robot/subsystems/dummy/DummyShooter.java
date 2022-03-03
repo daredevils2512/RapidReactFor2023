@@ -2,7 +2,7 @@ package frc.robot.subsystems.dummy;
 
 import frc.robot.subsystems.Shooter;
 
-public class SwiggitySwooggityShooter implements Shooter {
+public class DummyShooter implements Shooter {
 
   @Override
   public void spitBalls(double speed) {

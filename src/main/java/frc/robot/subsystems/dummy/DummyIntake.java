@@ -2,7 +2,7 @@ package frc.robot.subsystems.dummy;
 
 import frc.robot.subsystems.Intake;
 
-public class SwiggitySwooggityIntake implements Intake {
+public class DummyIntake implements Intake {
 
   @Override
   public void setExtended(boolean wantsExtended) {

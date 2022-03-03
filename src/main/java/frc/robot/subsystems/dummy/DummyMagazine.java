@@ -2,7 +2,7 @@ package frc.robot.subsystems.dummy;
 
 import frc.robot.subsystems.Magazine;
 
-public class SwiggitySwooggityMagazine implements Magazine {
+public class DummyMagazine implements Magazine {
 
   @Override
   public void moveBalls(double speed) {

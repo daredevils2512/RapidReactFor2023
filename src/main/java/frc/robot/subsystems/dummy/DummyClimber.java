@@ -2,7 +2,7 @@ package frc.robot.subsystems.dummy;
 
 import frc.robot.subsystems.Climber;
 
-public class SwiggitySwoogittyClimber implements Climber {
+public class DummyClimber implements Climber {
 
   @Override
   public void setClimbSpeed(double speed) {
