@@ -85,7 +85,8 @@ public class RobotContainer {
   private final DrivetrainCommand m_drivetrainCommand;
   private final IntakeCommand m_intakeCommand;
   private final RevShooter m_revShooter;
-  private final RunFlywheel m_runFlywheel;
+  private final RevShooter m_revShooter2;
+  // private final RunFlywheel m_runFlywheel;
   private final RunMag m_runMag;
   private final ShootLowGoal m_shootLowGoal;
   private final Aim m_aim;
@@ -133,20 +134,20 @@ public class RobotContainer {
     m_shooter = shooterEnabled ? new PhysicalShooter() : new DummyShooter();
 
     // Define commands
-    m_intakeShift = intakeEnabled ? new ActuateShiftCommand(m_intakeSub) : null;
-    m_climberUpComamnd = climberEnabled ? new ClimberCommand(m_climber, .5): null;
-    m_climberDownComamnd = climberEnabled ? new ClimberCommand(m_climber, -.5) : null;
-    m_auto = drivetrainEnabled ? new DriveBackAuto(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
-    m_driveShift = drivetrainEnabled ? new DriveShiftCommand(m_drivetrainSub) : null;
-    m_drivetrainCommand = drivetrainEnabled ? new DrivetrainCommand(m_drivetrainSub, () -> { return getMove(); }, () -> { return getTurn(); }) : null;
-    m_intakeCommand = intakeEnabled ? new IntakeCommand(m_intakeSub, ()-> 1) : null;
-    m_revShooter = shooterEnabled ? new RevShooter(m_shooter, 1) : null;
-    m_runFlywheel = shooterEnabled ? new RunFlywheel(m_shooter) : null;
-    m_runMag = magazineEnabled ? new RunMag(m_magazine, () -> 1) : null;
+    m_intakeShift = new ActuateShiftCommand(m_intakeSub);
+    m_climberUpComamnd = new ClimberCommand(m_climber, .5);
+    m_climberDownComamnd = new ClimberCommand(m_climber, -.5);
+    m_auto = new DriveBackAuto(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
+    m_driveShift = new DriveShiftCommand(m_drivetrainSub);
+    m_drivetrainCommand = new DrivetrainCommand(m_drivetrainSub, () -> { return getMove(); }, () -> { return getTurn(); });
+    m_intakeCommand = new IntakeCommand(m_intakeSub, ()-> 1);
+    m_revShooter = new RevShooter(m_shooter, 1);
+    m_runFlywheel = new RunFlywheel(m_shooter);
+    m_runMag = new RunMag(m_magazine, () -> 1);
     m_shootLowGoal = null; // TODO: idk what this is
 
-    m_aim = drivetrainEnabled ? new Aim(m_drivetrainSub):null;
-    m_FindRange = drivetrainEnabled ? new FindRange(m_drivetrainSub) :null;
+    m_aim = new Aim(m_drivetrainSub);
+    m_FindRange = new FindRange(m_drivetrainSub);
 
     // Define
     m_logManager = new LoggingManager();
@@ -178,18 +179,18 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // TODO Make correct controls
-    if (intakeEnabled) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
-    if (climberEnabled) m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
-    if (climberEnabled) m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
+    m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
+    m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
+    m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
     // m_auto command here
-    if (drivetrainEnabled) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
-    if (drivetrainEnabled) m_drivetrainSub.setDefaultCommand(m_drivetrainCommand);
-    if (intakeEnabled) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_intakeCommand);
-    if (shooterEnabled) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
-    // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
-    if (magazineEnabled) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
-    if (drivetrainEnabled) m_controlBoard.buttonBox.yellow.whileHeld(m_aim);
-    if (drivetrainEnabled) m_controlBoard.buttonBox.green.whileHeld(m_FindRange); 
+    m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
+    m_drivetrainSub.setDefaultCommand(m_drivetrainCommand);
+    m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_intakeCommand);
+    m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
+    // m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
+    m_controlBoard.extreme.trigger.whileHeld(m_runMag);
+    m_controlBoard.buttonBox.yellow.whileHeld(m_aim);
+    m_controlBoard.buttonBox.green.whileHeld(m_FindRange); 
   }
 
   /**
