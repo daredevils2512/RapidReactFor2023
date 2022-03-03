@@ -31,6 +31,8 @@ public final class Constants {
   public static final int shooterBackwardChannel = 1; // TODO find value
   public static final double shooterRateLimNUM = 0.5; // TODO find best value
 
+  // climber
+  public static final double climberSpeed = 1;
   // Motor IDs
   public static final int drivetrainLeftID1 = 10; 
   public static final int drivetrainLeftID2 = 11; 
@@ -53,7 +55,7 @@ public static final double limelightLensHeightInches = 26;
 // distance from the target to the floor
 public static final double goalHeightInches = 104;
 //desired distance from the target
-public static final double desiredDistance = 66; 
+public static final double desiredDistance = 66.;
 
 
   // Encoder IDs

@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -21,7 +23,9 @@ public class CompresserManager  extends NTSubsystem {
     m_closedLoopControlEntry = m_networkTable.getEntry("closed loop control");
   }
     
-  public void periodic() {}
+  public void periodic() {
+    Logger.getGlobal().info("Switch: " + (m_compressor.getPressureSwitchValue() ? "low" : "high"));
+  }
       
   public void setClosedLoopControl(boolean wantsClosedLoopControl) {
     // m_compressor.setClosedLoopControl(wantsClosedLoopControl);

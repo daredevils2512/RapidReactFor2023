@@ -137,6 +137,10 @@ public class Drivetrain extends NTSubsystem {
     setLowGear(!getLowGear());
   }
   
+  public double getAverageDistance() {
+    return (getLeftDistance() + getRightDistance()) / 2;
+  }
+  
   /** Periodically runs code */
   @Override
   public void periodic() { 

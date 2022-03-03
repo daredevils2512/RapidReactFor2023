@@ -7,30 +7,32 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.DriveBackAuto;
 import frc.robot.Vision.Limelight;
 import frc.robot.Vision.Limelight.Pipeline;
+import frc.robot.commands.Autonomous;
 import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.Aim;
 import frc.robot.commands.ClimberCommand;
+import frc.robot.commands.DriveBackAutoCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.io.NTButton;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.RunFlywheel;
-import frc.robot.commands.RunMag;
-import frc.robot.commands.ShootLowGoal;
+import frc.robot.commands.RunFlywheelCommand;
+import frc.robot.commands.RunMagCommand;
+import frc.robot.commands.ShootLowGoalCommand;
 import frc.robot.commands.DriveShiftCommand;
 import frc.robot.commands.DrivetrainCommand;
+import frc.robot.commands.RevShooterCommand;
 import frc.robot.commands.FindRange;
-import frc.robot.commands.RevShooter;
 import frc.robot.io.ControlBoard;
 import frc.robot.subsystems.Magazine;
 import frc.robot.subsystems.Shooter;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -57,22 +59,22 @@ public class RobotContainer {
   private final Optional<Shooter> m_shooter;
   
   // Commands
-  private final ActuateShiftCommand m_intakeShift;
-  private final ClimberCommand m_climberUpComamnd;
-  private final ClimberCommand m_climberDownComamnd;
-  private final DriveBackAuto m_auto;
-  private final DriveShiftCommand m_driveShift;
-  private final DrivetrainCommand m_drivetrainCommand;
-  private final IntakeCommand m_intakeCommand;
-  private final RevShooter m_revShooter;
-  private final RevShooter m_revShooter2;
-  // private final RunFlywheel m_runFlywheel;
-  private final RunMag m_runMag;
-  private final ShootLowGoal m_shootLowGoal;
-  private final Aim m_aim;
-  private final FindRange m_FindRange;
+  private final Command m_intakeShift;
+  private final Command m_climberUpComamnd;
+  private final Command m_climberDownComamnd;
+  private final Command m_autoDriveBack;
+  private final Command m_autoDriveBackAndShoot;
+  private final Command m_driveShift;
+  private final Command m_drivetrainCommand;
+  private final Command m_intakeCommand;
+  private final Command m_revShooter;
+  private final Command m_revShooter2;
+  // private final Command m_runFlywheel;
+  private Command m_runMag;
+  private final Command m_shootLowGoal;
+  private final Command m_aim;
+  private final Command m_FindRange;
   private final Limelight m_limelight;
- 
 
   // Controls
   private final ControlBoard m_controlBoard;
@@ -117,22 +119,32 @@ public class RobotContainer {
     // m_shooter = Optional.empty();
 
 
+
     // Define commands
     m_intakeShift = m_intakeSub.isPresent() ? new ActuateShiftCommand(m_intakeSub.get()) : null;
-    m_climberUpComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), 1): null;
-    m_climberDownComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), -1) : null;
-    m_auto = m_drivetrainSub.isPresent() ? new DriveBackAuto(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
+    m_climberUpComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), Constants.climberSpeed): null;
+    m_climberDownComamnd = m_climber.isPresent() ? new ClimberCommand(m_climber.get(), -Constants.climberSpeed) : null;
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
+    m_runMag = m_magazine.isPresent() ? new RunMagCommand(m_magazine.get(), () -> 1) : null;
+    // m_auto = m_drivetrainSub.isPresent() ? new Autonomous(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE, m_runFlywheel, m_runMag, 234) : null; //TODO change shooter value 
+    m_autoDriveBackAndShoot = m_drivetrainSub.isPresent() && m_shooter.isPresent() && m_magazine.isPresent() ?
+      new DriveBackAutoCommand(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;  
+    m_autoDriveBack = m_drivetrainSub.isPresent() ? new DriveBackAutoCommand(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), ()-> 1) : null;
-    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), .75) : null;
-    m_revShooter2 = m_shooter.isPresent()?new RevShooter(m_shooter.get(), .25):null;
+    m_revShooter = m_shooter.isPresent() ? new RevShooterCommand(m_shooter.get(), .75) : null;
+    m_revShooter2 = m_shooter.isPresent()?new RevShooterCommand(m_shooter.get(), .25):null;
     // m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
-    m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 1) : null;
+    m_runMag = m_magazine.isPresent() ? new RunMagCommand(m_magazine.get(), () -> 1) : null;
     m_shootLowGoal = null; // TODO: idk what this is
 
     m_aim = m_drivetrainSub.isPresent() ? new Aim(m_drivetrainSub.get(), m_limelight):null;
     m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
+    // m_runFlywheel = m_shooter.isPresent() ? new RunFlywheelCommand(m_shooter.get()) : null;
+    
+
+    
+    
 
     // Define
     m_logManager = new LoggingManager();
@@ -186,6 +198,6 @@ public class RobotContainer {
    * @return The command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return m_autoDriveBackAndShoot;
   }
 } 

@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.utils.Constants;
@@ -26,6 +27,14 @@ public class Intake extends NTSubsystem {
     m_intake1.setInverted(false);
     m_intake2.setInverted(false);
     m_intake2.follow(m_intake1);
+
+    // Sets up inversions, etc.
+   
+    m_intake1.setInverted(InvertType.None);
+    m_intake1.setInverted(InvertType.OpposeMaster);
+
+    // m_intake3.setInverted(false);
+    // m_intake3.follow(m_intake1);
 
     // Shifters
     m_leftShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter1ForwardID, Constants.intakeShifter1BackwardID);

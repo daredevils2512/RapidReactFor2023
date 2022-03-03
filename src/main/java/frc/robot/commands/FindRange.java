@@ -17,8 +17,6 @@ public class FindRange extends CommandBase {
   private Double driveAjust;
   //private final Double angleToGoalDegrees;
   
-
-  
   private final Double Kpd;
 
     public FindRange(Drivetrain drivetrain){
