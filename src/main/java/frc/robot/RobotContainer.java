@@ -141,8 +141,9 @@ public class RobotContainer {
     m_driveShift = new DriveShiftCommand(m_drivetrainSub);
     m_drivetrainCommand = new DrivetrainCommand(m_drivetrainSub, () -> { return getMove(); }, () -> { return getTurn(); });
     m_intakeCommand = new IntakeCommand(m_intakeSub, ()-> 1);
-    m_revShooter = new RevShooter(m_shooter, 1);
-    m_runFlywheel = new RunFlywheel(m_shooter);
+    m_revShooter = new RevShooter(m_shooter, .75);
+    m_revShooter2 = new RevShooter(m_shooter, .25);
+    // m_runFlywheel = new RunFlywheel(m_shooter);
     m_runMag = new RunMag(m_magazine, () -> 1);
     m_shootLowGoal = null; // TODO: idk what this is
 
