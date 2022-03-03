@@ -17,7 +17,7 @@ public class RevShooterAutoCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_shooter.spitBalls(speed);
+    m_shooter.spitBalls(1);
   }
 
   @Override
