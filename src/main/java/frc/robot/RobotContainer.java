@@ -63,7 +63,8 @@ public class RobotContainer {
   private final DrivetrainCommand m_drivetrainCommand;
   private final IntakeCommand m_intakeCommand;
   private final RevShooter m_revShooter;
-  private final RunFlywheel m_runFlywheel;
+  private final RevShooter m_revShooter2;
+  // private final RunFlywheel m_runFlywheel;
   private final RunMag m_runMag;
   private final ShootLowGoal m_shootLowGoal;
   private final Aim m_aim;
@@ -120,8 +121,9 @@ public class RobotContainer {
     m_driveShift = m_drivetrainSub.isPresent() ? new DriveShiftCommand(m_drivetrainSub.get()) : null;
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), ()-> 1) : null;
-    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), 1) : null;
-    m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
+    m_revShooter = m_shooter.isPresent() ? new RevShooter(m_shooter.get(), .75) : null;
+    m_revShooter2 = m_shooter.isPresent()?new RevShooter(m_shooter.get(), .25):null;
+    // m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
     m_runMag = m_magazine.isPresent() ? new RunMag(m_magazine.get(), () -> 1) : null;
     m_shootLowGoal = null; // TODO: idk what this is
 
@@ -156,18 +158,22 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // TODO Make correct controls
-    if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
+    if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseMiddleLeft.whenPressed(m_intakeShift);
+    if (m_intakeSub.isPresent()) m_controlBoard.extreme.baseMiddleRight.whileHeld(m_intakeCommand);
+
     if (m_climber.isPresent()) m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
     if (m_climber.isPresent()) m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
     // m_auto command here
-    if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
+    if (m_drivetrainSub.isPresent()) m_controlBoard.xboxController.rightBumper.whenPressed(m_driveShift);
     if (m_drivetrainSub.isPresent()) m_drivetrainSub.get().setDefaultCommand(m_drivetrainCommand);
-    if (m_intakeSub.isPresent()) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_intakeCommand);
+    
     if (m_shooter.isPresent()) m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
+    if (m_shooter.isPresent()) m_controlBoard.extreme.baseBackLeft.whileHeld(m_revShooter2);
     // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     if (m_magazine.isPresent()) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
-    if (m_drivetrainSub.isPresent()) m_controlBoard.buttonBox.yellow.whileHeld(m_aim);
-    if (m_drivetrainSub.isPresent()) m_controlBoard.buttonBox.green.whileHeld(m_FindRange); 
+
+    if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_aim);
+    if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomRight.whileHeld(m_FindRange); 
   }
 
   /**
