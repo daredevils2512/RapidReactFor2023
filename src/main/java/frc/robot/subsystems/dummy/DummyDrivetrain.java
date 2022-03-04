@@ -51,5 +51,23 @@ public class DummyDrivetrain implements Drivetrain {
     // TODO Auto-generated method stub
     return 0;
   }
+
+  @Override
+  public double getAverageDistance() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public void aimLeft(double speed) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void aimRight(double speed) {
+    // TODO Auto-generated method stub
+    
+  }
   
 }

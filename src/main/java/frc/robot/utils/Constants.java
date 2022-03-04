@@ -12,6 +12,15 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  public static final boolean shooterEnabled = true;
+  public static final boolean magazineEnabled = true;
+  public static final boolean intakeEnabled = true;
+  public static final boolean climberEnabled = true;
+  public static final boolean drivetrainEnabled = true;
+  public static final boolean sparkDrivetrainEnabled = false;
+  public static final boolean compressorEnabled = true;
+
   // Auto
   public static final double DRIVE_AUTO_SPEED = 0.5; // TODO set value
   public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // TODO find value
@@ -31,6 +40,8 @@ public final class Constants {
   public static final int shooterBackwardChannel = 1; // TODO find value
   public static final double shooterRateLimNUM = 0.5; // TODO find best value
 
+  // climber
+  public static final double climberSpeed = 1;
   // Motor IDs
   public static final int drivetrainLeftID1 = 10; 
   public static final int drivetrainLeftID2 = 11; 
@@ -53,7 +64,7 @@ public static final double limelightLensHeightInches = 26;
 // distance from the target to the floor
 public static final double goalHeightInches = 104;
 //desired distance from the target
-public static final double desiredDistance = 66; 
+public static final double desiredDistance = 66.;
 
 
   // Encoder IDs

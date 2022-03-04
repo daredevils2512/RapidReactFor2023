@@ -6,11 +6,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.DriveBackAuto;
+import frc.robot.Vision.Limelight;
+import frc.robot.Vision.Limelight.Pipeline;
 import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.Aim;
 import frc.robot.commands.ClimberCommand;
+import frc.robot.commands.DriveBackAutoCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.RevShooterAutoCommand;
 import frc.robot.io.NTButton;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CompresserManager;
@@ -31,13 +34,11 @@ import frc.robot.subsystems.physical.PhysicalIntake;
 import frc.robot.subsystems.physical.PhysicalMagazine;
 import frc.robot.subsystems.physical.PhysicalShooter;
 import frc.robot.subsystems.physical.PhysicalSparkDrivetrain;
-import frc.robot.commands.RunFlywheel;
-import frc.robot.commands.RunMag;
-import frc.robot.commands.ShootLowGoal;
+import frc.robot.commands.RunMagCommand;
 import frc.robot.commands.DriveShiftCommand;
 import frc.robot.commands.DrivetrainCommand;
+import frc.robot.commands.RevShooterCommand;
 import frc.robot.commands.FindRange;
-import frc.robot.commands.RevShooter;
 import frc.robot.io.ControlBoard;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
@@ -74,24 +75,25 @@ public class RobotContainer {
   private final Intake m_intakeSub;
   private final Magazine m_magazine;
   private final Shooter m_shooter;
-  private final CompresserManager m_compressor = compressorEnabled ? new PhysicalCompressor() : new DummyCompressor();
+  private final CompresserManager m_compressor = Constants.compressorEnabled ? new PhysicalCompressor() : new DummyCompressor();
 
   // Commands
-  private final ActuateShiftCommand m_intakeShift;
-  private final ClimberCommand m_climberUpComamnd;
-  private final ClimberCommand m_climberDownComamnd;
-  private final DriveBackAuto m_auto;
-  private final DriveShiftCommand m_driveShift;
-  private final DrivetrainCommand m_drivetrainCommand;
-  private final IntakeCommand m_intakeCommand;
-  private final RevShooter m_revShooter;
-  private final RevShooter m_revShooter2;
-  // private final RunFlywheel m_runFlywheel;
-  private final RunMag m_runMag;
-  private final ShootLowGoal m_shootLowGoal;
-  private final Aim m_aim;
-  private final FindRange m_FindRange;
- 
+  private final Command m_intakeShift;
+  private final Command m_climberUpComamnd;
+  private final Command m_climberDownComamnd;
+  private final Command m_autoDriveBack;
+  private final Command m_autoDriveBackAndShoot;
+  private final Command m_driveShift;
+  private final Command m_drivetrainCommand;
+  private final Command m_intakeCommand;
+  private final Command m_revShooter;
+  private final Command m_revShooter2;
+  // private final Command m_runFlywheel;
+  private Command m_runMag;
+  private final Command m_shootLowGoal;
+  private final Command m_aim;
+  private final Command m_FindRange;
+  private final Limelight m_limelight;
 
   // Controls
   private final ControlBoard m_controlBoard;
@@ -127,28 +129,42 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define optionals
-    m_climber = climberEnabled ? new PhysicalClimber() : new DummyClimber();
-    m_drivetrainSub = drivetrainEnabled ? (sparkDrivetrainEnabled ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new DummyDrivetrain();
-    m_intakeSub = intakeEnabled ? new PhysicalIntake() : new DummyIntake();
-    m_magazine = magazineEnabled ? new PhysicalMagazine() : new DummyMagazine();
-    m_shooter = shooterEnabled ? new PhysicalShooter() : new DummyShooter();
+    m_climber = Constants.climberEnabled ? new PhysicalClimber() : new DummyClimber();
+    m_drivetrainSub = Constants.drivetrainEnabled ? (Constants.sparkDrivetrainEnabled ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new DummyDrivetrain();
+    m_intakeSub = Constants.intakeEnabled ? new PhysicalIntake() : new DummyIntake();
+    m_magazine = Constants.magazineEnabled ? new PhysicalMagazine() : new DummyMagazine();
+    m_shooter = Constants.shooterEnabled ? new PhysicalShooter() : new DummyShooter();
+    m_limelight = new Limelight(Pipeline.N_E_D);
+
+
 
     // Define commands
     m_intakeShift = new ActuateShiftCommand(m_intakeSub);
-    m_climberUpComamnd = new ClimberCommand(m_climber, .5);
-    m_climberDownComamnd = new ClimberCommand(m_climber, -.5);
-    m_auto = new DriveBackAuto(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
+    // m_auto = new DriveBackAuto(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
     m_driveShift = new DriveShiftCommand(m_drivetrainSub);
     m_drivetrainCommand = new DrivetrainCommand(m_drivetrainSub, () -> { return getMove(); }, () -> { return getTurn(); });
-    m_intakeCommand = new IntakeCommand(m_intakeSub, ()-> 1);
-    m_revShooter = new RevShooter(m_shooter, .75);
-    m_revShooter2 = new RevShooter(m_shooter, .25);
     // m_runFlywheel = new RunFlywheel(m_shooter);
-    m_runMag = new RunMag(m_magazine, () -> 1);
+    m_runMag = new RunMagCommand(m_magazine, () -> 1);
     m_shootLowGoal = null; // TODO: idk what this is
 
-    m_aim = new Aim(m_drivetrainSub);
     m_FindRange = new FindRange(m_drivetrainSub);
+    m_climberUpComamnd = new ClimberCommand(m_climber, Constants.climberSpeed);
+    m_climberDownComamnd = new ClimberCommand(m_climber, -Constants.climberSpeed);
+    // m_auto = m_drivetrainSub.isPresent() ? new Autonomous(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE, m_runFlywheel, m_runMag, 234) : null; //TODO change shooter value 
+    m_autoDriveBackAndShoot = new RevShooterAutoCommand(m_shooter).withTimeout(5).andThen(new RunMagCommand(m_magazine,()-> 1).withTimeout(5).alongWith(new IntakeCommand(m_intakeSub, ()-> 1))).andThen( new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE));  
+    m_autoDriveBack = new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
+    m_intakeCommand = new IntakeCommand(m_intakeSub, ()-> 1);
+    m_revShooter = new RevShooterCommand(m_shooter, .75);
+    m_revShooter2 = new RevShooterCommand(m_shooter, .25);
+    // m_runFlywheel = m_shooter.isPresent() ? new RunFlywheel(m_shooter.get()) : null;
+    m_runMag = new RunMagCommand(m_magazine, () -> 1);
+
+    m_aim = new Aim(m_drivetrainSub, m_limelight);
+    // m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
+    
+
+    
+    
 
     // Define
     m_logManager = new LoggingManager();
@@ -200,6 +216,6 @@ public class RobotContainer {
    * @return The command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return m_autoDriveBackAndShoot;
   }
 } 

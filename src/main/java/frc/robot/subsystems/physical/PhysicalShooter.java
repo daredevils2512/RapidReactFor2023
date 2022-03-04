@@ -26,6 +26,7 @@ public class PhysicalShooter extends NTSubsystem implements Shooter {
     m_speed = NetworkTableInstance.getDefault().getTable("Test").getEntry("Speed");
     m_speed.setDouble(0);
 
+    // m_motor.getSelectedSensorVelocity() 
     // m_encoder = new Encoder(Constants.shooterEncoderChannelA, Constants.shooterEncoderChannelB);
     // m_encoder.setDistancePerPulse(1./4096);
 
@@ -41,12 +42,12 @@ public class PhysicalShooter extends NTSubsystem implements Shooter {
     m_logger.fine("set: " + get());
   }  
   
-  public void setVoltage(double voltage){
+  public void setVoltage(double voltage) {
     m_motor.setVoltage(voltage);
     m_logger.fine("set: " + get());
   }
   
-  public void setRPM (double RPM){
+  public void setRPM (double RPM) {
     double voltage = feedforward.calculate(RPM);
     m_motor.setVoltage(voltage);
     m_logger.fine("set: " + get());
@@ -56,7 +57,7 @@ public class PhysicalShooter extends NTSubsystem implements Shooter {
   //   return m_encoder.getRate();
   // }
   
-  public double get(){
+  public double get() {
     return m_motor.get(); 
   }
 }
