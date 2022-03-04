@@ -135,5 +135,23 @@ public class PhysicalSparkDrivetrain extends NTSubsystem implements Drivetrain {
   public int getRightEncoder() {
     return m_rightEncoder.get();
   }
+
+  @Override
+  public double getAverageDistance() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public void aimLeft(double speed) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void aimRight(double speed) {
+    // TODO Auto-generated method stub
+    
+  }
   
 }

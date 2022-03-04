@@ -1,5 +1,6 @@
 package frc.robot.subsystems.physical;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.subsystems.Intake;
@@ -11,10 +12,11 @@ public class PhysicalIntake extends NTSubsystem implements Intake {
   // Motor stuff
   private final WPI_TalonSRX m_intake1;
   private final WPI_TalonSRX m_intake2;
+  // private final WPI_TalonSRX m_intake3;
 
   // Shifters
   private final DoubleSolenoid m_leftShifter;
-  private final DoubleSolenoid m_rightShifter;
+  // private final DoubleSolenoid m_rightShifter;
 
   public PhysicalIntake() {
     super("IntakeSub");
@@ -25,18 +27,26 @@ public class PhysicalIntake extends NTSubsystem implements Intake {
         
     // Sets up inversions, etc.
     m_intake1.setInverted(false);
-    m_intake2.setInverted(true);
+    m_intake2.setInverted(false);
     m_intake2.follow(m_intake1);
+
+    // Sets up inversions, etc.
+   
+    m_intake1.setInverted(InvertType.None);
+    m_intake1.setInverted(InvertType.OpposeMaster);
+
+    // m_intake3.setInverted(false);
+    // m_intake3.follow(m_intake1);
 
     // Shifters
     m_leftShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter1ForwardID, Constants.intakeShifter1BackwardID);
-    m_rightShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter2ForwardID, Constants.intakeShifter2BackwardID);
+    //m_rightShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter2ForwardID, Constants.intakeShifter2BackwardID);
   }
 
   /** Sets gears to proper value */
   public void setExtended(boolean wantsExtended) {
     m_leftShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);
-    m_rightShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);
+    //m_rightShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);
     m_logger.info("set extended: " + wantsExtended);
   }
 

@@ -125,6 +125,13 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     m_rightShifter.set(wantsLowGear ? Constants.drivetrainLowGearValue : Constants.drivetrainHighGearValue);
     m_logger.fine("set low gear: " + wantsLowGear);
   }
+  
+  public void aimLeft(double speed) {
+    m_left.set(speed);
+  }
+  public void aimRight(double speed){
+    m_right.set(speed);
+  }
 
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
@@ -134,6 +141,10 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
 
   public void toggleShifters() {
     setLowGear(!getLowGear());
+  }
+  
+  public double getAverageDistance() {
+    return (getLeftDistance() + getRightDistance()) / 2;
   }
   
   /** Periodically runs code */

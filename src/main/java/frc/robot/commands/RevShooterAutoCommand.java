@@ -3,33 +3,25 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class RevShooter extends CommandBase {
+public class RevShooterAutoCommand extends CommandBase {
+  // Variables
   private double speed;
   private Shooter m_shooter;
 
-  public RevShooter(Shooter shooter, double speed) {
+  public RevShooterAutoCommand(Shooter shooter) {
     m_shooter = shooter;
-    this.speed = speed;
-
   }
 
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    m_shooter.spitBalls(speed);
+    m_shooter.spitBalls(1);
   }
 
   @Override
   public void end(boolean interrupted) {
-    m_shooter.spitBalls(0);
+    if (!interrupted) m_shooter.spitBalls(0.0);
   }
-  @Override
-  public boolean isFinished(){
-    return false;
-  }
-
 }
