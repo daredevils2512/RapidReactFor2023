@@ -145,7 +145,7 @@ public class RobotContainer {
     m_climberUpComamnd = new ClimberCommand(m_climber, Constants.climberSpeed);
     m_climberDownComamnd = new ClimberCommand(m_climber, -Constants.climberSpeed);
     // m_auto = m_drivetrainSub.isPresent() ? new Autonomous(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE, m_runFlywheel, m_runMag, 234) : null; //TODO change shooter value 
-    m_autoDriveBackAndShoot = new RevShooterAutoCommand(m_shooter).withTimeout(5).andThen(new RunMagCommand(m_magazine,()-> 1).withTimeout(5).alongWith(new IntakeCommand(m_intakeSub, ()-> 1))).andThen( new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE));  
+    m_autoDriveBackAndShoot = new RevShooterAutoCommand(m_shooter).withTimeout(6).andThen(new RunMagCommand(m_magazine,()-> 1).withTimeout(5).alongWith(new IntakeCommand(m_intakeSub, ()-> 1)).withTimeout(5)).andThen( new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE));  
     m_autoDriveBack = new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
     m_intakeCommand = new IntakeCommand(m_intakeSub, ()-> 1);
     m_revShooter = new RevShooterCommand(m_shooter, .75);

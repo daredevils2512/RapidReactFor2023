@@ -1,12 +1,5 @@
 package frc.robot.Vision;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-// import edu.wpi.first.wpilibj.util.Units;
-
 /**
  * returned 228 in at 208 inches
  */

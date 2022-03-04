@@ -1,12 +1,8 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.led.Animation;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Shooter;
 
 public class Autonomous extends CommandBase {
   private final Drivetrain m_drivetrain;
