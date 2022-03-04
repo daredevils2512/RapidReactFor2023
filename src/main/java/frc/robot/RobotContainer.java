@@ -196,18 +196,22 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // TODO Make correct controls
-    m_controlBoard.extreme.baseBackLeft.whenPressed(m_intakeShift);
+    m_controlBoard.extreme.baseMiddleLeft.whenPressed(m_intakeShift);
+    m_controlBoard.extreme.baseMiddleRight.whileHeld(m_intakeCommand);
+
     m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
     m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
     // m_auto command here
-    m_controlBoard.extreme.baseBackRight.whenPressed(m_driveShift);
+    m_controlBoard.xboxController.rightBumper.whenPressed(m_driveShift);
     m_drivetrainSub.setDefaultCommand(m_drivetrainCommand);
-    m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_intakeCommand);
+    
     m_controlBoard.extreme.sideButton.whileHeld(m_revShooter);
-    // m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
+    m_controlBoard.extreme.baseBackLeft.whileHeld(m_revShooter2);
+    // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     m_controlBoard.extreme.trigger.whileHeld(m_runMag);
-    m_controlBoard.buttonBox.yellow.whileHeld(m_aim);
-    m_controlBoard.buttonBox.green.whileHeld(m_FindRange); 
+
+    // if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_aim);
+    // if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomRight.whileHeld(m_FindRange); 
   }
 
   /**
