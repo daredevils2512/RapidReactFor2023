@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  */
 public final class Constants {
 
+  // 
   public static final boolean shooterEnabled = true;
   public static final boolean magazineEnabled = true;
   public static final boolean intakeEnabled = true;
@@ -20,6 +21,7 @@ public final class Constants {
   public static final boolean drivetrainEnabled = true;
   public static final boolean sparkDrivetrainEnabled = false;
   public static final boolean compressorEnabled = true;
+  public static final boolean limelightEnabled = true;
 
   // Auto
   public static final double DRIVE_AUTO_SPEED = 0.5; // TODO set value

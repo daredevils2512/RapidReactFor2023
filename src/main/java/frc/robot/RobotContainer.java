@@ -6,8 +6,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Vision.DummyLimelight;
 import frc.robot.Vision.Limelight;
-import frc.robot.Vision.Limelight.Pipeline;
+import frc.robot.Vision.PhysicalLimelight;
+import frc.robot.Vision.Pipeline;
 import frc.robot.commands.ActuateShiftCommand;
 import frc.robot.commands.Aim;
 import frc.robot.commands.ClimberCommand;
@@ -60,14 +62,6 @@ public class RobotContainer {
 
   // Logging
   private final LoggingManager m_logManager;
-
-  private final boolean shooterEnabled = true;
-  private final boolean magazineEnabled = true;
-  private final boolean intakeEnabled = true;
-  private final boolean climberEnabled = true;
-  private final boolean drivetrainEnabled = true;
-  private final boolean sparkDrivetrainEnabled = false;
-  private final boolean compressorEnabled = true;
 
   // Subsystems
   private final Drivetrain m_drivetrainSub;
@@ -134,7 +128,7 @@ public class RobotContainer {
     m_intakeSub = Constants.intakeEnabled ? new PhysicalIntake() : new DummyIntake();
     m_magazine = Constants.magazineEnabled ? new PhysicalMagazine() : new DummyMagazine();
     m_shooter = Constants.shooterEnabled ? new PhysicalShooter() : new DummyShooter();
-    m_limelight = new Limelight(Pipeline.N_E_D);
+    m_limelight = Constants.limelightEnabled ? new PhysicalLimelight(Pipeline.N_E_D) : new DummyLimelight();
 
 
 
@@ -151,7 +145,7 @@ public class RobotContainer {
     m_climberUpComamnd = new ClimberCommand(m_climber, Constants.climberSpeed);
     m_climberDownComamnd = new ClimberCommand(m_climber, -Constants.climberSpeed);
     // m_auto = m_drivetrainSub.isPresent() ? new Autonomous(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE, m_runFlywheel, m_runMag, 234) : null; //TODO change shooter value 
-    m_autoDriveBackAndShoot = new RevShooterAutoCommand(m_shooter).withTimeout(5).andThen(new RunMagCommand(m_magazine,()-> 1).withTimeout(5).alongWith(new IntakeCommand(m_intakeSub, ()-> 1))).andThen( new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE));  
+    m_autoDriveBackAndShoot = new RevShooterAutoCommand(m_shooter).withTimeout(6).andThen(new RunMagCommand(m_magazine,()-> 1).withTimeout(5).alongWith(new IntakeCommand(m_intakeSub, ()-> 1)).withTimeout(5)).andThen( new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE));  
     m_autoDriveBack = new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
     m_intakeCommand = new IntakeCommand(m_intakeSub, ()-> 1);
     m_revShooter = new RevShooterCommand(m_shooter, .75);

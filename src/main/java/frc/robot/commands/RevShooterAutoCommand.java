@@ -22,6 +22,6 @@ public class RevShooterAutoCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    if (!interrupted) m_shooter.spitBalls(0.0);
+     m_shooter.spitBalls(0.0);
   }
 }
