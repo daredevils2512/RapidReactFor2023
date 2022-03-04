@@ -85,8 +85,10 @@ public class RobotContainer {
   // private final Command m_runFlywheel;
   private Command m_runMag;
   private final Command m_shootLowGoal;
+
   private final Command m_aim;
   private final Command m_FindRange;
+
   private final Limelight m_limelight;
 
   // Controls
@@ -145,7 +147,7 @@ public class RobotContainer {
     m_climberUpComamnd = new ClimberCommand(m_climber, Constants.climberSpeed);
     m_climberDownComamnd = new ClimberCommand(m_climber, -Constants.climberSpeed);
     // m_auto = m_drivetrainSub.isPresent() ? new Autonomous(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE, m_runFlywheel, m_runMag, 234) : null; //TODO change shooter value 
-    m_autoDriveBackAndShoot = new RevShooterAutoCommand(m_shooter).withTimeout(6).andThen(new RunMagCommand(m_magazine,()-> 1).withTimeout(5).alongWith(new IntakeCommand(m_intakeSub, ()-> 1)).withTimeout(5)).andThen( new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE));  
+    m_autoDriveBackAndShoot = new RevShooterAutoCommand(m_shooter).withTimeout(6).andThen(new RunMagCommand(m_magazine,()-> 1).withTimeout(5).alongWith(new IntakeCommand(m_intakeSub, ()-> 1)).withTimeout(5)).andThen( new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE).withTimeout(3));  
     m_autoDriveBack = new DriveBackAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
     m_intakeCommand = new IntakeCommand(m_intakeSub, ()-> 1);
     m_revShooter = new RevShooterCommand(m_shooter, .75);
@@ -155,6 +157,10 @@ public class RobotContainer {
 
     m_aim = new Aim(m_drivetrainSub, m_limelight);
     // m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
+    // m_aim = m_drivetrainSub.isPresent() ? new Aim(m_drivetrainSub.get(), m_limelight):null;
+    // m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
+
+    // m_runFlywheel = m_shooter.isPresent() ? new RunFlywheelCommand(m_shooter.get()) : null;
     
 
     
