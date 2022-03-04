@@ -27,6 +27,7 @@ public class PhysicalShooter extends NTSubsystem implements Shooter {
     m_speed.setDouble(0);
 
     // m_motor.getSelectedSensorVelocity() 
+    // m_encoder = new Encoder(Constants.shooterEncoderChannelA, Constants.shooterEncoderChannelB);
     // m_encoder.setDistancePerPulse(1./4096);
 
     m_motor = new WPI_TalonFX(Constants.shooterID);
@@ -36,7 +37,7 @@ public class PhysicalShooter extends NTSubsystem implements Shooter {
   }
 
   public void spitBalls(double speed) {
-    // speed = m_limiter.calculate(speed);
+    speed = m_limiter.calculate(speed);
     m_motor.set(speed);
     m_logger.fine("set: " + get());
   }  

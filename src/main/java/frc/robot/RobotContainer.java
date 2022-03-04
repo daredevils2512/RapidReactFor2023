@@ -61,6 +61,14 @@ public class RobotContainer {
   // Logging
   private final LoggingManager m_logManager;
 
+  private final boolean shooterEnabled = true;
+  private final boolean magazineEnabled = true;
+  private final boolean intakeEnabled = true;
+  private final boolean climberEnabled = true;
+  private final boolean drivetrainEnabled = true;
+  private final boolean sparkDrivetrainEnabled = false;
+  private final boolean compressorEnabled = true;
+
   // Subsystems
   private final Drivetrain m_drivetrainSub;
   private final Climber m_climber;
