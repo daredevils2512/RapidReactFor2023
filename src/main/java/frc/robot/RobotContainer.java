@@ -59,6 +59,7 @@ public class RobotContainer {
   private final Optional<Magazine> m_magazine;
   private final Optional<Shooter> m_shooter;
   
+  
   // Commands
   private final Command m_intakeShift;
   private final Command m_climberUpComamnd;
@@ -73,8 +74,10 @@ public class RobotContainer {
   // private final Command m_runFlywheel;
   private Command m_runMag;
   private final Command m_shootLowGoal;
-  private final Command m_aim;
-  private final Command m_FindRange;
+
+  // private final Command m_aim;
+  // private final Command m_FindRange;
+
   private final Limelight m_limelight;
 
   // Controls
@@ -129,9 +132,11 @@ public class RobotContainer {
     m_drivetrainCommand = m_drivetrainSub.isPresent() ? new DrivetrainCommand(m_drivetrainSub.get(), () -> { return getMove(); }, () -> { return getTurn(); }) : null;
     m_runMag = m_magazine.isPresent() ? new RunMagCommand(m_magazine.get(), () -> 1) : null;
     // m_auto = m_drivetrainSub.isPresent() ? new Autonomous(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE, m_runFlywheel, m_runMag, 234) : null; //TODO change shooter value 
+    
     m_autoDriveBackAndShoot = m_drivetrainSub.isPresent() && m_shooter.isPresent() && m_magazine.isPresent() ?
       new RevShooterAutoCommand(m_shooter.get()).withTimeout(6).andThen(new RunMagCommand(m_magazine.get(),()-> 1).withTimeout(5).alongWith(new IntakeCommand(m_intakeSub.get(), ()-> 1)).withTimeout(5)).andThen( new DriveBackAutoCommand(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE)) : null;  
-    m_autoDriveBack = m_drivetrainSub.isPresent() ? new DriveBackAutoCommand(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
+   
+      m_autoDriveBack = m_drivetrainSub.isPresent() ? new DriveBackAutoCommand(m_drivetrainSub.get(), Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE) : null;
     m_intakeCommand = m_intakeSub.isPresent() ? new IntakeCommand(m_intakeSub.get(), ()-> 1) : null;
     m_revShooter = m_shooter.isPresent() ? new RevShooterCommand(m_shooter.get(), .75) : null;
     m_revShooter2 = m_shooter.isPresent()?new RevShooterCommand(m_shooter.get(), .25):null;
@@ -139,8 +144,9 @@ public class RobotContainer {
     m_runMag = m_magazine.isPresent() ? new RunMagCommand(m_magazine.get(), () -> 1) : null;
     m_shootLowGoal = null; // TODO: idk what this is
 
-    m_aim = m_drivetrainSub.isPresent() ? new Aim(m_drivetrainSub.get(), m_limelight):null;
-    m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
+    // m_aim = m_drivetrainSub.isPresent() ? new Aim(m_drivetrainSub.get(), m_limelight):null;
+    // m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
+
     // m_runFlywheel = m_shooter.isPresent() ? new RunFlywheelCommand(m_shooter.get()) : null;
     
 
@@ -189,8 +195,8 @@ public class RobotContainer {
     // if (m_shooter.isPresent()) m_controlBoard.buttonBox.topWhite.whileHeld(m_runFlywheel);
     if (m_magazine.isPresent()) m_controlBoard.extreme.trigger.whileHeld(m_runMag);
 
-    if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_aim);
-    if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomRight.whileHeld(m_FindRange); 
+    // if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_aim);
+    // if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomRight.whileHeld(m_FindRange); 
   }
 
   /**
