@@ -15,7 +15,7 @@ public class PhysicalIntake extends NTSubsystem implements Intake {
 
   // Shifters
   private final DoubleSolenoid m_leftShifter;
-  private final DoubleSolenoid m_rightShifter;
+  //private final DoubleSolenoid m_rightShifter;
 
   public PhysicalIntake() {
     super("IntakeSub");
@@ -31,7 +31,7 @@ public class PhysicalIntake extends NTSubsystem implements Intake {
 
     // Shifters
     m_leftShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter1ForwardID, Constants.intakeShifter1BackwardID);
-    m_rightShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter2ForwardID, Constants.intakeShifter2BackwardID);
+   // m_rightShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter2ForwardID, Constants.intakeShifter2BackwardID);
   }
 
   /** Sets gears to proper value */
