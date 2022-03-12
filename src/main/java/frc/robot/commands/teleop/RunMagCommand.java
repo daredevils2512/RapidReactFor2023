@@ -10,7 +10,7 @@ public class RunMagCommand extends CommandBase  {
   private final Magazine m_magazine;
 
   /** Assigns variables
-   * @param Magazine The file to use
+   * @param PhysicalMagazine The file to use
    * @param DoubleSupplier Control for the speed of the magazine
    */
   public RunMagCommand(Magazine magazine, DoubleSupplier speed){

@@ -17,11 +17,11 @@ public class ShootAutoCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_shooter.spitBalls(speed);
+    m_shooter.spitBalls(1);
   }
 
   @Override
   public void end(boolean interrupted) {
-    if (!interrupted) m_shooter.spitBalls(0.0);
+     m_shooter.spitBalls(0.0);
   }
 }

@@ -7,14 +7,18 @@ public class ClimberCommand extends CommandBase {
   private final Climber m_climber;
   private final double m_speed;
 
+  
+
   public ClimberCommand(Climber climber, double speed) {
     m_climber = climber;
     m_speed = speed;
     addRequirements(m_climber);
+    
   }
 
   @Override
   public void execute() {
+  
     m_climber.setClimbSpeed(m_speed);
   }
   @Override

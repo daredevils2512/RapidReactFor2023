@@ -4,52 +4,59 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Vision.Limelight;
+import frc.robot.Vision.LimelightLEDMode;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.Constants;
 
 public class FindRange extends CommandBase {
   private final Drivetrain m_drivetrain;
-  private final NetworkTable m_limelight;
+  private final NetworkTable m_limelightTable;
   private final NetworkTableEntry m_ty;
-  private final double m_distanceThreshold;
+  private Limelight m_limelight;
+  private Double driveAjust;
   //private final Double angleToGoalDegrees;
   
   private final Double Kpd;
 
-  public FindRange(Drivetrain drivetrain, double distanceThreshold) {
-    m_drivetrain = drivetrain;
-    m_distanceThreshold = distanceThreshold;
-    Kpd= 0.2;
-    m_limelight = NetworkTableInstance.getDefault().getTable("limelight");
-    m_ty = m_limelight.getEntry("ty");
-  }
+    public FindRange(Drivetrain drivetrain){
+      m_drivetrain = drivetrain; 
+      Kpd= 0.2;
+      m_limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+      m_ty = m_limelightTable.getEntry("ty");
+     
+    }
+/** Called when the command is initially scheduled. */
+@Override
+public void initialize() {}
 
-  /** Called every time the scheduler runs while the command is scheduled. */
-  @Override
-  public void execute() {    
-    //calculate distance
-    double driveAjust= Kpd*getDistanceVariation();
+/** Called every time the scheduler runs while the command is scheduled. */
+@Override
+public void execute() {
+  m_limelight.setLEDMode(LimelightLEDMode.ON);
+  double angleToGoalDegrees = Constants.limelightMountAngleDegrees + m_ty.getDouble(0.0);
+  double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+  //whatever we want the distance to be. 
+  
 
-    m_drivetrain.arcadeDrive(driveAjust, 0);
-  }
+  //calculate distance
+  double currentDistance = (Constants.goalHeightInches - Constants.limelightLensHeightInches)/Math.tan(angleToGoalRadians);
+  double distanceVariation = Constants.desiredDistance - currentDistance;
+  driveAjust= Kpd*distanceVariation;
+ m_drivetrain.arcadeDrive(driveAjust, 0);
+}
 
-  /** Called once the command ends or is interrupted. */
-  @Override
-  public void end(boolean interrupted) { }
+/** Called once the command ends or is interrupted. */
+@Override
+public void end(boolean interrupted) {
+  m_limelight.setLEDMode(LimelightLEDMode.OFF);
+  m_drivetrain.arcadeDrive(0, 0);
 
-  /** Returns true when the command should end. */
-  @Override
-  public boolean isFinished() {
-    return getDistanceVariation() < m_distanceThreshold;
-  }
+}
 
-  private double getDistanceVariation() {
-    double angleToGoalDegrees = Constants.limelightMountAngleDegrees + m_ty.getDouble(0.0);
-    double angleToGoalRadians = Math.toRadians(angleToGoalDegrees);
-
-    double currentDistance = (Constants.goalHeightInches - Constants.limelightLensHeightInches)/Math.tan(angleToGoalRadians);
-    double distanceVariation = Constants.desiredDistance - currentDistance;
-
-    return distanceVariation;
-  }
+/** Returns true when the command should end. */
+@Override
+public boolean isFinished() {
+  return false;
+}    
 }

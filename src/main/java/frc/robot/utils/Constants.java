@@ -12,6 +12,17 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  // 
+  public static final boolean shooterEnabled = true;
+  public static final boolean magazineEnabled = true;
+  public static final boolean intakeEnabled = true;
+  public static final boolean climberEnabled = true;
+  public static final boolean drivetrainEnabled = true;
+  public static final boolean sparkDrivetrainEnabled = false;
+  public static final boolean compressorEnabled = true;
+  public static final boolean limelightEnabled = false;
+
   // Auto
   public static final double DRIVE_AUTO_SPEED = 0.5; // TODO set value
   public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // Inches
@@ -19,8 +30,8 @@ public final class Constants {
   // Drivetrain
   public static final int drivetrainEncoderResolution = 1; // TODO find value
   public static final double drivetrainRateLimNUM = 15;
-  public static final double drivetrainMaxSpeed = 0.75; 
-  public static final double drivetrainMaxTurn = 0.75; 
+  public static final double drivetrainMaxSpeed = .75; 
+  public static final double drivetrainMaxTurn = .75; 
   public static final double drivetrainGearRatio = 1; // TODO find vale
   public static final double drivetrainWheelDiameter = 6;
   public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
