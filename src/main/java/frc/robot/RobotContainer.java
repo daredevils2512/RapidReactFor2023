@@ -16,7 +16,6 @@ import frc.robot.subsystems.CompresserManager;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.commands.auto.DriveAutoCommand;
-import frc.robot.commands.auto.ShootAutoCommand;
 import frc.robot.commands.teleop.ActuateShiftCommand;
 import frc.robot.commands.teleop.ClimberCommand;
 import frc.robot.commands.teleop.DriveShiftCommand;
