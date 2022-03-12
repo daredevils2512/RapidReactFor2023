@@ -66,7 +66,7 @@ public class XboxController {
     return m_controller.getRawAxis(k_yAxisRightID);
   }
 
-  /** @retrun Left Trigger */
+  /** @return Left Trigger */
   public double getLeftTrigger() {
     return m_controller.getRawAxis(k_leftTrigger);
   }

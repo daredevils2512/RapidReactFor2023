@@ -1,14 +1,14 @@
-package frc.robot.commands;
+package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class RunFlywheel extends CommandBase {
+public class RunFlywheelCommand extends CommandBase {
   private final Shooter m_flywheel;
 
-  public RunFlywheel(Shooter flywheel) {
+  public RunFlywheelCommand(Shooter flywheel) {
     m_flywheel = flywheel;
-    addRequirements(flywheel);
+    addRequirements(m_flywheel);
   }
 
   /** Called when the command is initially scheduled. */

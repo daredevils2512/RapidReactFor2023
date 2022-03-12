@@ -1,19 +1,19 @@
-package frc.robot.commands;
+package frc.robot.commands.teleop;
 
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Magazine;
 
-public class RunMag extends CommandBase  {
+public class RunMagCommand extends CommandBase  {
   // Variables
   private final DoubleSupplier m_speed;
   private final Magazine m_magazine;
 
   /** Assigns variables
-   * @param Magazine The file to use
+   * @param PhysicalMagazine The file to use
    * @param DoubleSupplier Control for the speed of the magazine
    */
-  public RunMag(Magazine magazine, DoubleSupplier speed){
+  public RunMagCommand(Magazine magazine, DoubleSupplier speed){
     m_magazine = magazine;
     m_speed = speed;
     addRequirements(magazine);

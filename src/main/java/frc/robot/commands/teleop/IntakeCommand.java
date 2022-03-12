@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.teleop;
 
 import java.util.function.DoubleSupplier;
 
@@ -23,5 +23,9 @@ public class IntakeCommand extends CommandBase {
   /** Executes intake code */
   public void execute() {
     m_intake.setIntake(m_speed.getAsDouble());
+  }
+  @Override
+  public void  end(boolean interupted){
+    m_intake.setIntake(0.0);
   }
 }
