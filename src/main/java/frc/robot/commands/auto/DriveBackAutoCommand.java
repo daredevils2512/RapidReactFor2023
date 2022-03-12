@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
@@ -9,7 +9,7 @@ public class DriveBackAutoCommand extends CommandBase{
   private final double m_distance;
   private double m_initialDistance;
 
-  public DriveBackAutoCommand(Drivetrain drivetrain, double move, double distance){
+  public DriveBackAutoCommand(Drivetrain drivetrain, double move, double distance) {
     m_drivetrain = drivetrain;
     m_move = move;
     m_distance = distance;
@@ -32,8 +32,6 @@ public class DriveBackAutoCommand extends CommandBase{
 
   @Override
   public void end(boolean interrupted) {
-    if (!interrupted){
-      m_drivetrain.arcadeDrive (0,0);
-    }
+    m_drivetrain.arcadeDrive(0,0);
   }
 }
