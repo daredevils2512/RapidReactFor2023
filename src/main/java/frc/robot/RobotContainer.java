@@ -15,7 +15,6 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CompresserManager;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
-import frc.robot.commands.auto.Autonomous;
 import frc.robot.commands.auto.DriveAutoCommand;
 import frc.robot.commands.auto.ShootAutoCommand;
 import frc.robot.commands.teleop.ActuateShiftCommand;
@@ -152,8 +151,8 @@ public class RobotContainer {
     m_compressor = Constants.compressorEnabled ? new PhysicalCompressor() : new DummyCompressor();
 
     m_autoDriveBack = new DriveAutoCommand(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
-    m_autoShoot = new ShootAutoCommand((RevShooterCommand) m_revShooter, (RunMagCommand) m_runMag, (IntakeCommand) m_intakeCommand);
-    m_autoDriveBackAndShoot = new Autonomous((DriveAutoCommand) m_autoDriveBack, (ShootAutoCommand) m_autoShoot);
+    m_autoShoot = m_revShooter.withTimeout(6).andThen(m_runMag.withTimeout(5).alongWith(m_intakeCommand.withTimeout(5))).andThen(new RevShooterCommand(m_shooter, 0));
+    m_autoDriveBackAndShoot = m_autoShoot.andThen(m_autoDriveBack);
 
     m_aim = new Aim(m_drivetrainSub, m_limelight);
     // m_FindRange = m_drivetrainSub.isPresent() ? new FindRange(m_drivetrainSub.get()) :null;
