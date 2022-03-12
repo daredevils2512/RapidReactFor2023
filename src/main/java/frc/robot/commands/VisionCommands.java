@@ -10,6 +10,8 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.Constants;
 
 public final class VisionCommands {
+  private VisionCommands() {}
+
   static NetworkTable m_limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
   public static Command Aim(Drivetrain drivetrain, Limelight limelight) {
