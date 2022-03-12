@@ -24,8 +24,9 @@ public final class Constants {
   public static final boolean limelightEnabled = false;
 
   // Auto
-  public static final double DRIVE_AUTO_SPEED = 0.5; // TODO set value
-  public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // Inches
+  public static final double DRIVE_AUTO_SPEED = 0.5; // TODO: Find value
+  public static final double SHOOT_AUTO_SPEED = 1; // TODO: Find value
+  public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // Inches // TODO: No longer used
 
   // Drivetrain
   public static final int drivetrainEncoderResolution = 1; // TODO find value
@@ -59,14 +60,15 @@ public final class Constants {
   public static final int shooterID = 9; 
 
   // Vision, Baby! 
-  // how many degrees back is your limelight rotated from perfectly vertical? TODO:FIX THIS SHIT
+  // how many degrees back is your limelight rotated from perfectly vertical? TODO:FIX THIS STUFF
   public static final double limelightMountAngleDegrees = 26.39;
-  // distance from the center of the Limelight lens to the floor TODO: THIS SHIT WACK
+  // distance from the center of the Limelight lens to the floor TODO: THIS STUFF WACK
   public static final double limelightLensHeightInches = 26;
   // distance from the target to the floor
   public static final double goalHeightInches = 104;
   //desired distance from the target
   public static final double desiredDistance = 66.;
+  public static final double Kp = 0.2;
 
   // Encoder IDs
   public static final int drivetrainLeftEncoderChannelA = 1; 
