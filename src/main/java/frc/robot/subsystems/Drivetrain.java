@@ -11,7 +11,7 @@ public interface Drivetrain extends Subsystem {
   double getRightDistance();
   double getLeftDistance();
   boolean getLowGear();
-  double getAverageDistance();
+  double getDistance();
   void aimLeft(double speed);
   void aimRight(double speed);
 }

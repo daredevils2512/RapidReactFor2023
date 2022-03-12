@@ -47,7 +47,7 @@ public class PhysicalShooter extends NTSubsystem implements Shooter {
     m_logger.fine("set: " + get());
   }
   
-  public void setRPM (double RPM) {
+  public void setRPM(double RPM) {
     double voltage = feedforward.calculate(RPM);
     m_motor.setVoltage(voltage);
     m_logger.fine("set: " + get());

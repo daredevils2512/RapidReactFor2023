@@ -13,9 +13,7 @@ public class RevShooterCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() { }
 
   @Override
   public void execute() {
@@ -26,8 +24,10 @@ public class RevShooterCommand extends CommandBase {
   public void end(boolean interrupted) {
     m_shooter.spitBalls(0);
   }
+
   @Override
   public boolean isFinished(){
     return false;
   }
+  
 }

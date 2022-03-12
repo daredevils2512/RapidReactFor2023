@@ -129,6 +129,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   public void aimLeft(double speed) {
     m_left.set(speed);
   }
+
   public void aimRight(double speed){
     m_right.set(speed);
   }
@@ -143,7 +144,8 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     setLowGear(!getLowGear());
   }
   
-  public double getAverageDistance() {
+  /** @return distance that the drivetrain has moved */
+  public double getDistance() {
     return (getLeftDistance() + getRightDistance()) / 2;
   }
   

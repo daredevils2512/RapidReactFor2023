@@ -137,7 +137,7 @@ public class PhysicalSparkDrivetrain extends NTSubsystem implements Drivetrain {
   }
 
   @Override
-  public double getAverageDistance() {
+  public double getDistance() {
     // TODO Auto-generated method stub
     return 0;
   }
