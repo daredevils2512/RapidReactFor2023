@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  */
 public final class Constants {
 
-  // 
+  // Subsystem status
   public static final boolean shooterEnabled = true;
   public static final boolean magazineEnabled = true;
   public static final boolean intakeEnabled = true;
