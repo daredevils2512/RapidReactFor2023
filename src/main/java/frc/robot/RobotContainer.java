@@ -6,10 +6,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Vision.DummyLimelight;
-import frc.robot.Vision.Limelight;
-import frc.robot.Vision.PhysicalLimelight;
-import frc.robot.Vision.Pipeline;
 import frc.robot.io.NTButton;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CompresserManager;
@@ -36,6 +32,10 @@ import frc.robot.subsystems.physical.PhysicalSparkDrivetrain;
 import frc.robot.io.ControlBoard;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
+import frc.robot.Vision.DummyLimelight;
+import frc.robot.Vision.Limelight;
+import frc.robot.Vision.PhysicalLimelight;
+import frc.robot.Vision.Pipeline;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -115,12 +115,13 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define Subsystems
-    m_climber = Constants.climberEnabled ? new PhysicalClimber() : new DummyClimber();
-    m_drivetrainSub = Constants.drivetrainEnabled ? (Constants.sparkDrivetrainEnabled ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new DummyDrivetrain();
-    m_intakeSub = Constants.intakeEnabled ? new PhysicalIntake() : new DummyIntake();
-    m_magazine = Constants.magazineEnabled ? new PhysicalMagazine() : new DummyMagazine();
-    m_shooter = Constants.shooterEnabled ? new PhysicalShooter() : new DummyShooter();
-    m_limelight = Constants.limelightEnabled ? new PhysicalLimelight(Pipeline.N_E_D) : new DummyLimelight();
+    m_climber = Constants.CLIMBER_ENABLED ? new PhysicalClimber() : new DummyClimber();
+    m_drivetrainSub = Constants.DRIVETRAIN_ENABLED ? (Constants.SPARK_DRIVETRAIN_ENABLED ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new DummyDrivetrain();
+    m_intakeSub = Constants.INTAKE_ENABLED ? new PhysicalIntake() : new DummyIntake();
+    m_magazine = Constants.MAGAZINE_ENABLED ? new PhysicalMagazine() : new DummyMagazine();
+    m_shooter = Constants.SHOOTER_ENABLED ? new PhysicalShooter() : new DummyShooter();
+    m_limelight = Constants.LIMELIGHT_ENABLED ? new PhysicalLimelight(Pipeline.N_E_D) : new DummyLimelight();
+    m_compressor = Constants.COMPRESSOR_ENABLED ? new PhysicalCompressor() : new DummyCompressor();
 
     // Define Commands
     m_driveShift = Commands.driveShifters(m_drivetrainSub);
@@ -128,8 +129,8 @@ public class RobotContainer {
     
     m_runMag = Commands.runMag(m_magazine, () -> 1);
 
-    m_climberUpComamnd = Commands.runClimber(m_climber, Constants.climberSpeed);
-    m_climberDownComamnd = Commands.runClimber(m_climber, -Constants.climberSpeed);
+    m_climberUpComamnd = Commands.runClimber(m_climber, Constants.CLIMBER_SPEED);
+    m_climberDownComamnd = Commands.runClimber(m_climber, -Constants.CLIMBER_SPEED);
 
     m_intakeCommand = Commands.runIntake(m_intakeSub, () -> 1);
     m_intakeShift = Commands.intakeShifters(m_intakeSub);
@@ -143,8 +144,6 @@ public class RobotContainer {
 
     m_aim = VisionCommands.Aim(m_drivetrainSub, m_limelight);
     m_FindRange = VisionCommands.findRange(m_drivetrainSub, m_limelight);
-
-    m_compressor = Constants.compressorEnabled ? new PhysicalCompressor() : new DummyCompressor();
 
     // Define
     m_logManager = new LoggingManager();
