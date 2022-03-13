@@ -135,8 +135,8 @@ public class RobotContainer {
     m_intakeCommand = Commands.runIntake(m_intakeSub, () -> 1);
     m_intakeShift = Commands.intakeShifters(m_intakeSub);
 
-    m_revShooterFast = Commands.revShooter(m_shooter, .75);
-    m_revShooterSlow = Commands.revShooter(m_shooter, .25);
+    m_revShooterFast = Commands.revShooter(m_shooter, Constants.SHOOTER_FAST_SPEED);
+    m_revShooterSlow = Commands.revShooter(m_shooter, Constants.SHOOTER_SLOW_SPEED);
 
     m_autoDriveBack = AutoCommands.autoDriveBack(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED);
     m_autoShoot = AutoCommands.autoShoot(m_shooter, m_magazine, m_intakeSub, Constants.SHOOT_AUTO_SPEED);
