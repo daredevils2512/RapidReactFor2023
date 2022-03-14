@@ -21,8 +21,8 @@ public class PhysicalIntake extends NTSubsystem implements Intake {
     super("IntakeSub");
 
     // Sets IDs for motors
-    m_intake1 = new WPI_TalonSRX(Constants.intake1ID);
-    m_intake2 = new WPI_TalonSRX(Constants.intake2ID);
+    m_intake1 = new WPI_TalonSRX(Constants.INTAKE_1ID);
+    m_intake2 = new WPI_TalonSRX(Constants.INTAKE_2ID);
         
     // Sets up inversions, etc.
     m_intake1.setInverted(false);
@@ -30,21 +30,21 @@ public class PhysicalIntake extends NTSubsystem implements Intake {
     m_intake2.follow(m_intake1);
 
     // Shifters
-    m_leftShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter1ForwardID, Constants.intakeShifter1BackwardID);
-    m_rightShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.intakeShifter2ForwardID, Constants.intakeShifter2BackwardID);
+    m_leftShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.INTAKE_SHIFTER_FORWARD_ID1, Constants.INTAKE_SHIFTER_BACKWARD_ID1);
+    m_rightShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.INTAKE_SHIFTER_FORWARD_ID1, Constants.INTAKE_SHIFTER_BACKWARD_ID2);
   }
 
   /** Sets gears to proper value */
   public void setExtended(boolean wantsExtended) {
-    m_leftShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);
+    m_leftShifter.set(wantsExtended ? Constants.INTAKE_EXTENDED_VALUE : Constants.INTAKE_RETRACTED_VALUE);
     //m_rightShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);
     m_logger.info("set extended: " + wantsExtended);
   }
 
   /** @return true if shifters are in low gear */
   public boolean getExtended() {
-    m_logger.fine("get extended: " + (m_leftShifter.get() == Constants.intakeExtendedValue));
-    return m_leftShifter.get() == Constants.intakeExtendedValue;
+    m_logger.fine("get extended: " + (m_leftShifter.get() == Constants.INTAKE_EXTENDED_VALUE));
+    return m_leftShifter.get() == Constants.INTAKE_EXTENDED_VALUE;
   }
 
   /** Toggles the shifters on/off */

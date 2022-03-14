@@ -10,7 +10,7 @@ public class PhysicalCompressor extends NTSubsystem implements CompresserManager
   private final NetworkTableEntry m_isRunningEntry;
   private final NetworkTableEntry m_closedLoopControlEntry;
 
-  private Compressor m_compressor = new Compressor(Constants.pneumaticsModuleType);
+  private Compressor m_compressor = new Compressor(Constants.PNEUMATICS_MODULE_TYPE);
  
   public PhysicalCompressor() {
     super("Compressor");

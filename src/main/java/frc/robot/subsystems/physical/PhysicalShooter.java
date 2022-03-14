@@ -7,7 +7,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.subsystems.NTSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.utils.Constants;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class PhysicalShooter extends NTSubsystem implements Shooter {
@@ -30,10 +29,10 @@ public class PhysicalShooter extends NTSubsystem implements Shooter {
     // m_encoder = new Encoder(Constants.shooterEncoderChannelA, Constants.shooterEncoderChannelB);
     // m_encoder.setDistancePerPulse(1./4096);
 
-    m_motor = new WPI_TalonFX(Constants.shooterID);
+    m_motor = new WPI_TalonFX(Constants.SHOOTER_ID);
       
-    m_limiter = new SlewRateLimiter(Constants.shooterRateLimNUM);
-    feedforward = new SimpleMotorFeedforward(Constants.shooterForwardChannel, Constants.shooterBackwardChannel);
+    m_limiter = new SlewRateLimiter(Constants.SHOOTER_RATELIM_VALUE);
+    feedforward = new SimpleMotorFeedforward(Constants.SHOOTER_FORWARD_CHANNEL, Constants.SHOOTER_BACKWARD_CHANNEL);
   }
 
   public void spitBalls(double speed) {
@@ -47,7 +46,7 @@ public class PhysicalShooter extends NTSubsystem implements Shooter {
     m_logger.fine("set: " + get());
   }
   
-  public void setRPM (double RPM) {
+  public void setRPM(double RPM) {
     double voltage = feedforward.calculate(RPM);
     m_motor.setVoltage(voltage);
     m_logger.fine("set: " + get());
