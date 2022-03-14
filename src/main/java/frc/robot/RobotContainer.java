@@ -189,11 +189,11 @@ public class RobotContainer {
 
     m_controlBoard.extreme.joystickBottomLeft.whenPressed(m_turnOnLimelight);
     m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_aim);
-    m_controlBoard.extreme.joystickBottomLeft.whenReleased(m_turnOnLimelight);
+    m_controlBoard.extreme.joystickBottomLeft.whenReleased(m_turnOffLimelight);
     
     m_controlBoard.extreme.joystickBottomRight.whenPressed(m_turnOnLimelight);
     m_controlBoard.extreme.joystickBottomRight.whileHeld(m_FindRange);
-    m_controlBoard.extreme.joystickBottomRight.whenReleased(m_turnOnLimelight);
+    m_controlBoard.extreme.joystickBottomRight.whenReleased(m_turnOffLimelight);
     
     m_controlBoard.extreme.sideButton.whileHeld(m_revShooterFast);
     m_controlBoard.extreme.baseBackLeft.whileHeld(m_revShooterSlow);
