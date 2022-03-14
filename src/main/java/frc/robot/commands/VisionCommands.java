@@ -27,7 +27,7 @@ public final class VisionCommands {
 
     double ty = m_limelightTable.getEntry("ty").getDouble(0);
     double angleToGoalDegrees = Constants.LIMELIGHT_MOUNT_ANGLE_DEGREES + ty;
-    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+    double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
     double currentDistance = (Constants.GOAL_HEIGHT - Constants.LIMELIGHT_LENS_HEIGHT) / Math.tan(angleToGoalRadians);
     double distanceVariation = Constants.DESIRED_DISTANCE - currentDistance;
     double driveAjust = Constants.K_P * distanceVariation;
