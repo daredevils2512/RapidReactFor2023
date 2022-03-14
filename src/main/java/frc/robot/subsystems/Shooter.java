@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+<<<<<<< HEAD
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -7,9 +8,17 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.utils.Constants;
+=======
+import edu.wpi.first.wpilibj2.command.Subsystem;
+>>>>>>> master
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+public interface Shooter extends Subsystem {
+  void spitBalls(double speed);
+  void setVoltage(double voltage);
+  void setRPM(double RPM);
+  // double encoderRate();
 
+<<<<<<< HEAD
 public class Shooter extends NTSubsystem {
   // PID
   private final PIDController PID;
@@ -76,4 +85,6 @@ public class Shooter extends NTSubsystem {
   public void setRPMPID(double setpoint) {
     m_motor.set(PID.calculate(m_encoder.getRate(), setpoint));
   }
+=======
+>>>>>>> master
 }
