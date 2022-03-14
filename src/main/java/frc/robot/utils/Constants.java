@@ -30,24 +30,6 @@ public final class Constants {
   public static final double AUTO_DRIVE_BACK_TIME = 0; // TODO: calculate time based on distance and speed!!!!!!!!!
 
   // Drivetrain
-<<<<<<< HEAD
-  public static final int drivetrainEncoderResolution = 1; // TODO find value
-  public static final double drivetrainRateLimNUM = 15;
-  public static final double drivetrainMaxSpeed = 0.75;
-  public static final double drivetrainMaxTurn = 0.75; 
-  public static final double drivetrainGearRatio = 1; // TODO find value
-  public static final double drivetrainWheelDiameter = 6;
-  public static final double drivetrainWheelCircumference =  drivetrainWheelDiameter * Math.PI;
-  public static final double drivetrainDistancePerPulse = drivetrainWheelCircumference / drivetrainGearRatio / drivetrainEncoderResolution;
-
-  // Shooter
-  public static final int shooterForwardChannel = 0; // TODO find value
-  public static final int shooterBackwardChannel = 1; // TODO find value
-  public static final double shooterRateLimNUM = 0.5; // TODO find best value
-  public static final double shooterP = 0;
-  public static final double shooterI = 0;
-  public static final double shooterD = 0;
-=======
   public static final int DRIVETRAIN_ENCODER_RESOLUTION = 1; // TODO find value
   public static final double DRIVETRAIN_RATELIM_VALUE = 15;
   public static final double DRIVETRAIN_MAX_SPEED = .75; 
@@ -58,15 +40,21 @@ public final class Constants {
   public static final double DRIVETRAIN_DISTANCE_PER_PULSE = DRIVETRAIN_WHEEL_CIRCUMFERENCE / DRIVETRAIN_GEAR_RATIO / DRIVETRAIN_ENCODER_RESOLUTION;
 
   // Shooter
+  public static final int SHOOTER_ENCODER_RESOLUTION = 0; // TODO: find value
+  public static final int SHOOTER_ENCODER_CHANNEL_A = 0; // TODO: Find value
+  public static final int SHOOTER_ENCODER_CHANNEL_B = 1; // TODO: Find value
   public static final int SHOOTER_FORWARD_CHANNEL = 0; // TODO find value
   public static final int SHOOTER_BACKWARD_CHANNEL = 1; // TODO find value
   public static final double SHOOTER_RATELIM_VALUE = 0.5; // TODO find best value
   public static final double SHOOTER_FAST_SPEED = .75;
   public static final double SHOOTER_SLOW_SPEED = .25;
+  public static final double SHOOTER_P = 0; // TODO: Find value
+  public static final double SHOOTER_I = 0; // TODO: Find value
+  public static final double SHOOTER_D = 0; // TODO: Find value
+  
 
   // climber
   public static final double CLIMBER_SPEED = 1;
->>>>>>> master
 
   // Motor IDs
   public static final int DRIVETRAIN_LEFT_ID1 = 10; 

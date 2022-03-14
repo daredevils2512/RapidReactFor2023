@@ -56,26 +56,28 @@ public class RobotContainer {
   private final LoggingManager m_logManager;
 
   // Subsystems
-  private final Drivetrain m_drivetrainSub;
+  private final Drivetrain m_drivetrain;
   private final Climber m_climber;
-  private final Intake m_intakeSub;
+  private final Intake m_intake;
   private final Magazine m_magazine;
   private final Shooter m_shooter;
   private final CompresserManager m_compressor;
 
   // Commands
   private final Command m_intakeShift;
-  private final Command m_climberUpComamnd;
-  private final Command m_climberDownComamnd;
+  private final Command m_climberUp;
+  private final Command m_climberDown;
   private final Command m_autoDriveBack;
   private final Command m_autoShoot;
   private final Command m_autoDriveBackAndShoot;
   private final Command m_driveShift;
-  private final Command m_drivetrainCommand;
-  private final Command m_intakeCommand;
+  private final Command m_drive;
+  private final Command m_takeBalls;
   private final Command m_revShooterFast;
   private final Command m_revShooterSlow;
   private final Command m_runMag;
+  private final Command m_turnOnLimelight;
+  private final Command m_turnOffLimelight;
   private final Command m_aim;
   private final Command m_FindRange;
 
@@ -116,34 +118,36 @@ public class RobotContainer {
   public RobotContainer() {
     // Define Subsystems
     m_climber = Constants.CLIMBER_ENABLED ? new PhysicalClimber() : new DummyClimber();
-    m_drivetrainSub = Constants.DRIVETRAIN_ENABLED ? (Constants.SPARK_DRIVETRAIN_ENABLED ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new DummyDrivetrain();
-    m_intakeSub = Constants.INTAKE_ENABLED ? new PhysicalIntake() : new DummyIntake();
+    m_drivetrain = Constants.DRIVETRAIN_ENABLED ? (Constants.SPARK_DRIVETRAIN_ENABLED ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new DummyDrivetrain();
+    m_intake = Constants.INTAKE_ENABLED ? new PhysicalIntake() : new DummyIntake();
     m_magazine = Constants.MAGAZINE_ENABLED ? new PhysicalMagazine() : new DummyMagazine();
     m_shooter = Constants.SHOOTER_ENABLED ? new PhysicalShooter() : new DummyShooter();
     m_limelight = Constants.LIMELIGHT_ENABLED ? new PhysicalLimelight(Pipeline.N_E_D) : new DummyLimelight();
     m_compressor = Constants.COMPRESSOR_ENABLED ? new PhysicalCompressor() : new DummyCompressor();
 
     // Define Commands
-    m_driveShift = Commands.driveShifters(m_drivetrainSub);
-    m_drivetrainCommand = Commands.drive(m_drivetrainSub, () -> getMove(), () -> getTurn());
+    m_driveShift = Commands.driveShifters(m_drivetrain);
+    m_drive = Commands.drive(m_drivetrain, () -> getMove(), () -> getTurn());
     
     m_runMag = Commands.runMag(m_magazine, () -> 1);
 
-    m_climberUpComamnd = Commands.runClimber(m_climber, Constants.CLIMBER_SPEED);
-    m_climberDownComamnd = Commands.runClimber(m_climber, -Constants.CLIMBER_SPEED);
+    m_climberUp = Commands.runClimber(m_climber, Constants.CLIMBER_SPEED);
+    m_climberDown = Commands.runClimber(m_climber, -Constants.CLIMBER_SPEED);
 
-    m_intakeCommand = Commands.runIntake(m_intakeSub, () -> 1);
-    m_intakeShift = Commands.intakeShifters(m_intakeSub);
+    m_takeBalls = Commands.runIntake(m_intake, () -> 1);
+    m_intakeShift = Commands.intakeShifters(m_intake);
 
     m_revShooterFast = Commands.revShooter(m_shooter, Constants.SHOOTER_FAST_SPEED);
     m_revShooterSlow = Commands.revShooter(m_shooter, Constants.SHOOTER_SLOW_SPEED);
 
-    m_autoDriveBack = AutoCommands.autoDriveBack(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_TIME);
-    m_autoShoot = AutoCommands.autoShoot(m_shooter, m_magazine, m_intakeSub, Constants.SHOOT_AUTO_SPEED);
-    m_autoDriveBackAndShoot = AutoCommands.fullAuto(m_drivetrainSub, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_TIME, m_shooter, m_magazine, m_intakeSub, Constants.SHOOT_AUTO_SPEED);
+    m_autoDriveBack = AutoCommands.autoDriveBack(m_drivetrain, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_TIME);
+    m_autoShoot = AutoCommands.autoShoot(m_shooter, m_magazine, m_intake, Constants.SHOOT_AUTO_SPEED);
+    m_autoDriveBackAndShoot = AutoCommands.fullAuto(m_drivetrain, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_TIME, m_shooter, m_magazine, m_intake, Constants.SHOOT_AUTO_SPEED);
 
-    m_aim = VisionCommands.Aim(m_drivetrainSub, m_limelight);
-    m_FindRange = VisionCommands.findRange(m_drivetrainSub, m_limelight);
+    m_turnOnLimelight = VisionCommands.turnOnLimelight(m_limelight);
+    m_turnOffLimelight = VisionCommands.turnOffLimelight(m_limelight);
+    m_aim = VisionCommands.Aim(m_drivetrain);
+    m_FindRange = VisionCommands.findRange(m_drivetrain);
 
     // Define
     m_logManager = new LoggingManager();
@@ -175,13 +179,21 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     m_controlBoard.extreme.baseMiddleLeft.whenPressed(m_intakeShift);
-    m_controlBoard.extreme.baseMiddleRight.whileHeld(m_intakeCommand);
+    m_controlBoard.extreme.baseMiddleRight.whileHeld(m_takeBalls);
 
-    m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUpComamnd);
-    m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDownComamnd);
+    m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUp);
+    m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDown);
     
     m_controlBoard.xboxController.rightBumper.whenPressed(m_driveShift);
-    m_drivetrainSub.setDefaultCommand(m_drivetrainCommand);
+    m_drivetrain.setDefaultCommand(m_drive);
+
+    m_controlBoard.extreme.joystickBottomLeft.whenPressed(m_turnOnLimelight);
+    m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_aim);
+    m_controlBoard.extreme.joystickBottomLeft.whenReleased(m_turnOnLimelight);
+    
+    m_controlBoard.extreme.joystickBottomRight.whenPressed(m_turnOnLimelight);
+    m_controlBoard.extreme.joystickBottomRight.whileHeld(m_FindRange);
+    m_controlBoard.extreme.joystickBottomRight.whenReleased(m_turnOnLimelight);
     
     m_controlBoard.extreme.sideButton.whileHeld(m_revShooterFast);
     m_controlBoard.extreme.baseBackLeft.whileHeld(m_revShooterSlow);
