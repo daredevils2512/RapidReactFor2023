@@ -46,34 +46,34 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff
-    m_frontLeft = new WPI_TalonFX(Constants.drivetrainLeftID1); 
-    m_backLeft = new WPI_TalonFX(Constants.drivetrainLeftID2);
+    m_frontLeft = new WPI_TalonFX(Constants.DRIVETRAIN_LEFT_ID1); 
+    m_backLeft = new WPI_TalonFX(Constants.DRIVETRAIN_LEFT_ID2);
     m_left = new MotorControllerGroup(m_frontLeft, m_backLeft);
     m_left.setInverted(true);
-    m_frontRight = new WPI_TalonFX(Constants.drivetrainRightID1);
-    m_backRight = new WPI_TalonFX(Constants.drivetrainRightID2);
+    m_frontRight = new WPI_TalonFX(Constants.DRIVETRAIN_RIGHT_ID1);
+    m_backRight = new WPI_TalonFX(Constants.DRIVETRAIN_RIGHT_ID2);
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 
     // Network table stuff
-    m_leftEncoder = new Encoder(Constants.drivetrainLeftEncoderChannelA, Constants.drivetrainLeftEncoderChannelB);
-    m_rightEncoder = new Encoder(Constants.drivetrainRightEncoderChannelA, Constants.drivetrainRightEncoderChannelB);
+    m_leftEncoder = new Encoder(Constants.DRIVETRAIN_LEFT_ENCODER_A, Constants.DRIVETRAIN_LEFT_ENCODER_B);
+    m_rightEncoder = new Encoder(Constants.DRIVETRAIN_RIGHT_ENCODER_A, Constants.DRIVETRAIN_RIGHT_ENCODER_B);
     m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); 
     m_rightEncoderEntry = m_table.getEntry("Right encoder distance");
-    m_leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
+    m_leftEncoder.setDistancePerPulse(Constants.DRIVETRAIN_DISTANCE_PER_PULSE);
     m_leftEncoder.setReverseDirection(true);
-    m_rightEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
+    m_rightEncoder.setDistancePerPulse(Constants.DRIVETRAIN_DISTANCE_PER_PULSE);
     m_leftDistanceEntry = m_table.getEntry("Left distance entry"); 
     m_rightDistanceEntry = m_table.getEntry("Right distance entry"); 
     m_getLowGearEntry = m_table.getEntry("Low gear entry");
 
     // Shifting
-    m_leftShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.drivetrainLeftForwardChannel, Constants.drivetrainLeftBackwardChannel);
-    m_rightShifter = new DoubleSolenoid(Constants.pneumaticsModuleType, Constants.drivetrainRightForwardChannel, Constants.drivetrainRightBackwardChannel);
+    m_leftShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.DRIVETRAIN_LEFT_FORWARD_CHANNEL, Constants.DRIVETRAIN_LEFT_BACKWARD_CHANNEL);
+    m_rightShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.DRIVETRAIN_RIGHT_FORWARD_CHANNEL, Constants.DRIVETRAIN_RIGHT_BACKWARD_CHANNEL);
 
     // Rate limiter
-    m_rateLim = new SlewRateLimiter(Constants.drivetrainRateLimNUM);
-    m_rateLimTurn = new SlewRateLimiter(Constants.drivetrainRateLimNUM);
+    m_rateLim = new SlewRateLimiter(Constants.DRIVETRAIN_RATELIM_VALUE);
+    m_rateLimTurn = new SlewRateLimiter(Constants.DRIVETRAIN_RATELIM_VALUE);
   }
 
   /** Runs the arcade drive 
@@ -83,7 +83,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(move);
     turn = m_rateLimTurn.calculate(turn);
-    m_drive.arcadeDrive((move)*Constants.drivetrainMaxSpeed, (turn)*Constants.drivetrainMaxTurn);
+    m_drive.arcadeDrive((move) * Constants.DRIVETRAIN_MAX_SPEED, (turn) * Constants.DRIVETRAIN_MAX_TURN);
   }
 
   /** 
@@ -121,8 +121,8 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
    * @param wantsLowGear if it wants to set low gear
    */
   public void setLowGear(boolean wantsLowGear) {
-    m_leftShifter.set(wantsLowGear ? Constants.drivetrainLowGearValue : Constants.drivetrainHighGearValue);
-    m_rightShifter.set(wantsLowGear ? Constants.drivetrainLowGearValue : Constants.drivetrainHighGearValue);
+    m_leftShifter.set(wantsLowGear ? Constants.DRIVETRAIN_LOW_GEAR_VALUE : Constants.DRIVETRAIN_HIGH_GEAR_VALUE);
+    m_rightShifter.set(wantsLowGear ? Constants.DRIVETRAIN_LOW_GEAR_VALUE : Constants.DRIVETRAIN_HIGH_GEAR_VALUE);
     m_logger.fine("set low gear: " + wantsLowGear);
   }
   
@@ -136,8 +136,8 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
 
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
-    m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.drivetrainLowGearValue));
-    return m_leftShifter.get() == Constants.drivetrainLowGearValue;
+    m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE));
+    return m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE;
   }
 
   public void toggleShifters() {
