@@ -12,7 +12,7 @@ public final class AutoCommands extends CommandBase {
   private AutoCommands() {}
 
   public static Command autoDriveBack(Drivetrain drivetrain, double speed, double driveTime) {
-    return new RunCommand(() -> Commands.drive(drivetrain, () -> speed, () -> 0.0).withTimeout(driveTime));
+    return new RunCommand(() -> Commands.drive(drivetrain, () -> speed, () -> 0.0).withTimeout(driveTime).andThen(Commands.drive(drivetrain, () -> 0, () -> 0)));
   }
 
   public static Command autoShoot(Shooter shooter, Magazine mag, Intake intake, double speed) {
