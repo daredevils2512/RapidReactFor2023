@@ -20,12 +20,11 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   private final NetworkTable m_table;
   private final NetworkTableEntry m_LEDColor;
 
-  // Math
-  private int sMin = 0;
-  private int sMax = 255;
-
   // Time
-  private double startTime = Timer.getFPGATimestamp();
+  private double startTime;
+
+  // Enabled
+  private boolean enabled;
 
   public PhysicalLEDManager() {
     super("AddressableLEDManager");
@@ -35,11 +34,17 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
     m_LEDColor = m_table.getEntry("LED color");
 
     // LED
-    m_LED = new AddressableLED(Constants.LEDPort);
-    m_LED.setLength(Constants.LEDLength);
+    m_LED = new AddressableLED(Constants.LED_PORT);
+    m_LED.setLength(Constants.LED_LENGTH);
 
     // LED Buffer
-    m_LEDBuffer = new AddressableLEDBuffer(Constants.LEDLength);
+    m_LEDBuffer = new AddressableLEDBuffer(Constants.LED_LENGTH);
+
+    // Time
+    startTime = Timer.getFPGATimestamp();
+
+    // Enabled
+    enabled = false;
 
     // Starts the LEDs
     m_LED.start();
@@ -48,9 +53,11 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   /** Periodically runs code */
   @Override
   public void periodic() {
-    setColor(Math.cos(Timer.getFPGATimestamp() - startTime) / 2 + 0.5);
-    m_LEDColor.setValue(getColor());
-    m_LED.setData(m_LEDBuffer);
+    if (enabled) {
+      setColor(Math.cos(Timer.getFPGATimestamp() - startTime) / 2 + 0.5);
+      m_LEDColor.setValue(getColor());
+      m_LED.setData(m_LEDBuffer);
+    }
   }
 
   @Override
@@ -62,12 +69,18 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   @Override
   /** Sets the color values of the LEDs */
   public void setColor(double saturation) {
-    for (int i = 0; i <= Constants.LEDLength; i++) { 
+    for (int i = 0; i <= Constants.LED_LENGTH; i++) { 
       m_LEDBuffer.setRGB(i, 255, 0, 0);
 
-      Constants.LED_S = sMin + (int)((sMax - sMin) * saturation);
+      Constants.LED_S = Constants.LED_MIN_S + (int)((Constants.LED_MAX_S - Constants.LED_MIN_S) * saturation);
       
       m_LEDBuffer.setHSV(i, 180, Constants.LED_S, 255);
     }
+  }
+
+  @Override
+  /** Toggles the LEDs */
+  public void toggleLEDs() {
+    enabled = !enabled;
   }
 }

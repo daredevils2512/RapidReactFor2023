@@ -16,5 +16,11 @@ public class DummyLEDManager implements LEDManager {
     // TODO Auto-generated method stub
     
   }
+
+  @Override
+  public void toggleLEDs() {
+    // TODO Auto-generated method stub
+    
+  }
   
 }

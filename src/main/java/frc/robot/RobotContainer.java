@@ -93,6 +93,7 @@ public class RobotContainer {
   private final Command m_turnOffLimelight;
   private final Command m_aim;
   private final Command m_FindRange;
+  private final Command m_toggleLEDs;
 
   private final Limelight m_limelight;
 
@@ -163,6 +164,8 @@ public class RobotContainer {
     m_aim = VisionCommands.Aim(m_drivetrain);
     m_FindRange = VisionCommands.findRange(m_drivetrain);
 
+    m_toggleLEDs = Commands.toggleLEDs(m_LED);
+
     // Define
     m_logManager = new LoggingManager();
     m_controlBoard = new ControlBoard();
@@ -213,6 +216,8 @@ public class RobotContainer {
     m_controlBoard.extreme.baseBackLeft.whileHeld(m_revShooterSlow);
 
     m_controlBoard.extreme.trigger.whileHeld(m_runMag);
+
+    m_controlBoard.extreme.baseBackRight.whenPressed(m_toggleLEDs);
   }
 
   /**

@@ -106,9 +106,11 @@ public final class Constants {
   public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.CTREPCM;
 
   // LEDs
-  public static final int LEDPort = 0; // TODO: find value
-  public static final int LEDLength = 15; // TODO: find value
+  public static final int LED_PORT = 0; // TODO: find value
+  public static final int LED_LENGTH = 15; // TODO: find value
   public static int LED_S = 255;
+  public static int LED_MIN_S = 0;
+  public static int LED_MAX_S = 255;
 
   private Constants() {}
 }
