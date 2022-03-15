@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.interfaces;
 
 import java.util.logging.Level;
 

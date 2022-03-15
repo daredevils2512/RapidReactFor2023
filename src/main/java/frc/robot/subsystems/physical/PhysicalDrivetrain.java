@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.NTSubsystem;
+import frc.robot.subsystems.interfaces.Drivetrain;
+import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
@@ -93,9 +93,6 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     return m_leftEncoder.get();
   }
 
-  // crusta eseances 
-  // crist shawnes
-
   /** 
    * @return Right encoder
   */
@@ -132,6 +129,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     return m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE;
   }
 
+  /** toggles the shifters */
   public void toggleShifters() {
     setLowGear(!getLowGear());
   }

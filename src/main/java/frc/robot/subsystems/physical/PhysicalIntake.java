@@ -2,8 +2,8 @@ package frc.robot.subsystems.physical;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.NTSubsystem;
+import frc.robot.subsystems.interfaces.Intake;
+import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalIntake extends NTSubsystem implements Intake {
@@ -33,7 +33,9 @@ public class PhysicalIntake extends NTSubsystem implements Intake {
     // m_rightShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.INTAKE_SHIFTER_FORWARD_ID1, Constants.INTAKE_SHIFTER_BACKWARD_ID2);
   }
 
-  /** Sets gears to proper value */
+  /** Sets gears to proper value 
+   * @param wantsExtended if extended shifters are wanted
+  */
   public void setExtended(boolean wantsExtended) {
     m_shifter.set(wantsExtended ? Constants.INTAKE_EXTENDED_VALUE : Constants.INTAKE_RETRACTED_VALUE);
     //m_rightShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);

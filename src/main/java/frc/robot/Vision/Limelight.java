@@ -1,7 +1,5 @@
 package frc.robot.vision;
 
-import frc.robot.Vision2.Pipeline;
-
 /**
  * returned 228 in at 208 inches
  */
