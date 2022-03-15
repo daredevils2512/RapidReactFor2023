@@ -6,21 +6,12 @@ import frc.robot.subsystems.LEDManager;
 public class DummyLEDManager implements LEDManager {
 
   @Override
-  public Color getColor() {
-    // TODO Auto-generated method stub
-    return null;
-  }
+  public Color getColor() { return null; }
 
   @Override
-  public void setColor(double saturation) {
-    // TODO Auto-generated method stub
-    
-  }
+  public void setColor(double saturation) { }
 
   @Override
-  public void toggleLEDs() {
-    // TODO Auto-generated method stub
-    
-  }
+  public void toggleLEDs() { }
   
 }
