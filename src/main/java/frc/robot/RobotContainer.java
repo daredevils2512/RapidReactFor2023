@@ -69,7 +69,7 @@ public class RobotContainer {
   private final Command m_climberDown;
   private final Command m_autoDriveBack;
   private final Command m_autoShoot;
-  private final Command m_autoDriveBackAndShoot;
+  private final Command m_autoFull;
   private final Command m_driveShift;
   private final Command m_drive;
   private final Command m_takeBalls;
@@ -142,7 +142,7 @@ public class RobotContainer {
 
     m_autoDriveBack = AutoCommands.autoDriveBack(m_drivetrain, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_TIME);
     m_autoShoot = AutoCommands.autoShoot(m_shooter, m_magazine, m_intake, Constants.SHOOT_AUTO_SPEED);
-    m_autoDriveBackAndShoot = AutoCommands.fullAuto(m_drivetrain, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_TIME, m_shooter, m_magazine, m_intake, Constants.SHOOT_AUTO_SPEED);
+    m_autoFull = AutoCommands.fullAuto(m_drivetrain, Constants.DRIVE_AUTO_SPEED, Constants.AUTO_DRIVE_BACK_TIME, m_shooter, m_magazine, m_intake, Constants.SHOOT_AUTO_SPEED);
 
     m_turnOnLimelight = VisionCommands.turnOnLimelight(m_limelight);
     m_turnOffLimelight = VisionCommands.turnOffLimelight(m_limelight);
@@ -207,6 +207,6 @@ public class RobotContainer {
    * @return The command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_autoDriveBackAndShoot;
+    return m_autoFull;
   }
 } 
