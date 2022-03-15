@@ -2,8 +2,8 @@ package frc.robot.subsystems.physical;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.NTSubsystem;
+import frc.robot.subsystems.interfaces.Intake;
+import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalIntake extends NTSubsystem implements Intake {

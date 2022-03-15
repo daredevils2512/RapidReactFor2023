@@ -3,8 +3,8 @@ package frc.robot.subsystems.physical;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.NTSubsystem;
+import frc.robot.subsystems.interfaces.Climber;
+import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalClimber extends NTSubsystem implements Climber {

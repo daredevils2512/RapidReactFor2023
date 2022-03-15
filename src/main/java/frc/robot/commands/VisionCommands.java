@@ -4,7 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.interfaces.Drivetrain;
 import frc.robot.utils.Constants;
 import frc.robot.vision.Limelight;
 import frc.robot.vision.LimelightLEDMode;

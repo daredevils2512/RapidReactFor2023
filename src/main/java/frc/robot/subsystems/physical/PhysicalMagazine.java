@@ -2,8 +2,9 @@ package frc.robot.subsystems.physical;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.subsystems.Magazine;
-import frc.robot.subsystems.NTSubsystem;
+
+import frc.robot.subsystems.interfaces.Magazine;
+import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalMagazine extends NTSubsystem implements Magazine {

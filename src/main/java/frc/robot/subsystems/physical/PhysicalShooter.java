@@ -5,8 +5,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import frc.robot.subsystems.NTSubsystem;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.interfaces.NTSubsystem;
+import frc.robot.subsystems.interfaces.Shooter;
 import frc.robot.utils.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
