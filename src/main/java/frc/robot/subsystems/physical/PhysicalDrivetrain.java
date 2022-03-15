@@ -76,6 +76,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     m_rateLimTurn = new SlewRateLimiter(Constants.DRIVETRAIN_RATELIM_VALUE);
   }
 
+  @Override
   /** Runs the arcade drive 
    * @param move Speed for forward/backward movement
    * @param turn Speed for left/right movement
@@ -86,6 +87,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     m_drive.arcadeDrive((move) * Constants.DRIVETRAIN_MAX_SPEED, (turn) * Constants.DRIVETRAIN_MAX_TURN);
   }
 
+  @Override
   /** 
    * @return Left encoder
   */
@@ -93,9 +95,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     return m_leftEncoder.get();
   }
 
-  // crusta eseances 
-  // crist shawnes
-
+  @Override
   /** 
    * @return Right encoder
   */
@@ -103,6 +103,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     return m_rightEncoder.get();
   }
 
+  @Override
   /** 
    * @return Left distance
    */
@@ -110,6 +111,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     return m_leftEncoder.getDistance();
   }
 
+  @Override
   /** 
    * @return Right distance
    */
@@ -117,6 +119,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     return m_rightEncoder.getDistance();
   }
 
+  @Override
   /** Sets low gear only if it wants to
    * @param wantsLowGear if it wants to set low gear
    */
@@ -126,23 +129,27 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     m_logger.fine("set low gear: " + wantsLowGear);
   }
 
+  @Override
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
     m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE));
     return m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE;
   }
 
+  @Override
+  /** Toggles the shifters */
   public void toggleShifters() {
     setLowGear(!getLowGear());
   }
   
+  @Override
   /** @return distance that the drivetrain has moved */
   public double getDistance() {
     return (getLeftDistance() + getRightDistance()) / 2;
   }
   
-  /** Periodically runs code */
   @Override
+  /** Periodically runs code */
   public void periodic() { 
     m_leftEncoderEntry.setNumber(getLeftEncoder());
     m_rightEncoderEntry.setNumber(getRightEncoder());

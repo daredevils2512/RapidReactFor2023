@@ -27,7 +27,7 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   private boolean enabled;
 
   public PhysicalLEDManager() {
-    super("AddressableLEDManager");
+    super("LEDManager");
 
     // Network table
     m_table = NetworkTableInstance.getDefault().getTable("LEDs");
@@ -85,4 +85,5 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
       m_LED.stop();
     }
   }
+  
 }
