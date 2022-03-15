@@ -6,10 +6,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Vision.DummyLimelight;
-import frc.robot.Vision.Limelight;
-import frc.robot.Vision.PhysicalLimelight;
-import frc.robot.Vision.Pipeline;
 import frc.robot.io.NTButton;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CompresserManager;
@@ -36,6 +32,10 @@ import frc.robot.subsystems.physical.PhysicalSparkDrivetrain;
 import frc.robot.io.ControlBoard;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LoggingManager;
+import frc.robot.vision.DummyLimelight;
+import frc.robot.vision.Limelight;
+import frc.robot.vision.PhysicalLimelight;
+import frc.robot.vision.Pipeline;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
