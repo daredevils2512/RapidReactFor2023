@@ -18,8 +18,8 @@ public class PhysicalClimber extends NTSubsystem implements Climber {
     super("ClimberSubsystem");
 
     // Make Motors
-    m_rightMotor = new TalonSRX(Constants.climber1ID);
-    m_leftMotor = new TalonSRX(Constants.climber2ID);
+    m_rightMotor = new TalonSRX(Constants.CLIMBER_1ID);
+    m_leftMotor = new TalonSRX(Constants.CLIMBER_2ID);
     m_leftMotor.follow(m_rightMotor);
     m_leftMotor.setInverted(true);
   }

@@ -14,7 +14,7 @@ public class PhysicalMagazine extends NTSubsystem implements Magazine {
     super("Magazine");
 
     // Assign motors
-    m_magMotor = new WPI_TalonSRX(Constants.magID);
+    m_magMotor = new WPI_TalonSRX(Constants.MAG_ID);
   }
 
   /** moves the balls
