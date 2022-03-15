@@ -21,5 +21,29 @@ public class DummyShooter implements Shooter {
     // TODO Auto-generated method stub
     
   }
+
+  @Override
+  public void setRPMPID(double setpoint) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public double velocityToRPM(double velocity) {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public double get() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public double getRPM() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
   
 }

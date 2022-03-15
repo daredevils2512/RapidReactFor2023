@@ -40,11 +40,18 @@ public final class Constants {
   public static final double DRIVETRAIN_DISTANCE_PER_PULSE = DRIVETRAIN_WHEEL_CIRCUMFERENCE / DRIVETRAIN_GEAR_RATIO / DRIVETRAIN_ENCODER_RESOLUTION;
 
   // Shooter
+  public static final int SHOOTER_ENCODER_RESOLUTION = 0; // TODO: find value
+  public static final int SHOOTER_ENCODER_CHANNEL_A = 0; // TODO: Find value
+  public static final int SHOOTER_ENCODER_CHANNEL_B = 1; // TODO: Find value
   public static final int SHOOTER_FORWARD_CHANNEL = 0; // TODO find value
   public static final int SHOOTER_BACKWARD_CHANNEL = 1; // TODO find value
   public static final double SHOOTER_RATELIM_VALUE = 0.5; // TODO find best value
   public static final double SHOOTER_FAST_SPEED = .75;
   public static final double SHOOTER_SLOW_SPEED = .25;
+  public static final double SHOOTER_P = 0; // TODO: Find value
+  public static final double SHOOTER_I = 0; // TODO: Find value
+  public static final double SHOOTER_D = 0; // TODO: Find value
+  
 
   // climber
   public static final double CLIMBER_SPEED = 1;

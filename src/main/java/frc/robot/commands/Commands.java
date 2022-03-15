@@ -34,7 +34,7 @@ public final class Commands {
   }
 
   public static Command revShooter(Shooter shooter, double speed) {
-    return new RunCommand(() -> shooter.setRPM(speed));
+    return new RunCommand(() -> shooter.setRPMPID(speed));
   }
 
   public static Command runMag(Magazine mag, DoubleSupplier speed) {
