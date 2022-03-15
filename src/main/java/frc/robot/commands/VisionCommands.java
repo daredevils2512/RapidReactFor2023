@@ -16,8 +16,9 @@ public final class VisionCommands {
 
   public static Command Aim(Drivetrain drivetrain) {
     double tx = m_limelightTable.getEntry("tx").getDouble(0);
+    double turnAdjust = Constants.K_P * tx;
 
-    return new RunCommand(() -> drivetrain.arcadeDrive(0, Constants.K_P * tx));
+    return new RunCommand(() -> drivetrain.arcadeDrive(0, turnAdjust));
   }
 
   public static Command findRange(Drivetrain drivetrain) {
@@ -26,9 +27,9 @@ public final class VisionCommands {
     double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
     double currentDistance = (Constants.GOAL_HEIGHT - Constants.LIMELIGHT_LENS_HEIGHT) / Math.tan(angleToGoalRadians);
     double distanceVariation = Constants.DESIRED_DISTANCE - currentDistance;
-    double driveAjust = Constants.K_P * distanceVariation;
+    double moveAjust = Constants.K_P * distanceVariation;
 
-    return new RunCommand(() -> drivetrain.arcadeDrive(driveAjust, 0));
+    return new RunCommand(() -> drivetrain.arcadeDrive(moveAjust, 0));
   }
 
   public static Command turnOnLimelight(Limelight limelight) {
