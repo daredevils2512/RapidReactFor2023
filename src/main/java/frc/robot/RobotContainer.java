@@ -22,14 +22,9 @@ import frc.robot.vision.DummyLimelight;
 import frc.robot.vision.Limelight;
 import frc.robot.vision.PhysicalLimelight;
 import frc.robot.vision.Pipeline;
-
-import java.util.logging.Level;
-import java.util.Optional;
 import frc.robot.commands.Commands;
 import frc.robot.commands.VisionCommands;
 import frc.robot.commands.AutoCommands;
-import frc.robot.subsystems.Magazine;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.dummy.DummyDrivetrain;
 import frc.robot.subsystems.dummy.DummyIntake;
 import frc.robot.subsystems.dummy.DummyLEDManager;
@@ -45,10 +40,6 @@ import frc.robot.subsystems.physical.PhysicalIntake;
 import frc.robot.subsystems.physical.PhysicalMagazine;
 import frc.robot.subsystems.physical.PhysicalShooter;
 import frc.robot.subsystems.physical.PhysicalSparkDrivetrain;
-import frc.robot.io.ControlBoard;
-import frc.robot.utils.Constants;
-import frc.robot.utils.LoggingManager;
-import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
