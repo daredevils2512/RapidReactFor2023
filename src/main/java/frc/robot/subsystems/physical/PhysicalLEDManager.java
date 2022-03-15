@@ -45,9 +45,6 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
 
     // Enabled
     enabled = false;
-
-    // Starts the LEDs
-    m_LED.start();
   }
   
   /** Periodically runs code */
@@ -82,5 +79,10 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   /** Toggles the LEDs */
   public void toggleLEDs() {
     enabled = !enabled;
+    if (enabled) {
+      m_LED.start();
+    } else {
+      m_LED.stop();
+    }
   }
 }
