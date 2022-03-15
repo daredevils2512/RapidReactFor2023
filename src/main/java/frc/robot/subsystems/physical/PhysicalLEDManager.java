@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.physical;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.subsystems.LEDManager;
+import frc.robot.subsystems.NTSubsystem;
 import frc.robot.utils.Constants;
 
-public class AddressableLEDManager extends NTSubsystem {
+public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   // LED stuffs
   private final AddressableLED m_LED;
   private final AddressableLEDBuffer m_LEDBuffer;
@@ -25,7 +27,7 @@ public class AddressableLEDManager extends NTSubsystem {
   // Time
   private double startTime = Timer.getFPGATimestamp();
 
-  public AddressableLEDManager() {
+  public PhysicalLEDManager() {
     super("AddressableLEDManager");
 
     // Network table
@@ -51,11 +53,13 @@ public class AddressableLEDManager extends NTSubsystem {
     m_LED.setData(m_LEDBuffer);
   }
 
+  @Override
   /** @return The color value of the LEDs */
   public Color getColor() {
     return m_LEDBuffer.getLED(1);
   }
 
+  @Override
   /** Sets the color values of the LEDs */
   public void setColor(double saturation) {
     for (int i = 0; i <= Constants.LEDLength; i++) { 
