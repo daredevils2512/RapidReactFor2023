@@ -199,9 +199,6 @@ public class RobotContainer {
     m_controlBoard.extreme.baseBackLeft.whileHeld(m_revShooterSlow);
 
     m_controlBoard.extreme.trigger.whileHeld(m_runMag);
-
-    // if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_aim);
-    // if (m_drivetrainSub.isPresent()) m_controlBoard.extreme.joystickBottomRight.whileHeld(m_FindRange); 
   }
 
   /**
