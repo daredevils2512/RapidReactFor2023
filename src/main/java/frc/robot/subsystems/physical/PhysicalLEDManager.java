@@ -70,6 +70,11 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   }
 
   @Override
+  public Color getColor(int i) {
+    return m_LEDBuffer.getLED(i);
+  }
+
+  @Override
   public void setColor(double saturation, int hue, int value) {
     for (int i = 0; i <= Constants.LED_LENGTH; i++) {
       m_saturation = Constants.LED_MIN_S + (int)((Constants.LED_MAX_S - Constants.LED_MIN_S) * saturation);

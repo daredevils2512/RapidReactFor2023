@@ -27,11 +27,11 @@ public interface Shooter extends Subsystem {
    * @param velocity The velocity to convert to RPM
    * @return The velocity converted to RPM
    */
-  public double velocityToRPM(double velocity);
+  double velocityToRPM(double velocity);
 
   /** @return The current speed of the shooter motor */
-  public double get();
+  double get();
 
   /** @return The current RPM of the motors */
-  public double getRPM();
+  double getRPM();
 }
