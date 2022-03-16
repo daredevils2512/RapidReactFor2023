@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.LEDManager;
-import frc.robot.subsystems.NTSubsystem;
+import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
@@ -28,7 +28,7 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
 
   public PhysicalLEDManager() {
     super("LEDManager");
-
+    
     // Network table
     m_table = NetworkTableInstance.getDefault().getTable("LEDs");
     m_LEDColor = m_table.getEntry("LED color");
@@ -78,10 +78,19 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   @Override
   /** Toggles the LEDs */
   public void toggleLEDs() {
-    enabled = !enabled;
-    if (enabled) {
+    setEnabled(!enabled);
+  }
+
+  @Override
+  /** Enables / Disables the LEDs
+   * @param wantsEnabled whether to enable the LEDs
+   */
+  public void setEnabled(boolean wantsEnabled) {
+    if (wantsEnabled) {
+      enabled = true;
       m_LED.start();
     } else {
+      enabled = false;
       m_LED.stop();
     }
   }

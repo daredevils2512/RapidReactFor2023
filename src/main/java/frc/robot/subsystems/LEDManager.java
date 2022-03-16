@@ -11,4 +11,9 @@ public interface LEDManager {
 
   /** Toggles the LEDs */
   public void toggleLEDs();
+
+  /** Enables / Disables the LEDs
+   * @param wantsEnabled whether to enable the LEDs
+   */
+  public void setEnabled(boolean wantsEnabled);
 }

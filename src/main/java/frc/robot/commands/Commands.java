@@ -4,12 +4,12 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDManager;
-import frc.robot.subsystems.Magazine;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.interfaces.Climber;
+import frc.robot.subsystems.interfaces.Drivetrain;
+import frc.robot.subsystems.interfaces.Intake;
+import frc.robot.subsystems.interfaces.Magazine;
+import frc.robot.subsystems.interfaces.Shooter;
 
 public final class Commands {
   private Commands() {}

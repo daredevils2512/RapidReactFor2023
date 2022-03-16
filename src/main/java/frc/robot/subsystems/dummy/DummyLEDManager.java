@@ -13,5 +13,8 @@ public class DummyLEDManager implements LEDManager {
 
   @Override
   public void toggleLEDs() { }
+
+  @Override
+  public void setEnabled(boolean wantsEnabled) { }
   
 }

@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.NTSubsystem;
+import frc.robot.subsystems.interfaces.Drivetrain;
+import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalSparkDrivetrain extends NTSubsystem implements Drivetrain {
