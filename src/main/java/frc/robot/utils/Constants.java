@@ -111,5 +111,5 @@ public final class Constants {
   public static final int LED_MIN_S = 0;
   public static final int LED_MAX_S = 255;
 
-  private Constants() {}
+  private Constants() { }
 }
