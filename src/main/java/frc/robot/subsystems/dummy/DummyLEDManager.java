@@ -1,7 +1,7 @@
 package frc.robot.subsystems.dummy;
 
 import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.subsystems.LEDManager;
+import frc.robot.subsystems.interfaces.LEDManager;
 
 public class DummyLEDManager implements LEDManager {
 
