@@ -108,9 +108,8 @@ public final class Constants {
   // LEDs
   public static final int LED_PORT = 0; // TODO: find value
   public static final int LED_LENGTH = 15; // TODO: find value
-  public static int LED_S = 255;
-  public static int LED_MIN_S = 0;
-  public static int LED_MAX_S = 255;
+  public static final int LED_MIN_S = 0;
+  public static final int LED_MAX_S = 255;
 
   private Constants() {}
 }

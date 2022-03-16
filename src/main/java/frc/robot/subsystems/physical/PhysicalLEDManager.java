@@ -26,6 +26,13 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   // Enabled
   private boolean enabled;
 
+  // Saturation
+  private int m_saturation =  255;
+
+  // HSV Values
+  private int m_hue = 180;
+  private int m_value = 255;
+
   public PhysicalLEDManager() {
     super("LEDManager");
 
@@ -47,44 +54,36 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
     enabled = false;
   }
   
-  /** Periodically runs code */
   @Override
   public void periodic() {
     if (enabled) {
-      setColor(Math.cos(Timer.getFPGATimestamp() - startTime) / 2 + 0.5);
-      m_LEDColor.setValue(getColor());
+      double colorSet = (Math.cos(Timer.getFPGATimestamp() - startTime) / 2 + 0.5);
+      setColor(colorSet, m_hue, m_value);
+      m_LEDColor.setValue(colorSet);
       m_LED.setData(m_LEDBuffer);
     }
   }
 
   @Override
-  /** @return The color value of the LEDs */
   public Color getColor() {
     return m_LEDBuffer.getLED(1);
   }
 
   @Override
-  /** Sets the color values of the LEDs */
-  public void setColor(double saturation) {
-    for (int i = 0; i <= Constants.LED_LENGTH; i++) { 
-      m_LEDBuffer.setRGB(i, 255, 0, 0);
-
-      Constants.LED_S = Constants.LED_MIN_S + (int)((Constants.LED_MAX_S - Constants.LED_MIN_S) * saturation);
+  public void setColor(double saturation, int hue, int value) {
+    for (int i = 0; i <= Constants.LED_LENGTH; i++) {
+      m_saturation = Constants.LED_MIN_S + (int)((Constants.LED_MAX_S - Constants.LED_MIN_S) * saturation);
       
-      m_LEDBuffer.setHSV(i, 180, Constants.LED_S, 255);
+      m_LEDBuffer.setHSV(i, hue, m_saturation, value);
     }
   }
 
   @Override
-  /** Toggles the LEDs */
   public void toggleLEDs() {
     setEnabled(!enabled);
   }
 
   @Override
-  /** Enables / Disables the LEDs
-   * @param wantsEnabled whether to enable the LEDs
-   */
   public void setEnabled(boolean wantsEnabled) {
     if (wantsEnabled) {
       enabled = true;
@@ -93,6 +92,16 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
       enabled = false;
       m_LED.stop();
     }
+  }
+
+  @Override
+  public void setHue(int newHue) {
+    m_hue = newHue;
+  }
+
+  @Override
+  public void setValue(int newValue) {
+    m_value = newValue;
   }
   
 }
