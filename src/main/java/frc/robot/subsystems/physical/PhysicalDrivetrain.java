@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import frc.robot.subsystems.NTSubsystem;
 import frc.robot.subsystems.interfaces.Drivetrain;
-import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
@@ -77,10 +77,6 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   }
 
   @Override
-  /** Runs the arcade drive 
-   * @param move Speed for forward/backward movement
-   * @param turn Speed for left/right movement
-  */
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(move);
     turn = m_rateLimTurn.calculate(turn);
@@ -88,41 +84,26 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   }
 
   @Override
-  /** 
-   * @return Left encoder
-  */
   public int getLeftEncoder() { 
     return m_leftEncoder.get();
   }
 
   @Override
-  /** 
-   * @return Right encoder
-  */
   public int getRightEncoder() { 
     return m_rightEncoder.get();
   }
 
   @Override
-  /** 
-   * @return Left distance
-   */
   public double getLeftDistance() { 
     return m_leftEncoder.getDistance();
   }
 
   @Override
-  /** 
-   * @return Right distance
-   */
   public double getRightDistance() { 
     return m_rightEncoder.getDistance();
   }
 
   @Override
-  /** Sets low gear only if it wants to
-   * @param wantsLowGear if it wants to set low gear
-   */
   public void setLowGear(boolean wantsLowGear) {
     m_leftShifter.set(wantsLowGear ? Constants.DRIVETRAIN_LOW_GEAR_VALUE : Constants.DRIVETRAIN_HIGH_GEAR_VALUE);
     m_rightShifter.set(wantsLowGear ? Constants.DRIVETRAIN_LOW_GEAR_VALUE : Constants.DRIVETRAIN_HIGH_GEAR_VALUE);
@@ -130,20 +111,17 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   }
 
   @Override
-  /** @return true if shifter are in low gear */
   public boolean getLowGear() {
     m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE));
     return m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE;
   }
 
   @Override
-  /** Toggles the shifters */
   public void toggleShifters() {
     setLowGear(!getLowGear());
   }
   
   @Override
-  /** @return distance that the drivetrain has moved */
   public double getDistance() {
     return (getLeftDistance() + getRightDistance()) / 2;
   }

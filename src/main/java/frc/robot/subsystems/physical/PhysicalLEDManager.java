@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.subsystems.NTSubsystem;
 import frc.robot.subsystems.interfaces.LEDManager;
-import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalLEDManager extends NTSubsystem implements LEDManager {

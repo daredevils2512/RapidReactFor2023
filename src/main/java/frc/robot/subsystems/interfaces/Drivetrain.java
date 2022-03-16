@@ -37,9 +37,9 @@ public interface Drivetrain extends Subsystem {
    */
   double getLeftDistance();
 
-  /** @return true if shifter are in low gear */
+  /** @return True if shifter are in low gear */
   boolean getLowGear();
 
-  /** @return distance that the drivetrain has moved */
+  /** @return Distance that the drivetrain has moved */
   double getDistance();
 }
