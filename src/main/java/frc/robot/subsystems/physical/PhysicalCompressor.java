@@ -1,8 +1,8 @@
 package frc.robot.subsystems.physical;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import frc.robot.subsystems.NTSubsystem;
 import frc.robot.subsystems.interfaces.CompresserManager;
-import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 import edu.wpi.first.wpilibj.Compressor;
 
@@ -17,13 +17,11 @@ public class PhysicalCompressor extends NTSubsystem implements CompresserManager
     m_isRunningEntry = m_table.getEntry("Is running");
     m_closedLoopControlEntry = m_table.getEntry("closed loop control");
   }
-    
-  /** Executes code periodically */
+
+  @Override
   public void periodic() {}
       
-  /** sets closed loop control
-   * @param wantsClosedLoopControl if you want to enable / disable closed loop control
-   */
+  @Override
   public void setClosedLoopControl(boolean wantsClosedLoopControl) {
     if (wantsClosedLoopControl) {
       m_compressor.enableDigital();
@@ -33,12 +31,12 @@ public class PhysicalCompressor extends NTSubsystem implements CompresserManager
     m_logger.fine("Compressor closed loop control: " + getClosedLoopControl());
   }
     
-  /** @return if closed loop control is enabled */
+  @Override
   public boolean getClosedLoopControl() {
     return m_compressor.enabled();
   }
 
-  /** toggles closed loop control */
+  @Override
   public void toggleCompressor() {
     if (getClosedLoopControl()) {
       m_compressor.disable(); 

@@ -2,19 +2,17 @@ package frc.robot.subsystems.physical;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.robot.subsystems.NTSubsystem;
 import frc.robot.subsystems.interfaces.Intake;
-import frc.robot.subsystems.interfaces.NTSubsystem;
 import frc.robot.utils.Constants;
 
 public class PhysicalIntake extends NTSubsystem implements Intake {
-
   // Motor stuff
   private final WPI_TalonSRX m_intake1;
   private final WPI_TalonSRX m_intake2;
 
   // Shifters
   private final DoubleSolenoid m_shifter;
-  // private final DoubleSolenoid m_rightShifter;
 
   public PhysicalIntake() {
     super("IntakeSub");
@@ -33,29 +31,25 @@ public class PhysicalIntake extends NTSubsystem implements Intake {
     // m_rightShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.INTAKE_SHIFTER_FORWARD_ID1, Constants.INTAKE_SHIFTER_BACKWARD_ID2);
   }
 
-  /** Sets gears to proper value 
-   * @param wantsExtended if extended shifters are wanted
-  */
+  @Override
   public void setExtended(boolean wantsExtended) {
     m_shifter.set(wantsExtended ? Constants.INTAKE_EXTENDED_VALUE : Constants.INTAKE_RETRACTED_VALUE);
     //m_rightShifter.set(wantsExtended ? Constants.intakeExtendedValue : Constants.intakeRetractedValue);
     m_logger.info("set extended: " + wantsExtended);
   }
 
-  /** @return true if shifters are in low gear */
+  @Override
   public boolean getExtended() {
     m_logger.fine("get extended: " + (m_shifter.get() == Constants.INTAKE_EXTENDED_VALUE));
     return m_shifter.get() == Constants.INTAKE_EXTENDED_VALUE;
   }
 
-  /** Toggles the shifters on/off */
+  @Override
   public void toggleExtended() {
     setExtended(!getExtended());
   }
     
-  /** Runs intake motors
-   * @param speed Speed for intake motors
-   */
+  @Override
   public void setIntake(double speed) {
     m_intake1.set(speed);
     m_logger.fine("set intake speed: " + speed);
