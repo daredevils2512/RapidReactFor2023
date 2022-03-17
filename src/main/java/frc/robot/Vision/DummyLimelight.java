@@ -1,7 +1,7 @@
 package frc.robot.vision;
 
 
-public class DummyLimelight implements Limelight {
+public class DummyLimelight implements frc.robot.vision.Limelight {
 
   @Override
   public Pipeline getDefaultPipeline() { return null; }

@@ -21,6 +21,7 @@ public final class Constants {
   public static final boolean SPARK_DRIVETRAIN_ENABLED = false;
   public static final boolean COMPRESSOR_ENABLED = true;
   public static final boolean LIMELIGHT_ENABLED = false;
+  public static final boolean LED_ENABLED = true;
 
   // Auto
   public static final double DRIVE_AUTO_SPEED = 0.5; // TODO: Find value
@@ -100,6 +101,12 @@ public final class Constants {
   public static final Value DRIVETRAIN_LOW_GEAR_VALUE = Value.kForward; 
   public static final Value DRIVETRAIN_HIGH_GEAR_VALUE = Value.kReverse;
   public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.CTREPCM;
+
+  // LEDs
+  public static final int LED_PORT = 0; // TODO: find value
+  public static final int LED_LENGTH = 15; // TODO: find value
+  public static final int LED_MIN_S = 0;
+  public static final int LED_MAX_S = 255;
 
   private Constants() { }
 }

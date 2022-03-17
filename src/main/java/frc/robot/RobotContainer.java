@@ -6,22 +6,33 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.io.ControlBoard;
 import frc.robot.io.NTButton;
+import frc.robot.utils.Constants;
+import frc.robot.utils.LoggingManager;
+import frc.robot.vision.DummyLimelight;
+import frc.robot.vision.Limelight;
+import frc.robot.vision.PhysicalLimelight;
+import frc.robot.vision.Pipeline;
 import frc.robot.commands.Commands;
 import frc.robot.commands.VisionCommands;
 import frc.robot.commands.AutoCommands;
 import frc.robot.subsystems.dummy.DummyDrivetrain;
 import frc.robot.subsystems.dummy.DummyIntake;
+import frc.robot.subsystems.dummy.DummyLEDManager;
 import frc.robot.subsystems.dummy.DummyMagazine;
 import frc.robot.subsystems.dummy.DummyShooter;
 import frc.robot.subsystems.interfaces.Climber;
 import frc.robot.subsystems.interfaces.CompresserManager;
 import frc.robot.subsystems.interfaces.Drivetrain;
 import frc.robot.subsystems.interfaces.Intake;
+import frc.robot.subsystems.interfaces.LEDManager;
 import frc.robot.subsystems.interfaces.Magazine;
 import frc.robot.subsystems.interfaces.Shooter;
 import frc.robot.subsystems.dummy.DummyClimber;
 import frc.robot.subsystems.dummy.DummyCompressor;
+import frc.robot.subsystems.physical.PhysicalLEDManager;
 import frc.robot.subsystems.physical.PhysicalClimber;
 import frc.robot.subsystems.physical.PhysicalCompressor;
 import frc.robot.subsystems.physical.PhysicalDrivetrain;
@@ -29,14 +40,6 @@ import frc.robot.subsystems.physical.PhysicalIntake;
 import frc.robot.subsystems.physical.PhysicalMagazine;
 import frc.robot.subsystems.physical.PhysicalShooter;
 import frc.robot.subsystems.physical.PhysicalSparkDrivetrain;
-import frc.robot.io.ControlBoard;
-import frc.robot.utils.Constants;
-import frc.robot.utils.LoggingManager;
-import frc.robot.vision.DummyLimelight;
-import frc.robot.vision.Limelight;
-import frc.robot.vision.PhysicalLimelight;
-import frc.robot.vision.Pipeline;
-import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -60,6 +63,7 @@ public class RobotContainer {
   private final CompresserManager m_compressor;
   private final Drivetrain m_drivetrain;
   private final Intake m_intake;
+  private final LEDManager m_LED;
   private final Limelight m_limelight;
   private final Magazine m_magazine;
   private final Shooter m_shooter;
@@ -81,6 +85,9 @@ public class RobotContainer {
     // Vision
   private final Command m_aim;
   private final Command m_FindRange;
+    // LEDs
+  private final Command m_LEDToggle;
+    // Limelight
   private final Command m_turnOnLimelight;
   private final Command m_turnOffLimelight;
     // Magazine
@@ -123,6 +130,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Define Subsystems
+    m_LED = Constants.LED_ENABLED ? new PhysicalLEDManager() : new DummyLEDManager();
     m_climber = Constants.CLIMBER_ENABLED ? new PhysicalClimber() : new DummyClimber();
     m_compressor = Constants.COMPRESSOR_ENABLED ? new PhysicalCompressor() : new DummyCompressor();
     m_drivetrain = Constants.DRIVETRAIN_ENABLED ? (Constants.SPARK_DRIVETRAIN_ENABLED ? new PhysicalSparkDrivetrain() : new PhysicalDrivetrain()) : new DummyDrivetrain();
@@ -152,6 +160,8 @@ public class RobotContainer {
     m_FindRange = VisionCommands.findRange(m_drivetrain);
     m_turnOnLimelight = VisionCommands.turnOnLimelight(m_limelight);
     m_turnOffLimelight = VisionCommands.turnOffLimelight(m_limelight);
+      // LEDs
+    m_LEDToggle = Commands.toggleLEDs(m_LED);
       // Magazine
     m_runMag = Commands.runMag(m_magazine, () -> 1);
       // Shooter
@@ -199,6 +209,8 @@ public class RobotContainer {
     m_controlBoard.extreme.joystickBottomLeft.whenPressed(m_turnOnLimelight);
     m_controlBoard.extreme.joystickBottomLeft.whileHeld(m_aim);
     m_controlBoard.extreme.joystickBottomLeft.whenReleased(m_turnOffLimelight);
+      // LEDs
+    m_controlBoard.extreme.baseBackRight.whenPressed(m_LEDToggle);
       // Find Range
     m_controlBoard.extreme.joystickBottomRight.whenPressed(m_turnOnLimelight);
     m_controlBoard.extreme.joystickBottomRight.whileHeld(m_FindRange);

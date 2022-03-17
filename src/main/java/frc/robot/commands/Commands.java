@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.interfaces.Climber;
 import frc.robot.subsystems.interfaces.Drivetrain;
 import frc.robot.subsystems.interfaces.Intake;
+import frc.robot.subsystems.interfaces.LEDManager;
 import frc.robot.subsystems.interfaces.Magazine;
 import frc.robot.subsystems.interfaces.Shooter;
 
@@ -73,5 +74,9 @@ public final class Commands {
    */
   public static Command runMag(Magazine mag, DoubleSupplier speed) {
     return new RunCommand(() -> mag.moveBalls(speed.getAsDouble()));
+  }
+
+  public static Command toggleLEDs(LEDManager LED) {
+    return new RunCommand(() -> LED.toggleLEDs(), LED);
   }
 }

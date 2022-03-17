@@ -127,6 +127,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   }
   
   @Override
+  /** Periodically runs code */
   public void periodic() { 
     m_leftEncoderEntry.setNumber(getLeftEncoder());
     m_rightEncoderEntry.setNumber(getRightEncoder());
