@@ -1,95 +1,51 @@
-package frc.robot.Vision;
+package frc.robot.vision;
 
-public class DummyLimelight implements Limelight {
 
-  @Override
-  public Pipeline getDefaultPipeline() {
-    // TODO Auto-generated method stub
-    return null;
-  }
+public class DummyLimelight implements frc.robot.vision.Limelight {
 
   @Override
-  public void setPipeline(Pipeline pipeline) {
-    // TODO Auto-generated method stub
-    
-  }
+  public Pipeline getDefaultPipeline() { return null; }
 
   @Override
-  public void setLEDMode(LimelightLEDMode ledMode) {
-    // TODO Auto-generated method stub
-    
-  }
+  public void setPipeline(Pipeline pipeline) { }
 
   @Override
-  public LimelightLEDMode getLEDMode() {
-    // TODO Auto-generated method stub
-    return null;
-  }
+  public void setLEDMode(LimelightLEDMode ledMode) { }
 
   @Override
-  public boolean hasTarget() {
-    // TODO Auto-generated method stub
-    return false;
-  }
+  public LimelightLEDMode getLEDMode() { return null; }
 
   @Override
-  public double tx() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public boolean hasTarget() { return false; }
 
   @Override
-  public double ty() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public double tx() { return 0; }
 
   @Override
-  public double ta() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public double ty() { return 0; }
 
   @Override
-  public double ts() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public double ta() { return 0; }
 
   @Override
-  public double tl() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public double ts() { return 0; }
 
   @Override
-  public int tshort() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public double tl() { return 0; }
 
   @Override
-  public int tlong() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public int tshort() { return 0; }
 
   @Override
-  public int thor() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public int tlong() { return 0; }
 
   @Override
-  public int tvert() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public int thor() { return 0; }
 
   @Override
-  public double getLastPosition() {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  public int tvert() { return 0; }
+
+  @Override
+  public double getLastPosition() { return 0; }
   
 }
