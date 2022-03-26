@@ -201,7 +201,7 @@ public class RobotContainer {
       // Climbers
     m_controlBoard.extreme.joystickTopLeft.whileHeld(m_climberUp);
     m_controlBoard.extreme.joystickTopRight.whileHeld(m_climberDown);
-    m_controlBoard.extreme.baseBackLeft.whenPressed(m_toggleClimberShifters);
+    m_controlBoard.extreme.baseFrontLeft.whenPressed(m_toggleClimberShifters);
       // Drive
     m_drivetrain.setDefaultCommand(m_drive);
     m_controlBoard.xboxController.rightBumper.whenPressed(m_driveShift);
