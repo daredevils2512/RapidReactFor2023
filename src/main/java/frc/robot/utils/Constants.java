@@ -16,12 +16,12 @@ public final class Constants {
   public static final boolean SHOOTER_ENABLED = true;
   public static final boolean MAGAZINE_ENABLED = true;
   public static final boolean INTAKE_ENABLED = true;
-  public static final boolean CLIMBER_ENABLED = true;
+  public static final boolean CLIMBER_ENABLED = false;
   public static final boolean DRIVETRAIN_ENABLED = true;
   public static final boolean SPARK_DRIVETRAIN_ENABLED = false;
   public static final boolean COMPRESSOR_ENABLED = true;
   public static final boolean LIMELIGHT_ENABLED = false;
-  public static final boolean LED_ENABLED = true;
+  public static final boolean LED_ENABLED = false;
 
   // Auto
   public static final double DRIVE_AUTO_SPEED = 0.5; // TODO: Find value
