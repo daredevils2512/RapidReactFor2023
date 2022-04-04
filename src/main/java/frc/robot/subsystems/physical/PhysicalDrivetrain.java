@@ -1,39 +1,19 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.physical;
 
-import java.util.Properties;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.NTSubsystem;
+import frc.robot.utils.Constants;
 
-public class DriveTrainSub extends NTSubsystem {
-
-  // IDs TODO: change to correct values!
-  private final int k_frontLeftID = 00;
-  private final int k_backLeftID = 01;
-  private final int k_frontRightID = 12;
-  private final int k_backRightID = 13;
-  private final int k_leftEncoderID1 = 0;
-  private final int k_leftEncoderID2 = 1;
-  private final int k_rightEncoderID1 = 0;
-  private final int k_rightEncoderID2 = 1;
-  private final double k_rateLimNUM = 0.5;
-  private final double k_maxSpeed = 0.5;
-  private final double k_maxTurn = 0.5;
-  private final int k_leftForwardChannel = 0;
-  private final int k_leftBackwardChannel = 0;
-  private final int k_rightForwardChannel = 0;
-  private final int k_rightBackwardChannel = 0;
-  private final PneumaticsModuleType k_pneumaticsModuleType = PneumaticsModuleType.CTREPCM;
-
+public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   // Motor stuff
   private final WPI_TalonFX m_frontLeft; 
   private final WPI_TalonFX m_backLeft; 
@@ -49,15 +29,9 @@ public class DriveTrainSub extends NTSubsystem {
   private final NetworkTableEntry m_rightDistanceEntry;
   private final NetworkTableEntry m_leftEncoderEntry;
   private final NetworkTableEntry m_rightEncoderEntry;
-  private final Properties m_properties;
+  private final NetworkTableEntry m_getLowGearEntry;
   private final Encoder m_leftEncoder; 
   private final Encoder m_rightEncoder;
-  private final double m_gearRatio;
-  private final double m_wheelCircumference;
-  private final double m_wheelDiameter;
-  private final double m_distancePerPulse;
-  private final NetworkTableEntry m_getLowGearEntry;
-  private final int m_encoderResolution;
 
   // Shifting
   private final DoubleSolenoid m_leftShifter;
@@ -65,45 +39,41 @@ public class DriveTrainSub extends NTSubsystem {
 
   // Rate limiter
   private final SlewRateLimiter m_rateLim;
+  private final SlewRateLimiter m_rateLimTurn;
 
-  public DriveTrainSub() {
-    super("DriveTrainSub");
+  public PhysicalDrivetrain() {
+    super("DrivetrainSub");
     m_table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff
-    m_frontLeft = new WPI_TalonFX(k_frontLeftID); 
-    m_backLeft = new WPI_TalonFX(k_backLeftID);
+    m_frontLeft = new WPI_TalonFX(Constants.DRIVETRAIN_LEFT_ID1); 
+    m_backLeft = new WPI_TalonFX(Constants.DRIVETRAIN_LEFT_ID2);
     m_left = new MotorControllerGroup(m_frontLeft, m_backLeft);
     m_left.setInverted(true);
-    m_frontRight = new WPI_TalonFX(k_frontRightID);
-    m_backRight = new WPI_TalonFX(k_backRightID);
+    m_frontRight = new WPI_TalonFX(Constants.DRIVETRAIN_RIGHT_ID1);
+    m_backRight = new WPI_TalonFX(Constants.DRIVETRAIN_RIGHT_ID2);
     m_right = new MotorControllerGroup(m_frontRight, m_backRight);
     m_drive = new DifferentialDrive(m_left, m_right); 
 
     // Network table stuff
-    m_properties = new Properties();
-    m_leftEncoder = new Encoder(k_leftEncoderID1, k_leftEncoderID2);
-    m_rightEncoder = new Encoder(k_rightEncoderID1, k_rightEncoderID2);
+    m_leftEncoder = new Encoder(Constants.DRIVETRAIN_LEFT_ENCODER_A, Constants.DRIVETRAIN_LEFT_ENCODER_B);
+    m_rightEncoder = new Encoder(Constants.DRIVETRAIN_RIGHT_ENCODER_A, Constants.DRIVETRAIN_RIGHT_ENCODER_B);
     m_leftEncoderEntry = m_table.getEntry("Left encoder distance"); 
     m_rightEncoderEntry = m_table.getEntry("Right encoder distance");
-    m_encoderResolution = Integer.parseInt(m_properties.getProperty("encoderResolution"));
-    m_wheelDiameter = Units.inchesToMeters(Double.parseDouble(m_properties.getProperty("wheelDiameter")));
-    m_wheelCircumference = Units.inchesToMeters(m_wheelDiameter) * Math.PI;
-    m_gearRatio = Double.parseDouble(m_properties.getProperty("gearRatio"));
-    m_distancePerPulse = m_wheelCircumference / m_gearRatio / m_encoderResolution;
-    m_leftEncoder.setDistancePerPulse(m_distancePerPulse);
+    m_leftEncoder.setDistancePerPulse(Constants.DRIVETRAIN_DISTANCE_PER_PULSE);
     m_leftEncoder.setReverseDirection(true);
-    m_rightEncoder.setDistancePerPulse(m_distancePerPulse);
+    m_rightEncoder.setDistancePerPulse(Constants.DRIVETRAIN_DISTANCE_PER_PULSE);
     m_leftDistanceEntry = m_table.getEntry("Left distance entry"); 
     m_rightDistanceEntry = m_table.getEntry("Right distance entry"); 
     m_getLowGearEntry = m_table.getEntry("Low gear entry");
 
     // Shifting
-    m_leftShifter = new DoubleSolenoid(k_pneumaticsModuleType, k_leftForwardChannel, k_leftBackwardChannel);
-    m_rightShifter = new DoubleSolenoid(k_pneumaticsModuleType, k_rightForwardChannel, k_rightBackwardChannel);
+    m_leftShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.DRIVETRAIN_LEFT_FORWARD_CHANNEL, Constants.DRIVETRAIN_LEFT_BACKWARD_CHANNEL);
+    m_rightShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.DRIVETRAIN_RIGHT_FORWARD_CHANNEL, Constants.DRIVETRAIN_RIGHT_BACKWARD_CHANNEL);
 
     // Rate limiter
-    m_rateLim = new SlewRateLimiter(k_rateLimNUM);
+    m_rateLim = new SlewRateLimiter(Constants.DRIVETRAIN_RATELIM_VALUE);
+    m_rateLimTurn = new SlewRateLimiter(Constants.DRIVETRAIN_RATELIM_VALUE);
   }
 
   /** Runs the arcade drive 
@@ -112,8 +82,8 @@ public class DriveTrainSub extends NTSubsystem {
   */
   public void arcadeDrive(double move, double turn) { 
     move = m_rateLim.calculate(move);
-    turn = m_rateLim.calculate(turn);
-    m_drive.arcadeDrive((move)*k_maxSpeed, (turn)*k_maxTurn);
+    turn = m_rateLimTurn.calculate(turn);
+    m_drive.arcadeDrive((move) * Constants.DRIVETRAIN_MAX_SPEED, (turn) * Constants.DRIVETRAIN_MAX_TURN);
   }
 
   /** 
@@ -122,6 +92,9 @@ public class DriveTrainSub extends NTSubsystem {
   public int getLeftEncoder() { 
     return m_leftEncoder.get();
   }
+
+  // crusta eseances 
+  // crist shawnes
 
   /** 
    * @return Right encoder
@@ -148,19 +121,32 @@ public class DriveTrainSub extends NTSubsystem {
    * @param wantsLowGear if it wants to set low gear
    */
   public void setLowGear(boolean wantsLowGear) {
-    m_leftShifter.set(wantsLowGear ? Value.kForward : Value.kReverse);
-    m_rightShifter.set(wantsLowGear ? Value.kForward : Value.kReverse);
+    m_leftShifter.set(wantsLowGear ? Constants.DRIVETRAIN_LOW_GEAR_VALUE : Constants.DRIVETRAIN_HIGH_GEAR_VALUE);
+    m_rightShifter.set(wantsLowGear ? Constants.DRIVETRAIN_LOW_GEAR_VALUE : Constants.DRIVETRAIN_HIGH_GEAR_VALUE);
     m_logger.fine("set low gear: " + wantsLowGear);
+  }
+  
+  public void aimLeft(double speed) {
+    m_left.set(speed);
+  }
+
+  public void aimRight(double speed){
+    m_right.set(speed);
   }
 
   /** @return true if shifter are in low gear */
   public boolean getLowGear() {
-    m_logger.fine("get low gear: " + (m_leftShifter.get() == Value.kForward ? true : false));
-    return m_leftShifter.get() == Value.kForward ? true : false;
+    m_logger.fine("get low gear: " + (m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE));
+    return m_leftShifter.get() == Constants.DRIVETRAIN_LOW_GEAR_VALUE;
   }
 
   public void toggleShifters() {
     setLowGear(!getLowGear());
+  }
+  
+  /** @return distance that the drivetrain has moved */
+  public double getDistance() {
+    return (getLeftDistance() + getRightDistance()) / 2;
   }
   
   /** Periodically runs code */
