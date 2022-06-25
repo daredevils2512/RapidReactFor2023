@@ -19,7 +19,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command intakeShifters(Intake intake) {
-    return new InstantCommand(() -> intake.toggleExtended(), intake);
+    return new InstantCommand(() -> intake.toggleExtended(), intake); // TODO Lambda can be replaced with method reference (i.e. intake::toggleExtended)
   }
 
   /** Runs the intake motors
@@ -36,7 +36,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command climbingShifters(Climber climber) {
-    return new InstantCommand(() -> climber.toggleExtended(), climber);
+    return new InstantCommand(() -> climber.toggleExtended(), climber); // TODO Lambda can be replaced with method reference
   }
 
   /** Runs the climber
@@ -53,7 +53,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command driveShifters(Drivetrain drivetrain) {
-    return new InstantCommand(() -> drivetrain.toggleShifters(), drivetrain);
+    return new InstantCommand(() -> drivetrain.toggleShifters(), drivetrain); // TODO Lambda can be replaced with method reference
   }
 
   /** Drives the robot
@@ -89,6 +89,6 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command toggleLEDs(LEDManager LED) {
-    return new RunCommand(() -> LED.toggleLEDs(), LED);
+    return new RunCommand(() -> LED.toggleLEDs(), LED); // TODO Lambda can be replaced with method reference
   }
 }

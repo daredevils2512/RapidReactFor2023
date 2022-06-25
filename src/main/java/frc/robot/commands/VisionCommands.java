@@ -33,10 +33,10 @@ public final class VisionCommands {
   public static Command findRange(Drivetrain drivetrain) {
     double ty = m_limelightTable.getEntry("ty").getDouble(0);
     double angleToGoalDegrees = Constants.LIMELIGHT_MOUNT_ANGLE_DEGREES + ty;
-    double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
+    double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0); // TODO Consider replacing with Math.toRadians(angleToGoalDegrees)
     double currentDistance = (Constants.GOAL_HEIGHT - Constants.LIMELIGHT_LENS_HEIGHT) / Math.tan(angleToGoalRadians);
     double distanceVariation = Constants.DESIRED_DISTANCE - currentDistance;
-    double moveAjust = Constants.K_P * distanceVariation;
+    double moveAjust = Constants.K_P * distanceVariation; // TODO Misspelled adjust
 
     return Commands.drive(drivetrain, () -> moveAjust, () -> 0.0);
   }
@@ -46,7 +46,7 @@ public final class VisionCommands {
    * @return The command to be used when called.
    */
   public static Command turnOnLimelight(Limelight limelight) {
-    return new RunCommand(() -> limelight.setLEDMode(LimelightLEDMode.ON));
+    return new RunCommand(() -> limelight.setLEDMode(LimelightLEDMode.ON)); // TODO This should only run once so consider replacing with InstantCommand
   }
 
   /** Command that turns the limelight off
@@ -54,6 +54,6 @@ public final class VisionCommands {
    * @return The command to be used when called.
    */
   public static Command turnOffLimelight(Limelight limelight) {
-    return new RunCommand(() -> limelight.setLEDMode(LimelightLEDMode.OFF));
+    return new RunCommand(() -> limelight.setLEDMode(LimelightLEDMode.OFF)); // TODO Should replace with InstantCommand
   }
 }

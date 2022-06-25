@@ -103,6 +103,7 @@ public class RobotContainer {
   // Controls
   private final ControlBoard m_controlBoard;
 
+  // TODO remove this if it's not going to be used and if it is it doesn't belong in this class
   public enum Axis {
     kLeftX(0),
     kRightX(4),
