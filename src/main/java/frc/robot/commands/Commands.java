@@ -2,8 +2,8 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.interfaces.Climber;
 import frc.robot.subsystems.interfaces.Drivetrain;
 import frc.robot.subsystems.interfaces.Intake;
@@ -12,14 +12,14 @@ import frc.robot.subsystems.interfaces.Magazine;
 import frc.robot.subsystems.interfaces.Shooter;
 
 public final class Commands {
-  private Commands() {}
+  private Commands() { }
   
   /** Runs the intake shifters
    * @param intake The intake subsystem to use.
    * @return The command to be used when called.
    */
   public static Command intakeShifters(Intake intake) {
-    return new InstantCommand(() -> intake.toggleExtended(), intake); // TODO Lambda can be replaced with method reference (i.e. intake::toggleExtended)
+    return new InstantCommand(intake::toggleExtended, intake);
   }
 
   /** Runs the intake motors
@@ -28,15 +28,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command runIntake(Intake intake, DoubleSupplier speed) {
-    return new RunCommand(() -> intake.setIntake(speed.getAsDouble()), intake);
-  }
-
-  /** Toggles the climber shifters
-   * @param climber The climber subsystem to use.
-   * @return The command to be used when called.
-   */
-  public static Command climbingShifters(Climber climber) {
-    return new InstantCommand(() -> climber.toggleExtended(), climber); // TODO Lambda can be replaced with method reference
+    return new FunctionalCommand(() -> { }, () -> intake.setIntake(speed.getAsDouble()), (interrupted) -> intake.setIntake(0.0), () -> false, intake);
   }
 
   /** Runs the climber
@@ -45,7 +37,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command runClimber(Climber climber, double speed) {
-    return new RunCommand(() -> climber.setClimbSpeed(speed), climber);
+    return new FunctionalCommand(() -> { }, () -> climber.setClimbSpeed(speed), (interrupted) -> climber.setClimbSpeed(0.0), () -> false, climber);
   }
 
   /** Runs the driving shifters
@@ -53,7 +45,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command driveShifters(Drivetrain drivetrain) {
-    return new InstantCommand(() -> drivetrain.toggleShifters(), drivetrain); // TODO Lambda can be replaced with method reference
+    return new InstantCommand(drivetrain::toggleShifters, drivetrain); 
   }
 
   /** Drives the robot
@@ -63,7 +55,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command drive(Drivetrain drivetrain, DoubleSupplier move, DoubleSupplier turn) {
-    return new RunCommand(() -> drivetrain.arcadeDrive(move.getAsDouble(), turn.getAsDouble()), drivetrain);
+    return new FunctionalCommand(() -> { }, () -> drivetrain.arcadeDrive(move.getAsDouble(), turn.getAsDouble()), (interrupted) -> drivetrain.arcadeDrive(0.0, 0.0), () -> false, drivetrain);
   }
 
   /** Revs the shooter (and shoots balls)
@@ -72,7 +64,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command revShooter(Shooter shooter, double speed) {
-    return new RunCommand(() -> shooter.setRPMPID(speed), shooter);
+    return new FunctionalCommand(() -> { }, () -> shooter.spitBalls(speed), (interrupted) -> shooter.setRPM(0.0), () -> false, shooter);
   }
 
   /** Runs the magazine motors
@@ -81,7 +73,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command runMag(Magazine mag, DoubleSupplier speed) {
-    return new RunCommand(() -> mag.moveBalls(speed.getAsDouble()), mag);
+    return new FunctionalCommand(() -> { }, () -> mag.moveBalls(speed.getAsDouble()), (interrputed) -> mag.moveBalls(0.0), () -> false, mag);
   }
 
   /** Toggles the LEDs on and off
@@ -89,6 +81,6 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command toggleLEDs(LEDManager LED) {
-    return new RunCommand(() -> LED.toggleLEDs(), LED); // TODO Lambda can be replaced with method reference
+    return new InstantCommand(LED::toggleLEDs, LED); 
   }
 }

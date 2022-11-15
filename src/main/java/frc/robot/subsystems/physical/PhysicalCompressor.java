@@ -7,15 +7,16 @@ import frc.robot.utils.Constants;
 import edu.wpi.first.wpilibj.Compressor;
 
 public class PhysicalCompressor extends NTSubsystem implements CompresserManager {
-  private final NetworkTableEntry m_isRunningEntry;
-  private final NetworkTableEntry m_closedLoopControlEntry;
+  private final NetworkTableEntry isRunningEntry;
+  private final NetworkTableEntry closedLoopControlEntry;
 
-  private Compressor m_compressor = new Compressor(Constants.PNEUMATICS_MODULE_TYPE);
+  private Compressor compressor = new Compressor(Constants.PNEUMATICS_MODULE_TYPE);
  
   public PhysicalCompressor() {
     super("Compressor");
-    m_isRunningEntry = m_table.getEntry("Is running");
-    m_closedLoopControlEntry = m_table.getEntry("closed loop control");
+    isRunningEntry = table.getEntry("Is running");
+    closedLoopControlEntry = table.getEntry("closed loop control");
+    isRunningEntry.setBoolean(true);
   }
 
   @Override
@@ -24,24 +25,25 @@ public class PhysicalCompressor extends NTSubsystem implements CompresserManager
   @Override
   public void setClosedLoopControl(boolean wantsClosedLoopControl) {
     if (wantsClosedLoopControl) {
-      m_compressor.enableDigital();
+      compressor.enableDigital();
     } else {
-      m_compressor.disable();
+      compressor.disable();
     }
-    m_logger.fine("Compressor closed loop control: " + getClosedLoopControl());
+    logger.fine("Compressor closed loop control: " + getClosedLoopControl());
+    closedLoopControlEntry.setBoolean(getClosedLoopControl());
   }
     
   @Override
   public boolean getClosedLoopControl() {
-    return m_compressor.enabled();
+    return compressor.enabled();
   }
 
   @Override
   public void toggleCompressor() {
     if (getClosedLoopControl()) {
-      m_compressor.disable(); 
+      compressor.disable(); 
     } else {
-      m_compressor.enableDigital();
+      compressor.enableDigital();
     }
   }
 }
