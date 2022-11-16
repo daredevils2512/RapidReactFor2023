@@ -29,7 +29,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   private final NetworkTableEntry rightDistanceEntry;
   private final NetworkTableEntry leftEncoderEntry;
   private final NetworkTableEntry rightEncoderEntry;
-  private final NetworkTableEntry getLowGearEntry;
+  private final NetworkTableEntry lowGearEntry;
   private final Encoder leftEncoder; 
   private final Encoder rightEncoder;
   
@@ -65,7 +65,7 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     rightEncoder.setDistancePerPulse(Constants.DRIVETRAIN_DISTANCE_PER_PULSE);
     leftDistanceEntry = table.getEntry("Left distance entry"); 
     rightDistanceEntry = table.getEntry("Right distance entry"); 
-    getLowGearEntry = table.getEntry("Low gear entry");
+    lowGearEntry = table.getEntry("Low gear entry");
 
     // Shifting
     leftShifter = new DoubleSolenoid(Constants.PNEUMATICS_MODULE_TYPE, Constants.DRIVETRAIN_LEFT_FORWARD_CHANNEL, Constants.DRIVETRAIN_LEFT_BACKWARD_CHANNEL);
@@ -134,6 +134,6 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
     leftDistanceEntry.setNumber(getLeftDistance());
     rightDistanceEntry.setNumber(getRightDistance());
 
-    getLowGearEntry.setBoolean(getLowGear());
+    lowGearEntry.setBoolean(getLowGear());
   }
 }
