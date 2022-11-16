@@ -1,9 +1,12 @@
 package frc.robot.commands;
 
+import java.util.ArrayList;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Climber;
 import frc.robot.subsystems.interfaces.Drivetrain;
 import frc.robot.subsystems.interfaces.Intake;
@@ -74,6 +77,17 @@ public final class Commands {
    */
   public static Command runMag(Magazine mag, DoubleSupplier speed) {
     return new FunctionalCommand(() -> { }, () -> mag.moveBalls(speed.getAsDouble()), (interrputed) -> mag.moveBalls(0.0), () -> false, mag);
+  }
+
+  /** Runs mag backwards and intake forwards to trap balls
+   * @param mag The magazine subsystem to use.
+   * @param intake The intake subsystem to use.
+   * @param speed The speed to move motors.
+   * @return The command to be used when called.
+   */
+  public static Command trapBalls(Magazine mag, Intake intake, DoubleSupplier speed) {
+    Subsystem[] subs = {mag, intake};
+    return new FunctionalCommand(() -> { }, () -> runMag(mag, speed).alongWith(runIntake(intake, speed)), (interrupted) -> runMag(mag, speed).alongWith(runIntake(intake, speed)), () -> false, subs);
   }
 
   /** Toggles the LEDs on and off

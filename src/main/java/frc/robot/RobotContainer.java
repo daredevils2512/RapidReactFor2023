@@ -138,7 +138,7 @@ public class RobotContainer {
     LEDToggle = Commands.toggleLEDs(LED);
       // Magazine
     runMag = Commands.runMag(magazine, () -> Constants.MAG_SPEED);
-    runMagBack = Commands.runMag(magazine, () -> -Constants.MAG_SPEED);
+    runMagBack = Commands.trapBalls(magazine, intake, () -> Constants.TRAP_BALLS_SPEED);
       // Shooter
     revShooterFast = Commands.revShooter(shooter, Constants.SHOOTER_FAST_SPEED);
     revShooterSlow = Commands.revShooter(shooter, Constants.SHOOTER_SLOW_SPEED);

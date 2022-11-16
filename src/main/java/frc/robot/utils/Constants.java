@@ -83,6 +83,7 @@ public final class Constants {
   public static final int MAG_ID = 4;
   public static final double TAKE_BALLS_SPEED = 1;
   public static final double MAG_SPEED = 1;
+  public static final double TRAP_BALLS_SPEED = 1;
 
   // Shooter
   public static final int SHOOTER_ENCODER_RESOLUTION = 0; // TODO: find value
