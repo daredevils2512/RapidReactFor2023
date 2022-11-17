@@ -1,8 +1,8 @@
 package frc.robot.subsystems.dummy;
 
-import frc.robot.subsystems.interfaces.CompresserManager;
+import frc.robot.subsystems.interfaces.CompressorManager;
 
-public class DummyCompressor implements CompresserManager {
+public class DummyCompressor implements CompressorManager {
 
   @Override
   public void setClosedLoopControl(boolean wantsClosedLoopControl) { }

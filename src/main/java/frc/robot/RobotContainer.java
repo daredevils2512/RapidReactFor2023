@@ -23,7 +23,7 @@ import frc.robot.subsystems.dummy.DummyLimelight;
 import frc.robot.subsystems.dummy.DummyMagazine;
 import frc.robot.subsystems.dummy.DummyShooter;
 import frc.robot.subsystems.interfaces.Climber;
-import frc.robot.subsystems.interfaces.CompresserManager;
+import frc.robot.subsystems.interfaces.CompressorManager;
 import frc.robot.subsystems.interfaces.Drivetrain;
 import frc.robot.subsystems.interfaces.Intake;
 import frc.robot.subsystems.interfaces.LEDManager;
@@ -61,7 +61,7 @@ public class RobotContainer {
 
   // Subsystems
   private final Climber climber;
-  private final CompresserManager compressor;
+  private final CompressorManager compressor;
   private final Drivetrain drivetrain;
   private final Intake intake;
   private final LEDManager LED;
@@ -121,7 +121,7 @@ public class RobotContainer {
     autoShoot = AutoCommands.autoShoot(shooter, magazine, Constants.AUTO_SHOOT_SPEED);
     autoFull = AutoCommands.fullAuto(drivetrain, Constants.AUTO_DRIVE_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE, shooter, magazine, Constants.AUTO_SHOOT_SPEED);
       // Compressor
-    compressor.setClosedLoopControl(Constants.COMPRESSOR_CLOSED_LOOP_CONTROL_ENABLED);
+    compressor.setClosedLoopControl(Constants.COMPRESSOR_ENABLED);
       // Climber
     climberUp = Commands.runClimber(climber, -Constants.CLIMBER_SPEED);
     climberDown = Commands.runClimber(climber, Constants.CLIMBER_SPEED);

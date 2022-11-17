@@ -1,6 +1,6 @@
 package frc.robot.subsystems.interfaces;
 
-public interface CompresserManager {
+public interface CompressorManager {
   /** Enables closed loop control
    * @param wantsClosedLoopControl Whether to enable closed loop control
    */
