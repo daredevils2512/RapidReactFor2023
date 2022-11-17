@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.interfaces.Climber;
 import frc.robot.subsystems.interfaces.Drivetrain;
 import frc.robot.subsystems.interfaces.Intake;
@@ -86,7 +85,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command trapBalls(Magazine mag, Intake intake, DoubleSupplier speed) {
-    Subsystem[] subs = {mag, intake};
+    Subsystem[] subs = {};
     return new FunctionalCommand(() -> { }, () -> runMag(mag, speed).alongWith(runIntake(intake, speed)), (interrupted) -> runMag(mag, speed).alongWith(runIntake(intake, speed)), () -> false, subs);
   }
 

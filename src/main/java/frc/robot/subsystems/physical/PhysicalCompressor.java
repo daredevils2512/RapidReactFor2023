@@ -2,11 +2,11 @@ package frc.robot.subsystems.physical;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import frc.robot.subsystems.NTSubsystem;
-import frc.robot.subsystems.interfaces.CompresserManager;
+import frc.robot.subsystems.interfaces.CompressorManager;
 import frc.robot.utils.Constants;
 import edu.wpi.first.wpilibj.Compressor;
 
-public class PhysicalCompressor extends NTSubsystem implements CompresserManager {
+public class PhysicalCompressor extends NTSubsystem implements CompressorManager {
   private final NetworkTableEntry isRunningEntry;
   private final NetworkTableEntry closedLoopControlEntry;
 
