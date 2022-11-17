@@ -2,9 +2,7 @@ package frc.robot.subsystems.physical;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -24,7 +22,6 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
   private final DifferentialDrive drive;
 
   // Network table stuff
-  private final NetworkTable table; 
   private final NetworkTableEntry leftDistanceEntry;
   private final NetworkTableEntry rightDistanceEntry;
   private final NetworkTableEntry leftEncoderEntry;
@@ -43,7 +40,6 @@ public class PhysicalDrivetrain extends NTSubsystem implements Drivetrain {
 
   public PhysicalDrivetrain() {
     super("DrivetrainSub");
-    table = NetworkTableInstance.getDefault().getTable("Drive Train");
 
     // Motor stuff
     frontLeft = new WPI_TalonFX(Constants.DRIVETRAIN_LEFT_ID1); 

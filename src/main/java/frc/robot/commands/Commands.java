@@ -83,7 +83,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command trapBalls(Magazine mag, Intake intake, DoubleSupplier speed) {
-    return runMag(mag, speed).alongWith(runIntake(intake, () -> -speed.getAsDouble()));
+    return runMag(mag, () -> -speed.getAsDouble()).alongWith(runIntake(intake, speed));
   }
 
   /** Toggles the LEDs on and off

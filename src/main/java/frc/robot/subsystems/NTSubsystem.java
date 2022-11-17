@@ -1,12 +1,11 @@
 package frc.robot.subsystems;
 
 import java.util.logging.Level;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class NTSubsystem extends LoggingSubsystem {
-  // THE Network Table
+  /** THE Network Table */ 
   protected NetworkTable table;
 
   /** Creates a new NTsubsystem.
