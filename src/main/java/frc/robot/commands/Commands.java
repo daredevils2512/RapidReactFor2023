@@ -85,8 +85,7 @@ public final class Commands {
    * @return The command to be used when called.
    */
   public static Command trapBalls(Magazine mag, Intake intake, DoubleSupplier speed) {
-    Subsystem[] subs = {};
-    return new FunctionalCommand(() -> { }, () -> runMag(mag, speed).alongWith(runIntake(intake, speed)), (interrupted) -> runMag(mag, speed).alongWith(runIntake(intake, speed)), () -> false, subs);
+    return runMag(mag, speed).alongWith(runIntake(intake, () -> -speed.getAsDouble()));
   }
 
   /** Toggles the LEDs on and off
