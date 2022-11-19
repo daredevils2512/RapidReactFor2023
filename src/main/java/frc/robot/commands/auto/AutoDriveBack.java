@@ -1,16 +1,19 @@
 package frc.robot.commands.auto;
 
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.Commands;
 import frc.robot.subsystems.interfaces.Drivetrain;
 
 public class AutoDriveBack extends CommandBase {
   private final Drivetrain drivetrain;
   private double initialDistance = 0;
   private final double distance;
-  private final double speed;
+  private final DoubleSupplier speed;
 
-  public AutoDriveBack(Drivetrain drivetrain, double speed, double distance) {
+  public AutoDriveBack(Drivetrain drivetrain, DoubleSupplier speed, double  distance) {
     this.drivetrain = drivetrain;
     this.speed = speed;
     this.distance = distance;
@@ -24,12 +27,12 @@ public class AutoDriveBack extends CommandBase {
 
   @Override
   public void execute() {
-    drivetrain.arcadeDrive(speed, 0);
+    Commands.drive(drivetrain, speed, () -> 0.0);
   }
 
   @Override
   public void end(boolean interrupted) {
-    drivetrain.arcadeDrive(0, 0);
+    Commands.drive(drivetrain, ()-> 0.0, () -> 0.0);
   }
 
   @Override
