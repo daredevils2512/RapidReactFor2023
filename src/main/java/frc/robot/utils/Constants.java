@@ -15,9 +15,9 @@ public final class Constants {
   private Constants() { }
 
   // Auto
-  public static final double AUTO_DRIVE_SPEED = 0.5; // TODO: Find value
+  public static final double AUTO_DRIVE_SPEED = 0.7; // TODO: Find value
   public static final double AUTO_SHOOT_SPEED = .7; // TODO: Find value
-  public static final double AUTO_DRIVE_BACK_DISTANCE = 150; // Inches 
+  public static final double AUTO_DRIVE_BACK_DISTANCE = 300; // Inches 
 
   // Climber
   public static final int CLIMBER_BOTTOM_LIMIT_SWITCH_PORT = 6;
@@ -82,7 +82,7 @@ public final class Constants {
   public static final int MAG_ID = 4;
   public static final double TAKE_BALLS_SPEED = 1;
   public static final double MAG_SPEED = 1;
-  public static final double TRAP_BALLS_SPEED = 1;
+  public static final double TRAP_BALLS_SPEED = -.5;
 
   // Shooter
   public static final int SHOOTER_ENCODER_RESOLUTION = 0; // TODO: find value
@@ -95,7 +95,7 @@ public final class Constants {
   public static final double SHOOTER_I = 0; // TODO: Find value
   public static final double SHOOTER_D = 0; // TODO: Find value
   public static final double SHOOTER_RATELIM_VALUE = 0.5; // TODO find best value
-  public static final double SHOOTER_FAST_SPEED = .75;
+  public static final double SHOOTER_FAST_SPEED = .90;
   public static final double SHOOTER_SLOW_SPEED = .35;
 
   // Interfaces

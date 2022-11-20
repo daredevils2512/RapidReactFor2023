@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.auto.AutoDriveBack;
 import frc.robot.commands.auto.AutoShoot;
@@ -16,8 +18,9 @@ public final class AutoCommands {
   * @param driveDistance The distance to drive backwards
   * @return The command to be used when called.
   */
- public static Command autoDriveBack(Drivetrain drivetrain, double speed, double driveDistance) {
-   return new AutoDriveBack(drivetrain, speed, driveDistance);
+ public static Command autoDriveBack(Drivetrain drivetrain, DoubleSupplier speed, double driveDistance) {
+  return Commands.drive(drivetrain, speed, () -> 0.0);
+   //return new AutoDriveBack(drivetrain, speed, driveDistance);
  }
 
  /** Auto command that only shoots.
@@ -29,12 +32,12 @@ public final class AutoCommands {
   */
   public static Command autoShoot(Shooter shooter, Magazine mag, double shootSpeed) {
     // TODO: Can this code be deleted?
-    // return Commands.revShooter(shooter, shootSpeed)
-    // .withTimeout(3)
-    // .andThen(Commands.revShooter(shooter, shootSpeed))
-    // .alongWith(Commands.runMag(magazine, () -> 1.0))
-    // .withTimeout(6);
-    return new AutoShoot(shooter, mag, shootSpeed);
+     return Commands.revShooter(shooter, shootSpeed)
+     .withTimeout(3)
+      .andThen(Commands.revShooter(shooter, shootSpeed).alongWith(Commands.runMag(mag, () -> 1.0))
+      .withTimeout(3))
+      ;
+    //return new AutoShoot(shooter, mag, shootSpeed);
   }
 
   /** Auto comamnd that drives back and then shoots.
@@ -47,9 +50,9 @@ public final class AutoCommands {
    * @param shootSpeed The speed to shoot the balls
    * @return The command to be used when called.
    */
-  public static Command fullAuto(Drivetrain drivetrain, double driveSpeed, double driveTime, Shooter shooter, Magazine mag, double shootSpeed) {
+  public static Command fullAuto(Drivetrain drivetrain, DoubleSupplier driveSpeed, double driveTime, Shooter shooter, Magazine mag, double shootSpeed) {
     return autoShoot(shooter, mag, shootSpeed)
     .andThen(autoDriveBack(drivetrain, driveSpeed, driveTime)
-    .withTimeout(3));
+    .withTimeout(6));
   }
 }
