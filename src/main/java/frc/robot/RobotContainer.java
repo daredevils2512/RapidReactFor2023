@@ -117,14 +117,14 @@ public class RobotContainer {
 
     // Commands
       // Autos
-    autoDrive = AutoCommands.autoDriveBack(drivetrain, () -> Constants.AUTO_DRIVE_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE);
-    autoShoot = AutoCommands.autoShoot(shooter, magazine, Constants.AUTO_SHOOT_SPEED);
-    autoFull = AutoCommands.fullAuto(drivetrain, () -> Constants.AUTO_DRIVE_SPEED, Constants.AUTO_DRIVE_BACK_DISTANCE, shooter, magazine, Constants.AUTO_SHOOT_SPEED);
+    autoDrive = AutoCommands.autoDriveBack(drivetrain, () -> Constants.AUTO_DRIVE_SPEED);
+    autoShoot = AutoCommands.autoShoot(shooter, magazine, () -> Constants.AUTO_SHOOT_SPEED);
+    autoFull = AutoCommands.fullAuto(magazine, () -> Constants.AUTO_SHOOT_SPEED, drivetrain, () -> Constants.AUTO_DRIVE_SPEED, shooter);
       // Compressor
     compressor.setClosedLoopControl(Constants.COMPRESSOR_ENABLED);
       // Climber
-    climberUp = Commands.runClimber(climber, -Constants.CLIMBER_SPEED);
-    climberDown = Commands.runClimber(climber, Constants.CLIMBER_SPEED);
+    climberUp = Commands.runClimber(climber, () -> -Constants.CLIMBER_SPEED);
+    climberDown = Commands.runClimber(climber, () -> Constants.CLIMBER_SPEED);
       // Drive
     drive = Commands.drive(drivetrain, () -> ControlBoard.xboxController.getYAxisLeft(), () -> ControlBoard.xboxController.getXAxisRight());
     driveShift = Commands.driveShifters(drivetrain);
@@ -140,8 +140,8 @@ public class RobotContainer {
     runMag = Commands.runMag(magazine, () -> Constants.MAG_SPEED);
     trapBalls = Commands.trapBalls(magazine, intake, () -> Constants.TRAP_BALLS_SPEED);
       // Shooter
-    revShooterFast = Commands.revShooter(shooter, Constants.SHOOTER_FAST_SPEED);
-    revShooterSlow = Commands.revShooter(shooter, Constants.SHOOTER_SLOW_SPEED);
+    revShooterFast = Commands.revShooter(shooter, () -> Constants.SHOOTER_FAST_SPEED);
+    revShooterSlow = Commands.revShooter(shooter, () -> Constants.SHOOTER_SLOW_SPEED);
       // Limelight
     limelightOn = VisionCommands.limelightOn(limelight);
     limelightOff = VisionCommands.limelightOff(limelight);

@@ -36,8 +36,8 @@ public final class Commands {
    * @param speed the speed to run the climber. Positive for up, negative for down.
    * @return The command to be used when called.
    */
-  public static Command runClimber(Climber climber, double speed) {
-    return new FunctionalCommand(() -> { }, () -> climber.setClimbSpeed(speed), (interrupted) -> climber.setClimbSpeed(0.0), () -> false, climber);
+  public static Command runClimber(Climber climber, DoubleSupplier speed) {
+    return new FunctionalCommand(() -> { }, () -> climber.setClimbSpeed(speed.getAsDouble()), (interrupted) -> climber.setClimbSpeed(0.0), () -> false, climber);
   }
 
   /** Runs the driving shifters
@@ -63,8 +63,8 @@ public final class Commands {
    * @param speed The speed to move the motor.
    * @return The command to be used when called.
    */
-  public static Command revShooter(Shooter shooter, double speed) {
-    return new FunctionalCommand(() -> { }, () -> shooter.spitBalls(speed), (interrupted) -> shooter.setRPM(0.0), () -> false, shooter);
+  public static Command revShooter(Shooter shooter, DoubleSupplier speed) {
+    return new FunctionalCommand(() -> { }, () -> shooter.spitBalls(speed.getAsDouble()), (interrupted) -> shooter.setRPM(0.0), () -> false, shooter);
   }
 
   /** Runs the magazine motors

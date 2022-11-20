@@ -16,8 +16,7 @@ public final class Constants {
 
   // Auto
   public static final double AUTO_DRIVE_SPEED = 0.7; // TODO: Find value
-  public static final double AUTO_SHOOT_SPEED = .7; // TODO: Find value
-  public static final double AUTO_DRIVE_BACK_DISTANCE = 300; // Inches 
+  public static final double AUTO_SHOOT_SPEED = 0.7; // TODO: Find value
 
   // Climber
   public static final int CLIMBER_BOTTOM_LIMIT_SWITCH_PORT = 6;
@@ -25,7 +24,7 @@ public final class Constants {
   public static final int CLIMBER_TOP_LIMIT_SWITCH_PORT = 7;
   public static final int CLIMBER_1ID = 7;
   public static final int CLIMBER_2ID = 8;
-  public static final double CLIMBER_SPEED = .85;
+  public static final double CLIMBER_SPEED = 0.85;
 
   // Compressor
   public static final PneumaticsModuleType PNEUMATICS_MODULE_TYPE = PneumaticsModuleType.CTREPCM;
@@ -82,7 +81,7 @@ public final class Constants {
   public static final int MAG_ID = 4;
   public static final double TAKE_BALLS_SPEED = 1;
   public static final double MAG_SPEED = 1;
-  public static final double TRAP_BALLS_SPEED = -.5;
+  public static final double TRAP_BALLS_SPEED = -0.5;
 
   // Shooter
   public static final int SHOOTER_ENCODER_RESOLUTION = 0; // TODO: find value
@@ -95,8 +94,8 @@ public final class Constants {
   public static final double SHOOTER_I = 0; // TODO: Find value
   public static final double SHOOTER_D = 0; // TODO: Find value
   public static final double SHOOTER_RATELIM_VALUE = 0.5; // TODO find best value
-  public static final double SHOOTER_FAST_SPEED = .90;
-  public static final double SHOOTER_SLOW_SPEED = .35;
+  public static final double SHOOTER_FAST_SPEED = 0.90;
+  public static final double SHOOTER_SLOW_SPEED = 0.35;
 
   // Interfaces
   public static final boolean SHOOTER_ENABLED = true;
