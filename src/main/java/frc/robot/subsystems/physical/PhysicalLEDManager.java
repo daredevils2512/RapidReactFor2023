@@ -27,7 +27,7 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   private boolean enabled;
 
   // Saturation
-  private int saturation =  255;
+  private int saturation = 255;
 
   // HSV Values
   private int hue = 180;
