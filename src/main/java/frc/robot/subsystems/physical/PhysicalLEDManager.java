@@ -77,7 +77,7 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   @Override
   public void setColor(double saturation, int hue, int value) {
     for (int i = 0; i <= Constants.LED_LENGTH; i++) {
-      this.saturation = Constants.LED_MIN_S + (int)((Constants.LED_MAX_S - Constants.LED_MIN_S) * saturation);
+      setSaturation(Constants.LED_MIN_S + (int)((Constants.LED_MAX_S - Constants.LED_MIN_S) * saturation));
       
       LEDBuffer.setHSV(i, hue, this.saturation, value);
     }
@@ -100,13 +100,18 @@ public class PhysicalLEDManager extends NTSubsystem implements LEDManager {
   }
 
   @Override
-  public void setHue(int newHue) {
-    hue = newHue;
+  public void setHue(int hue) {
+   this.hue = hue;
   }
 
   @Override
-  public void setValue(int newValue) {
-    value = newValue;
+  public void setValue(int value) {
+    this.value = value;
+  }
+
+  @Override
+  public void setSaturation(int saturation) {
+    this.saturation = saturation;
   }
   
 }

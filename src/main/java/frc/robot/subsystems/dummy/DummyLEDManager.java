@@ -25,5 +25,8 @@ public class DummyLEDManager implements LEDManager {
 
   @Override
   public Color getColor(int i) { return new Color(0, 0, 0); }
+
+  @Override
+  public void setSaturation(int saturation) { }
   
 }

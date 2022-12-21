@@ -25,12 +25,17 @@ public interface LEDManager extends Subsystem {
   void setEnabled(boolean wantsEnabled);
 
   /** Sets the new hue value for HSV
-   * @param newHue The new hue value
+   * @param hue The new hue value
    */
-  void setHue(int newHue);
+  void setHue(int hue);
 
   /** Sets the new value for HSV
-   * @param newValue The new value
+   * @param value The new value
    */
-  void setValue(int newValue);
+  void setValue(int value);
+
+  /** Sets the new saturation for HSV
+   * @param saturation The new saturation
+   */
+  void setSaturation(int saturation);
 }

@@ -8,24 +8,53 @@ import frc.robot.subsystems.vision.Pipeline;
  */
 
 /**
- * <h1> Limelight manager for power cell target tracking
+ * Limelight manager for power cell target tracking
  */
 public interface Limelight {
 
-  public Pipeline getDefaultPipeline(); // Modifier 'public' is redundant for interface members
-  public void setPipeline(Pipeline pipeline);
-  public void setLEDMode(LimelightLEDMode ledMode);
-  public LimelightLEDMode getLEDMode();
-  public boolean hasTarget();
-  public double tx();
-  public double ty();
-  public double ta();
-  public double ts();
-  public double tl();
-  public int tshort();
-  public int tlong();
-  public int thor();
-  public int tvert();
-  public double getLastPosition();
+  /** @return The current pipline being used */
+  Pipeline getDefaultPipeline(); 
+  
+  /** Sets the pipeline to use */
+  void setPipeline(Pipeline pipeline);
+  
+  /** Sets the LED mode for the limelight */
+  void setLEDMode(LimelightLEDMode ledMode);
+  
+  /** @return The LED mode being used */
+  LimelightLEDMode getLEDMode();
+  
+  /** @return tv == 1 */
+  boolean hasTarget();
+  
+  /** @return tx */
+  double tx();
+  
+  /** @return ty */
+  double ty();
+  
+  /** @return ta */
+  double ta();
+  
+  /** @return ts */
+  double ts();
+  
+  /** @return tl */
+  double tl();
+  
+  /** @return tshort */
+  int tshort();
+  
+  /** @return tlong */
+  int tlong();
+  
+  /** @return thor */
+  int thor();
+  
+  /** @return tvert */
+  int tvert();
+  
+  /** @return The last position */
+  double getLastPosition();
 
 }
