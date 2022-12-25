@@ -76,6 +76,8 @@ public final class Constants {
   public static final double GOAL_HEIGHT = 104; // inches, distance from the target to the floor
   public static final double DESIRED_DISTANCE = 66; // desired distance from the target
   public static final double K_P = 0.2;
+  public static final double LIMELIGHT_ANGLE_VARIABLE_I_FOUND = 20;
+  public static final double LIMELIGHT_HEIGHT_OFFSET_VARIABLE_I_FOUND = 98.25 - 19.25;
 
   // Magazine
   public static final int MAG_ID = 4;
@@ -162,4 +164,5 @@ public final class Constants {
   public static final int BUTTON_BOX_BIG_RED_PORT = 14;
   public static final int BUTTON_BOX_YELLOW_PORT = 15;
   public static final int BUTTON_BOX_BOTTOM_RED_PORT = 16;
+
 }

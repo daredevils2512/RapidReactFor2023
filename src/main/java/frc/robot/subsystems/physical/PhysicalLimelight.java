@@ -14,8 +14,7 @@ public class PhysicalLimelight implements Limelight {
   public static final double RANGE_X_DEGREES = 29.8;
   public static final double RANGE_Y_DEGREES = 24.85;
   
-  private final double angle = 20;
-  private final double heightOffset = 98.25 - 19.25;
+  // moved these variables to constants because they should be there
   private final Pipeline pipeline;
 
   private NetworkTable table;
